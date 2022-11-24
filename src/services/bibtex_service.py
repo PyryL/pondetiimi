@@ -10,7 +10,7 @@ class BibtexService:
         self.db.entries.append(viite)
 
     def vie_viitteet(self, tiedostonimi):
-        with open(tiedostonimi, 'w') as bibfile:
+        with open(f"{tiedostonimi}.bib", 'w') as bibfile:
             bibfile.write(self.writer.write(self.db))
         print(f"Tiedosto {tiedostonimi}.bib luotu")
 
