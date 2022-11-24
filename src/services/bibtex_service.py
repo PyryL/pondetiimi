@@ -12,7 +12,6 @@ class BibtexService:
     def vie_viitteet(self, tiedostonimi):
         with open(f"{tiedostonimi}.bib", 'w') as bibfile:
             bibfile.write(self.writer.write(self.db))
-        print(f"Tiedosto {tiedostonimi}.bib luotu")
 
     def listaa_viitteet(self):
         for viite in self.db.entries:
