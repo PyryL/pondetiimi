@@ -1,4 +1,4 @@
-##Definition of Done
+## Definition of Done
 
 - Ominaisuus toimii sovelluksessa
 - Ominaisuuden hyväksymiskriteerit täyttyvät
