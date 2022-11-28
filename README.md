@@ -12,41 +12,29 @@
 
 Asenna tarvittavat riippuvuudet komennolla:
 
-'''
-$ poetry install
-'''
+      poetry install
 
 Sovellus käynnistyy komennolla:
 
-'''
-$ poetry run invoke start
-'''
+      poetry run invoke start
 
 ## Muut toiminnot:
 
 ### Testaus:
 
-'''
-poetry run invoke test
-'''
+      poetry run invoke test
 
 ### Testikattavuus ja testikattavuusraportti:
 
-'''
-poetry run invoke coverage
-'''
+      poetry run invoke coverage
 
-'''
-poetry run invoke coverage-report
-'''
+      poetry run invoke coverage-report
 
 ### Pylint
 
 Laatutarkastukset:
 
-'''
-poetry run invoke lint
-'''
+      poetry run invoke lint
 
 
 
