@@ -37,8 +37,8 @@ class Book:
         self._year = year
 
     def __str__(self):
-        return f"{self._author:20} {self._title:40} {self._year:4}"
+        return f"{self._author:30} {self._title:40} {self._year:4}"
 
     def generate_id(self):
         surname = self._author.split(",")
-        return surname[0]+self._year
+        return surname[0]+str(self._year)
