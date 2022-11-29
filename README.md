@@ -2,6 +2,8 @@
 
 [Ohjelmistotuotanto](https://ohjelmistotuotanto-hy.github.io/miniprojekti/)-kurssin projektityö.
 
+[ProductBacklog](https://docs.google.com/spreadsheets/d/1GRM8AXspv3U0oPStXTyR-001euZUgXl-X6GAkoWaCAw/edit#gid=0)
+
 ## Dokumentaatio
 
 [ProductBacklog](https://docs.google.com/spreadsheets/d/1GRM8AXspv3U0oPStXTyR-001euZUgXl-X6GAkoWaCAw/edit#gid=0)
@@ -35,6 +37,4 @@ Sovellus käynnistyy komennolla:
 Laatutarkastukset:
 
       poetry run invoke lint
-
-
 

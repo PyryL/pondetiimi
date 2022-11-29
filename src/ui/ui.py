@@ -15,7 +15,7 @@ class UI:
             print("Komento 'vie' vie lähdeviitteet bibtex-tiedostoon")
             print("Komento 'lopeta' lopettaa ohjelman")
 
-            komento = self._io.lue("Anna komento:")
+            komento = self._io.lue("Anna komento: ")
 
             if komento == "uusi":
                 self.references._new_entry(self._io, self.bibtex_service)
