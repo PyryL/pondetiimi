@@ -4,6 +4,8 @@
 
 [ProductBacklog](https://docs.google.com/spreadsheets/d/1GRM8AXspv3U0oPStXTyR-001euZUgXl-X6GAkoWaCAw/edit#gid=0)
 
+![workflow](https://github.com/PyryL/pondetiimi/actions/workflows/main.yml/badge.svg)
+
 ## Dokumentaatio
 
 [ProductBacklog](https://docs.google.com/spreadsheets/d/1GRM8AXspv3U0oPStXTyR-001euZUgXl-X6GAkoWaCAw/edit#gid=0)
