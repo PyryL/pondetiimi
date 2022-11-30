@@ -11,6 +11,7 @@ class ReferenceManager:
         # Tarkista, löytyykö jo self.viitteet
         self.vie_viite_databaseen(viite)
         self.viitteet.append(viite)
+        self.vie_viite_bibtexdb(viite)  
 
     def hae_viitteet_databasesta(self):
         return self.db_service.hae_viitteet_databasesta()

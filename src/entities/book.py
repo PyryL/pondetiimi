@@ -39,6 +39,17 @@ class Book:
     def __str__(self):
         return f"{self._author:30} {self._title:40} {self._year:4}"
 
+    def get_as_dictionary(self):
+        viite = {"author": self._author,
+                 "title": self._title,
+                 "publisher": self._publisher,
+                 "year": self._year,
+                 "isbn": self._isbn,
+                 "ID": "SukunimiVuosi",
+                 "ENTRYTYPE": "book"}
+
+        return viite
+
     def generate_id(self):
         surname = self._author.split(",")
         return surname[0]+str(self._year)
