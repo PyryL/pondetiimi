@@ -1,20 +1,26 @@
 from bibtexparser.bwriter import BibTexWriter
 from bibtexparser.bibdatabase import BibDatabase
 from pylatexenc.latexencode import UnicodeToLatexEncoder
-from services.database import Database
+
+class FileIO:
+    def write(self, filename, content):
+        with open(filename, 'w', encoding='utf-8') as file:
+            file.write(content)
 
 class BibtexService:
-    def __init__(self):
+    def __init__(self, file_io = FileIO()):
         self.writer = BibTexWriter()
-        self.db = BibDatabase()
+        self.database = BibDatabase()
         self.encoder = UnicodeToLatexEncoder(replacement_latex_protection='braces-all')
+        self.file_io = file_io
 
-    def uusi_viite(self, viite):
-        Database.save(viite["author"], viite["title"], viite["publisher"], viite["year"], viite["isbn"])
+    def vie_viite_databaseen(self, viite): #Turha?
+        # Tarkistus, onko viite jo db:ssä puuttuu. (Tarkistus suoritettu ref_manager-luokassa?)
+        for key in viite:
+            viite[key] = self.encoder.unicode_to_latex(viite[key])
 
-    def vie_viitteet(self, tiedostonimi):
-        with open(f"{tiedostonimi}.bib", 'w') as bibfile:
-            bibfile.write(self.writer.write(self.db))
+        self.database.entries.append(viite)
 
-    def listaa_viitteet(self):
-        Database.get()
+    def vie_viitteet_tiedostoon(self, tiedostonimi):
+        self.file_io.write(f"{tiedostonimi}.bib", self.writer.write(self.database))
+
