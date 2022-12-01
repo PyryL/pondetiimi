@@ -1,4 +1,12 @@
 .pytest_cache
 __pycache__
+
 .coverage
 htmlcov
+
+# ettei exportatut tiedostot tule vahingossa repoon mukaan
+*.bib
+
+# robot frameworkin outputit
+output.xml
+log.html
