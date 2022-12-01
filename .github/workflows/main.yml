@@ -22,3 +22,7 @@ jobs:
         run: poetry install
       - name: Run tests
         run: poetry run coverage run --branch -m pytest
+      - name: Coverage report
+        run: poetry run coverage xml
+      - name: Send coverage report
+        run: bash <(curl -s https://codecov.io/bash)
