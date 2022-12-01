@@ -1,42 +1,51 @@
 # Pöndetiimi
 
-[Ohjelmistotuotanto](https://ohjelmistotuotanto-hy.github.io/miniprojekti/)-kurssin projektityö.
-
-[ProductBacklog](https://docs.google.com/spreadsheets/d/1GRM8AXspv3U0oPStXTyR-001euZUgXl-X6GAkoWaCAw/edit#gid=0)
-
 ![workflow](https://github.com/PyryL/pondetiimi/actions/workflows/main.yml/badge.svg)
+
+[Ohjelmistotuotanto](https://ohjelmistotuotanto-hy.github.io/miniprojekti/)-kurssin projektityö.
 
 ## Dokumentaatio
 
-[ProductBacklog](https://docs.google.com/spreadsheets/d/1GRM8AXspv3U0oPStXTyR-001euZUgXl-X6GAkoWaCAw/edit#gid=0)
+[Product backlog](https://docs.google.com/spreadsheets/d/1GRM8AXspv3U0oPStXTyR-001euZUgXl-X6GAkoWaCAw/edit#gid=0)
 
 [Definition of Done](https://github.com/PyryL/pondetiimi/blob/main/documentation/definition_of_done.md)
 
-## Asennus ja Käynnistys
+## Asennus ja käynnistys
 
 Asenna tarvittavat riippuvuudet komennolla:
 
-      poetry install
+```
+poetry install
+```
 
 Sovellus käynnistyy komennolla:
 
-      poetry run invoke start
+```
+poetry run invoke start
+```
 
-## Muut toiminnot:
+## Muut toiminnot
 
-### Testaus:
+### Testaus
 
-      poetry run invoke test
+```
+poetry run invoke test
+```
 
 ### Testikattavuus ja testikattavuusraportti:
 
-      poetry run invoke coverage
+```
+poetry run invoke coverage
+```
 
-      poetry run invoke coverage-report
+```
+poetry run invoke coverage-report
+```
 
 ### Pylint
 
 Laatutarkastukset:
 
-      poetry run invoke lint
-
+```
+poetry run invoke lint
+```
