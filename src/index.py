@@ -3,6 +3,7 @@ from services.sqldb_service import SqldbService
 from services.bibtex_service import BibtexService
 from services.reference_manager import ReferenceManager
 from ui.ui import UI
+#from RobotLibrary import RobotLibrary
 
 def main():
     io = KonsoliIO()
@@ -12,6 +13,9 @@ def main():
 
     ui = UI(io, reference_manager)
     ui.run()
+    
+    #a = RobotLibrary()
+    #a.run_application()
 
 if __name__ == "__main__":
     main()

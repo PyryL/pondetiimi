@@ -20,11 +20,13 @@ class UI:
             if komento == "uusi":
                 luettu_viite = self.lue_viite()
                 self.reference_manager.lisaa_uusi_viite(luettu_viite)
+                self._io.tulosta("Uusi viite lisätty!")
             elif komento == "listaa":
                 self.listaa_viitteet()
             elif komento == "vie":
                 tiedostonimi = self._io.lue("Anna tiedostonimi:")
                 self.reference_manager.vie_viitteet_tiedostoon(tiedostonimi)
+                self._io.tulosta("Viitteet viety tiedostoon: " + tiedostonimi + ".bib!")
             elif komento == "lopeta":
                 break
 
