@@ -6,7 +6,7 @@ class StubIO:
     def add_input(self, inpt):
         self.inputs.append(inpt)
 
-    def lue(self):
+    def lue(self, prompt):
         if len(self.inputs) > 0:
             return self.inputs.pop(0)
         return "lopeta"
