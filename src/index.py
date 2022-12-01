@@ -6,14 +6,14 @@ from ui.ui import UI
 #from RobotLibrary import RobotLibrary
 
 def main():
-    io = KonsoliIO()
+    konsoli_io = KonsoliIO()
     bibtex_service = BibtexService()
     db_service = SqldbService()
     reference_manager = ReferenceManager(bibtex_service, db_service)
 
-    ui = UI(io, reference_manager)
-    ui.run()
-    
+    user_interface = UI(konsoli_io, reference_manager)
+    user_interface.run()
+
     #a = RobotLibrary()
     #a.run_application()
 

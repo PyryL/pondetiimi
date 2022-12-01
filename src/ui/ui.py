@@ -1,10 +1,8 @@
-from services.konsoli_io import KonsoliIO
-from services.reference_manager import ReferenceManager
 from entities.reference import Reference
 
 class UI:
-    def __init__(self, io, reference_manager):
-        self._io = io
+    def __init__(self, konsoli_io, reference_manager):
+        self._konsoli_io = konsoli_io
         self.reference_manager = reference_manager
 
     def run(self):
@@ -15,27 +13,28 @@ class UI:
             print("Komento 'vie' vie lähdeviitteet bibtex-tiedostoon")
             print("Komento 'lopeta' lopettaa ohjelman")
 
-            komento = self._io.lue("Anna komento: ")
+            komento = self._konsoli_io.lue("Anna komento: ")
 
             if komento == "uusi":
                 luettu_viite = self.lue_viite()
                 self.reference_manager.lisaa_uusi_viite(luettu_viite)
-                self._io.tulosta("Uusi viite lisätty!")
+                self._konsoli_io.tulosta("Uusi viite lisätty!")
             elif komento == "listaa":
                 self.listaa_viitteet()
             elif komento == "vie":
-                tiedostonimi = self._io.lue("Anna tiedostonimi:")
+                tiedostonimi = self._konsoli_io.lue("Anna tiedostonimi:")
                 self.reference_manager.vie_viitteet_tiedostoon(tiedostonimi)
-                self._io.tulosta("Viitteet viety tiedostoon: " + tiedostonimi + ".bib!")
+                self._konsoli_io.tulosta("Viitteet viety tiedostoon: " + tiedostonimi + ".bib!")
             elif komento == "lopeta":
                 break
 
     def lue_viite(self):
-        author = self._io.lue("Kirjoittaja:") #Nyt kirjoittajat pilkulla erotettuna --> Kysy jokainen kirjoittaja erikseen.
-        title = self._io.lue("Otsikko:")
-        publisher = self._io.lue("Julkaisija:")
-        year = self._io.lue("Vuosi:")
-        isbn = self._io.lue("ISBN:")
+        # Nyt kirjoittajat pilkulla erotettuna --> Kysy jokainen kirjoittaja erikseen.
+        author = self._konsoli_io.lue("Kirjoittaja:")
+        title = self._konsoli_io.lue("Otsikko:")
+        publisher = self._konsoli_io.lue("Julkaisija:")
+        year = self._konsoli_io.lue("Vuosi:")
+        isbn = self._konsoli_io.lue("ISBN:")
 
         viite = Reference(author, title, publisher, year, isbn)
 
@@ -45,28 +44,29 @@ class UI:
         viitteet = self.reference_manager.hae_viitteet()
         eka_rivi = ""
 
-        for k in range(100):
-            eka_rivi += "-"
+        eka_rivi += "-" * 100
 
-        toka_rivi = f"{'| Nro: |'} {'':9} {'Kirjoittajat:'} {'':9} {'|'} {'':17} {'Otsikko:'} {'':17} {'|'} {'Vuosi: |'}"
+        toka_rivi = f"| Nro: | {'':9} Kirjoittajat: {'':9} | {'':17} Otsikko: {'':17} | Vuosi: |"
         vali_rivi = eka_rivi
         vika_rivi = eka_rivi
 
-        self._io.tulosta("\n" + eka_rivi)
-        self._io.tulosta(toka_rivi)
+        self._konsoli_io.tulosta("\n" + eka_rivi)
+        self._konsoli_io.tulosta(toka_rivi)
 
         for i in range(len(viitteet)):
-            self._io.tulosta(vali_rivi)
+            self._konsoli_io.tulosta(vali_rivi)
 
             authors_tuple = viitteet[i].get_author().split(", ")
 
-            tulostettava_rivi = f"{'| '} {i:3} {'|'} {authors_tuple[0]:33} {'|'} {viitteet[i].get_title():44} {'|'} {viitteet[i].get_year():6} {'|'}"
+            title = viitteet[i].get_title()
+            year = viitteet[i].get_year()
+            tulostettava_rivi = f"|  {i:3} | {authors_tuple[0]:33} | {title:44} | {year:6} |"
 
-            self._io.tulosta(tulostettava_rivi)
+            self._konsoli_io.tulosta(tulostettava_rivi)
 
             for j in range(len(authors_tuple) - 1):
                 tulostettava_rivi = "|      | "
                 tulostettava_rivi += f"{authors_tuple[j + 1]:33} {'|'} {'':44} {'|'} {'':6} {'|'}"
-                self._io.tulosta(tulostettava_rivi)
+                self._konsoli_io.tulosta(tulostettava_rivi)
 
-        self._io.tulosta(vika_rivi)
+        self._konsoli_io.tulosta(vika_rivi)
