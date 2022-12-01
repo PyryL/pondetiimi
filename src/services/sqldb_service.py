@@ -5,33 +5,34 @@ class SqldbService:
     def vie_viite_databaseen(self, viite):
         # Tarkistus, onko viite jo db:ssä puuttuu.
         #Tarkistus suoritettu ref_manager metodissa lisaa_uusi_viite()?
-        db = sqlite3.connect("test.db")
-        db.isolation_level = None
-        
-        values=(viite.get_author(), viite.get_title(), viite.get_publisher(), viite.get_year(), viite.get_isbn())
+        database = sqlite3.connect("test.db")
+        database.isolation_level = None
 
-        db.execute("INSERT INTO test (author, title, publisher, year, isbn) VALUES (?, ?, ?, ?, ?)",values)
-        db.commit()
-        db.close()
+        values = (
+            viite.get_author(),
+            viite.get_title(),
+            viite.get_publisher(),
+            viite.get_year(),
+            viite.get_isbn()
+        )
 
-        # Tarpeellinen?
-        """
-        title = viite["title"]
-        author = viite["author"]
-        return f"Book {title} by {author} saved."
-        """
+        insert_sql="INSERT INTO test (author, title, publisher, year, isbn) VALUES (?, ?, ?, ?, ?)"
+        database.execute(insert_sql, values)
+        database.commit()
+        database.close()
 
     def hae_viitteet_databasesta(self):
         viitteet = []
 
-        db = sqlite3.connect("test.db")
-        db.isolation_level = None
-        all = db.execute("SELECT * FROM test")
+        database = sqlite3.connect("test.db")
+        database.isolation_level = None
+        all_references = database.execute("SELECT * FROM test")
 
-        for row in all:
+        for row in all_references:
             viite = Reference(row[1], row[2], row[3], row[4], row[5])
             viitteet.append(viite)
 
-        db.close()
+        database.close()
 
         return viitteet
+

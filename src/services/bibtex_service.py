@@ -4,13 +4,13 @@ from pylatexenc.latexencode import UnicodeToLatexEncoder
 
 class FileIO:
     def write(self, filename, content):
-        with open(filename, 'w') as file:
+        with open(filename, 'w', encoding='utf-8') as file:
             file.write(content)
 
 class BibtexService:
     def __init__(self, file_io = FileIO()):
         self.writer = BibTexWriter()
-        self.db = BibDatabase()
+        self.database = BibDatabase()
         self.encoder = UnicodeToLatexEncoder(replacement_latex_protection='braces-all')
         self.file_io = file_io
 
@@ -19,7 +19,8 @@ class BibtexService:
         for key in viite:
             viite[key] = self.encoder.unicode_to_latex(viite[key])
 
-        self.db.entries.append(viite)
+        self.database.entries.append(viite)
 
     def vie_viitteet_tiedostoon(self, tiedostonimi):
-        self.file_io.write(f"{tiedostonimi}.bib", self.writer.write(self.db))
+        self.file_io.write(f"{tiedostonimi}.bib", self.writer.write(self.database))
+

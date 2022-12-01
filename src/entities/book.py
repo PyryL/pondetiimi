@@ -22,7 +22,7 @@ class Book:
         return self._publisher
 
     def set_publisher(self, publisher):
-        self._description = publisher
+        self._publisher = publisher
 
     def get_isbn(self):
         return self._isbn
