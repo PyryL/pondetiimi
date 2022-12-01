@@ -1,6 +1,7 @@
 # Pöndetiimi
 
 ![workflow](https://github.com/PyryL/pondetiimi/actions/workflows/main.yml/badge.svg)
+[![codecov](https://codecov.io/gh/PyryL/pondetiimi/branch/main/graph/badge.svg?token=AHLKDBZ3U2)](https://codecov.io/gh/PyryL/pondetiimi)
 
 [Ohjelmistotuotanto](https://ohjelmistotuotanto-hy.github.io/miniprojekti/)-kurssin projektityö.
 
