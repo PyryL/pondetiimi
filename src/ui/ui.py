@@ -1,6 +1,7 @@
 from entities.reference import Reference
 from services.input_validation import InputValidation
 from services.konsoli_io import Varit
+from pyfiglet import Figlet
 
 class UI:
     def __init__(self, konsoli_io, reference_manager):
@@ -9,6 +10,7 @@ class UI:
 
     def run(self):
         while True:
+            self._tulosta_figlet()
             self._tulosta_menu_ohje()
 
             komento = self._pyyda_syote("Anna komento:", None, InputValidation.menu_command)
@@ -96,3 +98,7 @@ class UI:
                 self._konsoli_io.tulosta(tulostettava_rivi)
 
         self._konsoli_io.tulosta(vika_rivi)
+
+    def _tulosta_figlet(self):
+        f = Figlet(font='small')
+        self._konsoli_io.tulosta(f.renderText('BibTeX-viiteohjelma'), Varit.vihrea)
