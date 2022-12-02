@@ -10,27 +10,31 @@ class UI:
         while True:
             self._tulosta_menu_ohje()
 
-            komento = self._pyyda_syote("Anna komento: ", "(^uusi$)|(^listaa$)|(^vie$)|(^lopeta$)")
+            komento = self._pyyda_syote("Anna komento: ", "^(0|1|2|3|4)$")
 
-            if komento == "uusi":
+            if komento == "0":
                 luettu_viite = self.lue_viite()
                 self.reference_manager.lisaa_uusi_viite(luettu_viite)
                 self._konsoli_io.tulosta("Uusi viite lisätty!")
-            elif komento == "listaa":
+            elif komento == "1":
                 self.listaa_viitteet()
-            elif komento == "vie":
+            elif komento == "2":
                 tiedostonimi = self._konsoli_io.lue("Anna tiedostonimi:")
                 self.reference_manager.vie_viitteet_tiedostoon(tiedostonimi)
                 self._konsoli_io.tulosta("Viitteet viety tiedostoon: " + tiedostonimi + ".bib!")
-            elif komento == "lopeta":
+            elif komento == "3":
+                # TODO: lähdeviitteen poisto
+                pass
+            elif komento == "4":
                 break
 
     def _tulosta_menu_ohje(self):
         self._konsoli_io.tulosta("")
-        self._konsoli_io.tulosta("Komento 'uusi' luo uuden lähdeviitteen")
-        self._konsoli_io.tulosta("Komento 'listaa' listaa kaikki lähdeviitteet")
-        self._konsoli_io.tulosta("Komento 'vie' vie lähdeviitteet bibtex-tiedostoon")
-        self._konsoli_io.tulosta("Komento 'lopeta' lopettaa ohjelman")
+        self._konsoli_io.tulosta("0 Luo uusi lähdeviite")
+        self._konsoli_io.tulosta("1 Listaa kaikki lähdeviitteet")
+        self._konsoli_io.tulosta("2 Vie lähdeviitteet bibtex-tiedostoon")
+        self._konsoli_io.tulosta("3 Poista lähdeviite")
+        self._konsoli_io.tulosta("4 Lopeta ohjelma")
 
     def lue_viite(self):
         # Nyt kirjoittajat pilkulla erotettuna --> Kysy jokainen kirjoittaja erikseen.
