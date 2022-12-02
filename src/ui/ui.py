@@ -1,5 +1,5 @@
-import re
 from entities.reference import Reference
+from services.input_validation import InputValidation
 
 class UI:
     def __init__(self, konsoli_io, reference_manager):
@@ -10,7 +10,7 @@ class UI:
         while True:
             self._tulosta_menu_ohje()
 
-            komento = self._pyyda_syote("Anna komento: ", "^(0|1|2|3|4)$")
+            komento = self._pyyda_syote("Anna komento: ", InputValidation.menu_command)
 
             if komento == "0":
                 luettu_viite = self.lue_viite()
@@ -38,20 +38,20 @@ class UI:
 
     def lue_viite(self):
         # Nyt kirjoittajat pilkulla erotettuna --> Kysy jokainen kirjoittaja erikseen.
-        author = self._pyyda_syote("Kirjoittaja:", ".+")
-        title = self._pyyda_syote("Otsikko:", ".+")
-        publisher = self._pyyda_syote("Julkaisija:", ".+")
-        year = self._pyyda_syote("Vuosi:", "^\d{4}$")
-        isbn = self._pyyda_syote("ISBN:", "^(978-)?\d{3}-\d{5}-\d-\d$")
+        author = self._pyyda_syote("Kirjoittaja:", InputValidation.not_empty)
+        title = self._pyyda_syote("Otsikko:", InputValidation.not_empty)
+        publisher = self._pyyda_syote("Julkaisija:", InputValidation.not_empty)
+        year = self._pyyda_syote("Vuosi:", InputValidation.year)
+        isbn = self._pyyda_syote("ISBN:", InputValidation.isbn)
 
         viite = Reference(author, title, publisher, year, isbn)
 
         return viite
 
-    def _pyyda_syote(self, kehote, regexp):
+    def _pyyda_syote(self, kehote, validator):
         while True:
             syote = self._konsoli_io.lue(kehote)
-            if re.match(regexp, syote):
+            if validator(syote):
                 return syote
             self._konsoli_io.tulosta("Virheellinen syöte, yritä uudelleen.")
 
