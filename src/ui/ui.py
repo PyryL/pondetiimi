@@ -10,7 +10,7 @@ class UI:
         while True:
             self._tulosta_menu_ohje()
 
-            komento = self._pyyda_syote("Anna komento: ", InputValidation.menu_command)
+            komento = self._pyyda_syote("Anna komento:", None, InputValidation.menu_command)
 
             if komento == "0":
                 luettu_viite = self.lue_viite()
@@ -37,20 +37,22 @@ class UI:
         self._konsoli_io.tulosta("4 Lopeta ohjelma")
 
     def lue_viite(self):
-        # Nyt kirjoittajat pilkulla erotettuna --> Kysy jokainen kirjoittaja erikseen.
-        author = self._pyyda_syote("Kirjoittaja:", InputValidation.not_empty)
-        title = self._pyyda_syote("Otsikko:", InputValidation.not_empty)
-        publisher = self._pyyda_syote("Julkaisija:", InputValidation.not_empty)
-        year = self._pyyda_syote("Vuosi:", InputValidation.year)
-        isbn = self._pyyda_syote("ISBN:", InputValidation.isbn)
+        author = self._pyyda_syote("Kirjoittaja:", 13, InputValidation.not_empty)
+        title = self._pyyda_syote("Otsikko:", 13, InputValidation.not_empty)
+        publisher = self._pyyda_syote("Julkaisija:", 13, InputValidation.not_empty)
+        year = self._pyyda_syote("Vuosi:", 13, InputValidation.year)
+        isbn = self._pyyda_syote("ISBN:", 13, InputValidation.isbn)
 
         viite = Reference(author, title, publisher, year, isbn)
 
         return viite
 
-    def _pyyda_syote(self, kehote, validator):
+    def _pyyda_syote(self, kehote, kehotteen_pituus, validator):
+        if kehotteen_pituus is None:
+            kehotteen_pituus = len(kehote) + 1
+
         while True:
-            syote = self._konsoli_io.lue(kehote)
+            syote = self._konsoli_io.lue(f"{kehote:<{kehotteen_pituus}}")
             if validator(syote):
                 return syote
             self._konsoli_io.tulosta("Virheellinen syöte, yritä uudelleen.")
