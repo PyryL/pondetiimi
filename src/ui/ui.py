@@ -1,5 +1,6 @@
 from entities.reference import Reference
 from services.input_validation import InputValidation
+from services.konsoli_io import Varit
 
 class UI:
     def __init__(self, konsoli_io, reference_manager):
@@ -15,13 +16,14 @@ class UI:
             if komento == "0":
                 luettu_viite = self.lue_viite()
                 self.reference_manager.lisaa_uusi_viite(luettu_viite)
-                self._konsoli_io.tulosta("Uusi viite lisätty!")
+                self._konsoli_io.tulosta("Uusi viite lisätty!", Varit.vihrea)
             elif komento == "1":
                 self.listaa_viitteet()
             elif komento == "2":
-                tiedostonimi = self._konsoli_io.lue("Anna tiedostonimi:")
+                tiedostonimi = self._pyyda_syote("Anna tiedostonimi:", None, InputValidation.not_empty)
                 self.reference_manager.vie_viitteet_tiedostoon(tiedostonimi)
-                self._konsoli_io.tulosta("Viitteet viety tiedostoon: " + tiedostonimi + ".bib!")
+                self._konsoli_io.tulosta("Viitteet viety tiedostoon: ", Varit.vihrea, lopetus="")
+                self._konsoli_io.tulosta(f"{tiedostonimi}.bib", tummennus=True)
             elif komento == "3":
                 # TODO: lähdeviitteen poisto
                 pass
@@ -29,12 +31,18 @@ class UI:
                 break
 
     def _tulosta_menu_ohje(self):
+        komennot = {
+            "0": "Luo uusi lähdeviite",
+            "1": "Listaa kaikki lähdeviitteet",
+            "2": "Vie lähdeviitteet bibtex-tiedostoon",
+            "3": "Poista lähdeviite",
+            "4": "Lopeta ohjelma"
+        }
         self._konsoli_io.tulosta("")
-        self._konsoli_io.tulosta("0 Luo uusi lähdeviite")
-        self._konsoli_io.tulosta("1 Listaa kaikki lähdeviitteet")
-        self._konsoli_io.tulosta("2 Vie lähdeviitteet bibtex-tiedostoon")
-        self._konsoli_io.tulosta("3 Poista lähdeviite")
-        self._konsoli_io.tulosta("4 Lopeta ohjelma")
+        for komento, selite in komennot.items():
+            self._konsoli_io.tulosta(" ", lopetus="")
+            self._konsoli_io.tulosta(komento, Varit.sininen, tummennus=True, lopetus="")
+            self._konsoli_io.tulosta(" " + selite)
 
     def lue_viite(self):
         author = self._pyyda_syote("Kirjoittaja:", 13, InputValidation.not_empty)
@@ -52,10 +60,11 @@ class UI:
             kehotteen_pituus = len(kehote) + 1
 
         while True:
-            syote = self._konsoli_io.lue(f"{kehote:<{kehotteen_pituus}}")
+            self._konsoli_io.tulosta(f"{kehote:<{kehotteen_pituus}}", Varit.keltainen, lopetus="")
+            syote = self._konsoli_io.lue("")
             if validator(syote):
                 return syote
-            self._konsoli_io.tulosta("Virheellinen syöte, yritä uudelleen.")
+            self._konsoli_io.tulosta("Virheellinen syöte, yritä uudelleen.", Varit.punainen)
 
     def listaa_viitteet(self):
         viitteet = self.reference_manager.hae_viitteet()
