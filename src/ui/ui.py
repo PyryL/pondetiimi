@@ -45,7 +45,7 @@ class UI:
             self._konsoli_io.tulosta(" " + selite)
 
     def lue_viite(self):
-        author = self._pyyda_syote("Kirjoittaja:", 13, InputValidation.not_empty)
+        author = self._pyyda_syote("Kirjoittaja:", 13, InputValidation.name)
         title = self._pyyda_syote("Otsikko:", 13, InputValidation.not_empty)
         publisher = self._pyyda_syote("Julkaisija:", 13, InputValidation.not_empty)
         year = self._pyyda_syote("Vuosi:", 13, InputValidation.year)

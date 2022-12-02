@@ -22,6 +22,11 @@ class InputValidation:
         return re.match("^\\d{4}$", input_string) is not None
 
     @classmethod
+    def name(cls, input_string):
+        # hyväksytään kaikki merkkijonot, jotka ovat muotoa "Sukunimi, Etunimi; Sukunimi, Etunimi..."
+        return re.match("^([A-ZÄÖ][a-zäö]+, [A-ZÄÖ][a-zäö]+;? ?)+$", input_string) is not None
+
+    @classmethod
     def menu_command(cls, input_string):
         return re.match("^(0|1|2|3|4)$", input_string) is not None
 
