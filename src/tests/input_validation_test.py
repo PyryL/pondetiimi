@@ -46,3 +46,12 @@ class TestInputValidation(unittest.TestCase):
 
     def test_ei_tyhja_epakelvolla_syotteella(self):
         self.assertFalse(InputValidation.not_empty(""))
+
+    def test_nimi_oikealla_muodolla(self):
+        self.assertTrue(InputValidation.name("Dijkstra, Edsger"))
+
+    def test_useita_nimia_oikealla_muodolla(self):
+        self.assertTrue(InputValidation.name("Dijkstra, Edsger; Knuth, Donald"))
+
+    def test_nimi_epakelvolla_muodolla(self):
+        self.assertFalse(InputValidation.name("Dijkstra Edsger"))
