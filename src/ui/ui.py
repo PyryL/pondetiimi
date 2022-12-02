@@ -1,3 +1,4 @@
+import re
 from entities.reference import Reference
 
 class UI:
@@ -7,13 +8,9 @@ class UI:
 
     def run(self):
         while True:
-            print()
-            print("Komento 'uusi' luo uuden lähdeviitteen")
-            print("Komento 'listaa' listaa kaikki lähdeviitteet")
-            print("Komento 'vie' vie lähdeviitteet bibtex-tiedostoon")
-            print("Komento 'lopeta' lopettaa ohjelman")
+            self._tulosta_menu_ohje()
 
-            komento = self._konsoli_io.lue("Anna komento: ")
+            komento = self._pyyda_syote("Anna komento: ", "(^uusi$)|(^listaa$)|(^vie$)|(^lopeta$)")
 
             if komento == "uusi":
                 luettu_viite = self.lue_viite()
@@ -28,17 +25,31 @@ class UI:
             elif komento == "lopeta":
                 break
 
+    def _tulosta_menu_ohje(self):
+        self._konsoli_io.tulosta("")
+        self._konsoli_io.tulosta("Komento 'uusi' luo uuden lähdeviitteen")
+        self._konsoli_io.tulosta("Komento 'listaa' listaa kaikki lähdeviitteet")
+        self._konsoli_io.tulosta("Komento 'vie' vie lähdeviitteet bibtex-tiedostoon")
+        self._konsoli_io.tulosta("Komento 'lopeta' lopettaa ohjelman")
+
     def lue_viite(self):
         # Nyt kirjoittajat pilkulla erotettuna --> Kysy jokainen kirjoittaja erikseen.
-        author = self._konsoli_io.lue("Kirjoittaja:")
-        title = self._konsoli_io.lue("Otsikko:")
-        publisher = self._konsoli_io.lue("Julkaisija:")
-        year = self._konsoli_io.lue("Vuosi:")
-        isbn = self._konsoli_io.lue("ISBN:")
+        author = self._pyyda_syote("Kirjoittaja:", ".+")
+        title = self._pyyda_syote("Otsikko:", ".+")
+        publisher = self._pyyda_syote("Julkaisija:", ".+")
+        year = self._pyyda_syote("Vuosi:", "^\d{4}$")
+        isbn = self._pyyda_syote("ISBN:", "^(978-)?\d{3}-\d{5}-\d-\d$")
 
         viite = Reference(author, title, publisher, year, isbn)
 
         return viite
+
+    def _pyyda_syote(self, kehote, regexp):
+        while True:
+            syote = self._konsoli_io.lue(kehote)
+            if re.match(regexp, syote):
+                return syote
+            self._konsoli_io.tulosta("Virheellinen syöte, yritä uudelleen.")
 
     def listaa_viitteet(self):
         viitteet = self.reference_manager.hae_viitteet()
