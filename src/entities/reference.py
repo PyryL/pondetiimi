@@ -7,6 +7,9 @@ class Reference:
         self._isbn = isbn
         self._id = id or "SukunimiVuosi"
         self._entrytype = entrytype or "book"
+        
+    def get_id(self):
+        return self._id
 
     def get_author(self):
         return self._author

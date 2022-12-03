@@ -36,3 +36,11 @@ class SqldbService:
 
         return viitteet
 
+    def pois_viite_databasesta(self, viite):
+        database = sqlite3.connect("test.db")
+        database.isolation_level = None
+        database.execute("DELETE FROM test WHERE id_number = ?", (viite.get_id(),))
+        database.commit()
+        database.close()
+        
+        

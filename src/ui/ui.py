@@ -11,6 +11,7 @@ class UI:
             print("Komento 'uusi' luo uuden lähdeviitteen")
             print("Komento 'listaa' listaa kaikki lähdeviitteet")
             print("Komento 'vie' vie lähdeviitteet bibtex-tiedostoon")
+            print("Komento 'poista' poistaa lähdeviitteen")
             print("Komento 'lopeta' lopettaa ohjelman")
 
             komento = self._konsoli_io.lue("Anna komento: ")
@@ -25,6 +26,11 @@ class UI:
                 tiedostonimi = self._konsoli_io.lue("Anna tiedostonimi:")
                 self.reference_manager.vie_viitteet_tiedostoon(tiedostonimi)
                 self._konsoli_io.tulosta("Viitteet viety tiedostoon: " + tiedostonimi + ".bib!")
+            elif komento == "poista":
+                self.listaa_viitteet()
+                poistettavan_viitteen_numero = int(self._konsoli_io.lue("Anna poistettavan viitteen numero: "))
+                self.reference_manager.pois_viite_databasesta(self.reference_manager.hae_viitteet()[poistettavan_viitteen_numero])
+                self._konsoli_io.tulosta("Viite " + self.reference_manager.hae_viitteet()[poistettavan_viitteen_numero].get_title() + " poistettu!")
             elif komento == "lopeta":
                 break
 
@@ -70,3 +76,4 @@ class UI:
                 self._konsoli_io.tulosta(tulostettava_rivi)
 
         self._konsoli_io.tulosta(vika_rivi)
+        

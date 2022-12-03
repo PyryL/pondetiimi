@@ -31,3 +31,9 @@ class ReferenceManager:
     def vie_viite_bibtexdb(self, viite): #turha?
         viite_as_dictionary = viite.get_as_dictionary()
         self.bibtex_service.vie_viite_databaseen(viite_as_dictionary)
+
+    def pois_viite_databasesta(self, viite):
+        self.db_service.pois_viite_databasesta(viite)
+        self.viitteet.remove(viite)
+        
+    
