@@ -1,5 +1,6 @@
 import unittest
 import os
+#from entities.reference import Reference
 from entities.book import Book
 from services.reference_manager import ReferenceManager
 from services.bibtex_service import BibtexService
