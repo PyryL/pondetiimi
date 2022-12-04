@@ -21,11 +21,6 @@ class TestBook(unittest.TestCase):
         generated_id = self.book.generate_id()
         self.assertEqual(generated_id, 'Kurose2019')
 
-    def test_column_printing(self):
-        text = str(self.book)
-        expected = 'Kurose, Jim; Ross, Keith       Computer Networking                      2019'
-        self.assertEqual(text, expected)
-
     def test_command_vie_creates_bib_file(self):
         self.reference_manager.vie_viitteet_tiedostoon('viitteet_test')
         self.assertTrue(os.path.exists('viitteet_test.bib'))
