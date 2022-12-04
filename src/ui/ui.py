@@ -1,9 +1,13 @@
+from pyfiglet import Figlet
 from entities.reference import Reference
 from services.input_validation import InputValidation
 from services.konsoli_io import Varit
-from pyfiglet import Figlet
+
 
 class UI:
+    '''
+    Sovelluksen käyttöliittymä.
+    '''
     def __init__(self, konsoli_io, reference_manager):
         self._konsoli_io = konsoli_io
         self.reference_manager = reference_manager
@@ -18,13 +22,14 @@ class UI:
             if komento == "0":
                 luettu_viite = self.lue_viite()
                 self.reference_manager.lisaa_uusi_viite(luettu_viite)
-                self._konsoli_io.tulosta("Uusi viite lisätty!", Varit.vihrea)
+                self._konsoli_io.tulosta("Uusi viite lisätty!", Varit.VIHREA)
             elif komento == "1":
                 self.listaa_viitteet()
             elif komento == "2":
-                tiedostonimi = self._pyyda_syote("Anna tiedostonimi:", None, InputValidation.not_empty)
+                tiedostonimi = self._pyyda_syote\
+                    ("Anna tiedostonimi:", None, InputValidation.not_empty)
                 self.reference_manager.vie_viitteet_tiedostoon(tiedostonimi)
-                self._konsoli_io.tulosta("Viitteet viety tiedostoon: ", Varit.vihrea, lopetus="")
+                self._konsoli_io.tulosta("Viitteet viety tiedostoon: ", Varit.VIHREA, lopetus="")
                 self._konsoli_io.tulosta(f"{tiedostonimi}.bib", tummennus=True)
             elif komento == "3":
                 # TODO: lähdeviitteen poisto
@@ -43,7 +48,7 @@ class UI:
         self._konsoli_io.tulosta("")
         for komento, selite in komennot.items():
             self._konsoli_io.tulosta(" ", lopetus="")
-            self._konsoli_io.tulosta(komento, Varit.sininen, tummennus=True, lopetus="")
+            self._konsoli_io.tulosta(komento, Varit.SININEN, tummennus=True, lopetus="")
             self._konsoli_io.tulosta(" " + selite)
 
     def lue_viite(self):
@@ -62,11 +67,11 @@ class UI:
             kehotteen_pituus = len(kehote) + 1
 
         while True:
-            self._konsoli_io.tulosta(f"{kehote:<{kehotteen_pituus}}", Varit.keltainen, lopetus="")
+            self._konsoli_io.tulosta(f"{kehote:<{kehotteen_pituus}}", Varit.KELTAINEN, lopetus="")
             syote = self._konsoli_io.lue("")
             if validator(syote):
                 return syote
-            self._konsoli_io.tulosta("Virheellinen syöte, yritä uudelleen.", Varit.punainen)
+            self._konsoli_io.tulosta("Virheellinen syöte, yritä uudelleen.", Varit.PUNAINEN)
 
     def listaa_viitteet(self):
         viitteet = self.reference_manager.hae_viitteet()
@@ -101,4 +106,4 @@ class UI:
 
     def _tulosta_figlet(self):
         f = Figlet(font='small')
-        self._konsoli_io.tulosta(f.renderText('BibTeX-viiteohjelma'), Varit.vihrea)
+        self._konsoli_io.tulosta(f.renderText('BibTeX-viiteohjelma'), Varit.VIHREA)

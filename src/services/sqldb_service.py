@@ -2,6 +2,9 @@ import sqlite3
 from entities.reference import Reference
 
 class SqldbService:
+    '''
+    Tietokanta toiminnot.
+    '''
     def vie_viite_databaseen(self, viite):
         # Tarkistus, onko viite jo db:ssä puuttuu.
         #Tarkistus suoritettu ref_manager metodissa lisaa_uusi_viite()?
@@ -35,4 +38,3 @@ class SqldbService:
         database.close()
 
         return viitteet
-

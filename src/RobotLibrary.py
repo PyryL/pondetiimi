@@ -1,13 +1,16 @@
+from ui.ui import UI
 from stub_io import StubIO
+from services.stub_reference_manager import StubReferenceManager
+from entities.reference import Reference
+
 """
 #tee reference_repository-luokka ja importtaa
 from services.reference_manager import ReferenceManager
 from services.sqldb_service import SqldbService
 from services.bibtex_service import BibtexService
 """
-from ui.ui import UI
-from services.stub_reference_manager import StubReferenceManager
-from entities.reference import Reference # Riippuvuus huono?
+
+
 
 class RobotLibrary:
     def __init__(self):
