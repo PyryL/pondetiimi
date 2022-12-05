@@ -1,50 +1,77 @@
+from pyfiglet import Figlet
 from entities.reference import Reference
+from services.input_validation import InputValidation
+from services.konsoli_io import Varit
+
 
 class UI:
+    '''
+    Sovelluksen käyttöliittymä.
+    '''
     def __init__(self, konsoli_io, reference_manager):
         self._konsoli_io = konsoli_io
         self.reference_manager = reference_manager
 
     def run(self):
         while True:
-            print()
-            print("Komento 'uusi' luo uuden lähdeviitteen")
-            print("Komento 'listaa' listaa kaikki lähdeviitteet")
-            print("Komento 'vie' vie lähdeviitteet bibtex-tiedostoon")
-            print("Komento 'poista' poistaa lähdeviitteen")
-            print("Komento 'lopeta' lopettaa ohjelman")
+            self._tulosta_figlet()
+            self._tulosta_menu_ohje()
 
-            komento = self._konsoli_io.lue("Anna komento: ")
+            komento = self._pyyda_syote("Anna komento:", None, InputValidation.menu_command)
 
-            if komento == "uusi":
+            if komento == "0":
                 luettu_viite = self.lue_viite()
                 self.reference_manager.lisaa_uusi_viite(luettu_viite)
-                self._konsoli_io.tulosta("Uusi viite lisätty!")
-            elif komento == "listaa":
+                self._konsoli_io.tulosta("Uusi viite lisätty!", Varit.VIHREA)
+            elif komento == "1":
                 self.listaa_viitteet()
-            elif komento == "vie":
-                tiedostonimi = self._konsoli_io.lue("Anna tiedostonimi:")
+            elif komento == "2":
+                tiedostonimi = self._pyyda_syote\
+                    ("Anna tiedostonimi:", None, InputValidation.not_empty)
                 self.reference_manager.vie_viitteet_tiedostoon(tiedostonimi)
-                self._konsoli_io.tulosta("Viitteet viety tiedostoon: " + tiedostonimi + ".bib!")
-            elif komento == "poista":
-                self.listaa_viitteet()
-                poistettavan_viitteen_numero = int(self._konsoli_io.lue("Anna poistettavan viitteen numero: "))
-                self.reference_manager.pois_viite_databasesta(self.reference_manager.hae_viitteet()[poistettavan_viitteen_numero])
-                self._konsoli_io.tulosta("Viite " + self.reference_manager.hae_viitteet()[poistettavan_viitteen_numero].get_title() + " poistettu!")
-            elif komento == "lopeta":
+                self._konsoli_io.tulosta("Viitteet viety tiedostoon: ", Varit.VIHREA, lopetus="")
+                self._konsoli_io.tulosta(f"{tiedostonimi}.bib", tummennus=True)
+            elif komento == "3":
+                # TODO: lähdeviitteen poisto
+                pass
+            elif komento == "4":
                 break
 
+    def _tulosta_menu_ohje(self):
+        komennot = {
+            "0": "Luo uusi lähdeviite",
+            "1": "Listaa kaikki lähdeviitteet",
+            "2": "Vie lähdeviitteet bibtex-tiedostoon",
+            "3": "Poista lähdeviite",
+            "4": "Lopeta ohjelma"
+        }
+        self._konsoli_io.tulosta("")
+        for komento, selite in komennot.items():
+            self._konsoli_io.tulosta(" ", lopetus="")
+            self._konsoli_io.tulosta(komento, Varit.SININEN, tummennus=True, lopetus="")
+            self._konsoli_io.tulosta(" " + selite)
+
     def lue_viite(self):
-        # Nyt kirjoittajat pilkulla erotettuna --> Kysy jokainen kirjoittaja erikseen.
-        author = self._konsoli_io.lue("Kirjoittaja:")
-        title = self._konsoli_io.lue("Otsikko:")
-        publisher = self._konsoli_io.lue("Julkaisija:")
-        year = self._konsoli_io.lue("Vuosi:")
-        isbn = self._konsoli_io.lue("ISBN:")
+        author = self._pyyda_syote("Kirjoittaja:", 13, InputValidation.name)
+        title = self._pyyda_syote("Otsikko:", 13, InputValidation.not_empty)
+        publisher = self._pyyda_syote("Julkaisija:", 13, InputValidation.not_empty)
+        year = self._pyyda_syote("Vuosi:", 13, InputValidation.year)
+        isbn = self._pyyda_syote("ISBN:", 13, InputValidation.isbn)
 
         viite = Reference(author, title, publisher, year, isbn)
 
         return viite
+
+    def _pyyda_syote(self, kehote, kehotteen_pituus, validator):
+        if kehotteen_pituus is None:
+            kehotteen_pituus = len(kehote) + 1
+
+        while True:
+            self._konsoli_io.tulosta(f"{kehote:<{kehotteen_pituus}}", Varit.KELTAINEN, lopetus="")
+            syote = self._konsoli_io.lue("")
+            if validator(syote):
+                return syote
+            self._konsoli_io.tulosta("Virheellinen syöte, yritä uudelleen.", Varit.PUNAINEN)
 
     def listaa_viitteet(self):
         viitteet = self.reference_manager.hae_viitteet()
@@ -76,4 +103,7 @@ class UI:
                 self._konsoli_io.tulosta(tulostettava_rivi)
 
         self._konsoli_io.tulosta(vika_rivi)
-        
+
+    def _tulosta_figlet(self):
+        f = Figlet(font='small')
+        self._konsoli_io.tulosta(f.renderText('BibTeX-viiteohjelma'), Varit.VIHREA)

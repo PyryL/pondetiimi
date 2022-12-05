@@ -1,5 +1,8 @@
 
 class ReferenceManager:
+    '''
+    Viitteiden hallinnointi.
+    '''
     def __init__(self, bibtex_service, db_service):
         self.bibtex_service = bibtex_service
         self.db_service = db_service
