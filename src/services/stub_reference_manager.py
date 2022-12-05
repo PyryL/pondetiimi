@@ -10,3 +10,6 @@ class StubReferenceManager:
 
     def vie_viitteet_tiedostoon(self, tiedostonimi):
         pass
+
+    def pois_viite_databasesta(self, viite):
+        pass

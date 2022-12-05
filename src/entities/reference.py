@@ -7,6 +7,9 @@ class Reference:
         self._isbn = isbn
         self._id = id or "SukunimiVuosi"
         self._entrytype = entrytype or "book"
+        
+    def get_id(self):
+        return self._id
 
     def get_author(self):
         return self._author
@@ -38,19 +41,6 @@ class Reference:
     def set_year(self, year):
         self._year = year
 
-    # def __str__(self):
-    #     return f"{self._author:30} {self._title:40} {self._year:4}"
-
-    # def __str__(self):
-    #     authors_tuple = self._author.split(", ")
-
-    #     viite_string = f"{authors_tuple[0]:30} {self._title:40} {self._year:4}"
-
-    #     for i in range(len(authors_tuple) - 1):
-    #         viite_string += "\n" + f"{authors_tuple[i + 1]:30} {'':44}"
-
-    #     return viite_string
-
     def get_as_dictionary(self):
         viite = {"author": self._author,
                  "title": self._title,
@@ -62,7 +52,3 @@ class Reference:
 
         return viite
 
-    # Toiminnallisuus hajonnut?
-    # def generate_id(self):
-    #     surname = self._author.split(",")
-    #     return surname[0]+str(self._year)
