@@ -37,7 +37,7 @@ class TestInputValidation(unittest.TestCase):
     def test_menu_komento_kelvolla_yksinumeroisella_syotteella(self):
         for i in range(1,5):
             self.assertTrue(InputValidation.menu_command(str(i)))
-    
+
     def test_menu_komento_liian_suurella_numerolla(self):
         self.assertFalse(InputValidation.menu_command("9"))
 
@@ -55,3 +55,4 @@ class TestInputValidation(unittest.TestCase):
 
     def test_nimi_epakelvolla_muodolla(self):
         self.assertFalse(InputValidation.name("Dijkstra Edsger"))
+    

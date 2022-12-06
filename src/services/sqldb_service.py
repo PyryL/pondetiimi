@@ -32,7 +32,7 @@ class SqldbService:
         all_references = database.execute("SELECT * FROM test")
 
         for row in all_references:
-            viite = Reference(row[1], row[2], row[3], row[4], row[5])
+            viite = Reference(row[1], row[2], row[3], row[4])
             viitteet.append(viite)
 
         database.close()

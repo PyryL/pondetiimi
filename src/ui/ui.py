@@ -1,5 +1,4 @@
 from pyfiglet import Figlet
-from entities.reference import Reference
 from entities.book import Book
 from entities.article import Article
 from entities.inproceedings import InProceedings
@@ -72,7 +71,7 @@ class UI:
 
         viite = Book(author, title, publisher, year, isbn)
         return viite
-    
+
     def lue_artikkeli(self):
         author = self._pyyda_syote("Kirjoittaja:", 13, InputValidation.name)
         title = self._pyyda_syote("Otsikko:", 13, InputValidation.not_empty)
@@ -85,7 +84,7 @@ class UI:
 
         viite = Article(author, title, publisher, year, journal, volume, number,pages)
         return viite
-    
+
     def lue_kongerenssiviite(self):
         author = self._pyyda_syote("Kirjoittaja:", 13, InputValidation.name)
         title = self._pyyda_syote("Otsikko:", 13, InputValidation.not_empty)
@@ -140,5 +139,5 @@ class UI:
         self._konsoli_io.tulosta(vika_rivi)
 
     def _tulosta_figlet(self):
-        f = Figlet(font='small')
-        self._konsoli_io.tulosta(f.renderText('BibTeX-viiteohjelma'), Varit.VIHREA)
+        figlet = Figlet(font='small')
+        self._konsoli_io.tulosta(figlet.renderText('BibTeX-viiteohjelma'), Varit.VIHREA)

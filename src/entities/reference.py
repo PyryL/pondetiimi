@@ -1,13 +1,18 @@
 class Reference:
-    def __init__(self, author, title, publisher, year, isbn = None, id = None, entrytype = None):
+    '''
+    Viiteluokkien kattoluokka.
+        Args:
+
+    '''
+    def __init__(self, author, title, publisher, year, isbn = None, entrytype = None):
         self._author = author
         self._title = title
         self._publisher = publisher
         self._year = year
         self._isbn = isbn
-        self._id = id or "SukunimiVuosi"
+        self._id = self._author.split(",")[0]+str(self._year) or "SukunimiVuosi"
         self._entrytype = entrytype or "book"
-        
+
     def get_id(self):
         return self._id
 
@@ -51,4 +56,3 @@ class Reference:
                  "ENTRYTYPE": self._entrytype}
 
         return viite
-

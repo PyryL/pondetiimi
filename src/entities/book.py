@@ -1,6 +1,11 @@
 from entities.reference import Reference
 
 class Book(Reference):
+    '''
+    Kirjaluokka:
+    Args:
+        isbn (String):
+    '''
     def __init__(self,author, title, publisher, year, isbn=None):
         super().__init__(author, title, publisher, year)
         self._isbn = isbn
@@ -11,7 +16,3 @@ class Book(Reference):
 
     def set_isbn(self, isbn):
         self._isbn = isbn
-
-    def generate_id(self):
-        surname = self._author.split(",")
-        return surname[0]+str(self._year)

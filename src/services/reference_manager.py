@@ -38,5 +38,4 @@ class ReferenceManager:
     def pois_viite_databasesta(self, viite):
         self.db_service.pois_viite_databasesta(viite)
         self.viitteet.remove(viite)
-        
     

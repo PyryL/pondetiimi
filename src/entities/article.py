@@ -1,13 +1,25 @@
 from entities.reference import Reference
 
 class Article(Reference):
-    def __init__(self,author, title, publisher, year, journal = None, volume = None, number = None, pages = None):
+    '''
+    Artikkeliluokka.
+    Args:
+        journal (String): 
+        volume (String):
+        number (String):
+        pages (String):
+        '''
+    def __init__(self,author,
+                    title, publisher,
+                    year, journal = None,
+                    volume = None, number = None,
+                    pages = None):
         super().__init__(author, title, publisher, year)
         self._journal = journal
         self._volume = volume
         self._number = number
         self._pages = pages
-        self._type = "article"
+        self._entrytype = "article"
 
     def get_journal(self):
         return self._journal
