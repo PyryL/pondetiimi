@@ -78,7 +78,7 @@ class UI:
         title = self._pyyda_syote("Otsikko:", 13, InputValidation.not_empty, self.virheilmoitukset["otsikko"])
         publisher = self._pyyda_syote("Julkaisija:", 13, InputValidation.not_empty, self.virheilmoitukset["julkaisija"])
         year = self._pyyda_syote("Vuosi:", 13, InputValidation.year, self.virheilmoitukset["vuosi"])
-        isbn = self._pyyda_syote("ISBN:", 13, InputValidation.isb   n, self.virheilmoitukset["isbn"])
+        isbn = self._pyyda_syote("ISBN:", 13, InputValidation.isbn, self.virheilmoitukset["isbn"])
 
         viite = Book(author, title, publisher, year, isbn)
         return viite
