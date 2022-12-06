@@ -34,10 +34,10 @@ class TestInputValidation(unittest.TestCase):
     def test_vuosi_ylimaaraisella_osalla(self):
         self.assertFalse(InputValidation.year("1985 abc"))
 
-    def test_menu_komento_kelvolla_syotteella(self):
-        for i in range(5):
+    def test_menu_komento_kelvolla_yksinumeroisella_syotteella(self):
+        for i in range(1,5):
             self.assertTrue(InputValidation.menu_command(str(i)))
-
+    
     def test_menu_komento_liian_suurella_numerolla(self):
         self.assertFalse(InputValidation.menu_command("9"))
 

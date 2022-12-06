@@ -15,9 +15,11 @@ class Article(Reference):
     def set_journal(self, journal):
         self._journal = journal
 
-    """def __str__(self):
-        return f"{self._author:30} {self._title:40} {self._year:4}"
+    def get_volume(self):
+        return self.get_volume
 
-    def generate_id(self):
-        surname = self._author.split(",")
-        return surname[0]+str(self._year)"""
+    def get_number(self):
+        return self._number
+
+    def get_pages(self):
+        return self._pages

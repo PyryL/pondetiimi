@@ -7,8 +7,11 @@ class InProceedings(Reference):
         self._pages = pages
         self._type = "inproceedings"
 
-    def get_journal(self):
-        return self._journal
+    def get_booktitle(self):
+        return self._booktitle
 
-    def set_journal(self, journal):
-        self._journal = journal
+    def set_booktitle(self, journal):
+        self._booktitle = journal
+    
+    def get_pages(self):
+        return self._pages

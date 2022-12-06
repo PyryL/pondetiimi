@@ -57,7 +57,7 @@ class InputValidation:
         Returns
             (Boolean): True, jos syöte täyttää vaatimuksen.
         '''
-        return re.match("^(0|1|2|3|4)$", input_string) is not None
+        return re.match("^(01|02|03|1|2|3|4)$", input_string) is not None
 
     @classmethod
     def not_empty(cls, input_string):

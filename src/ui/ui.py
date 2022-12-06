@@ -1,5 +1,8 @@
 from pyfiglet import Figlet
 from entities.reference import Reference
+from entities.book import Book
+from entities.article import Article
+from entities.inproceedings import InProceedings
 from services.input_validation import InputValidation
 from services.konsoli_io import Varit
 
@@ -19,10 +22,19 @@ class UI:
 
             komento = self._pyyda_syote("Anna komento:", None, InputValidation.menu_command)
 
-            if komento == "0":
-                luettu_viite = self.lue_viite()
-                self.reference_manager.lisaa_uusi_viite(luettu_viite)
-                self._konsoli_io.tulosta("Uusi viite lisätty!", Varit.VIHREA)
+            if komento[0] == "0":
+                if komento == "01":
+                    luettu_viite = self.lue_kirja()
+                    self.reference_manager.lisaa_uusi_viite(luettu_viite)
+                    self._konsoli_io.tulosta("Uusi kirjaviite on lisätty!", Varit.VIHREA)
+                elif komento == "02":
+                    luettu_viite = self.lue_artikkeli()
+                    self.reference_manager.lisaa_uusi_viite(luettu_viite)
+                    self._konsoli_io.tulosta("Uusi artiikkeliviite on lisätty!", Varit.VIHREA)
+                elif komento == "03":
+                    luettu_viite = self.lue_kongerenssiviite()
+                    self.reference_manager.lisaa_uusi_viite(luettu_viite)
+                    self._konsoli_io.tulosta("Uusi konferenssiviite on lisätty!", Varit.VIHREA)
             elif komento == "1":
                 self.listaa_viitteet()
             elif komento == "2":
@@ -39,7 +51,7 @@ class UI:
 
     def _tulosta_menu_ohje(self):
         komennot = {
-            "0": "Luo uusi lähdeviite",
+            "0X": "Luo uusi lähdeviite: [01] Kirja, [02] Artiikkeli, [03] Konferenssiviite",
             "1": "Listaa kaikki lähdeviitteet",
             "2": "Vie lähdeviitteet bibtex-tiedostoon",
             "3": "Poista lähdeviite",
@@ -51,15 +63,38 @@ class UI:
             self._konsoli_io.tulosta(komento, Varit.SININEN, tummennus=True, lopetus="")
             self._konsoli_io.tulosta(" " + selite)
 
-    def lue_viite(self):
+    def lue_kirja(self):
         author = self._pyyda_syote("Kirjoittaja:", 13, InputValidation.name)
         title = self._pyyda_syote("Otsikko:", 13, InputValidation.not_empty)
         publisher = self._pyyda_syote("Julkaisija:", 13, InputValidation.not_empty)
         year = self._pyyda_syote("Vuosi:", 13, InputValidation.year)
         isbn = self._pyyda_syote("ISBN:", 13, InputValidation.isbn)
 
-        viite = Reference(author, title, publisher, year, isbn)
+        viite = Book(author, title, publisher, year, isbn)
+        return viite
+    
+    def lue_artikkeli(self):
+        author = self._pyyda_syote("Kirjoittaja:", 13, InputValidation.name)
+        title = self._pyyda_syote("Otsikko:", 13, InputValidation.not_empty)
+        publisher = self._pyyda_syote("Julkaisija:", 13, InputValidation.not_empty)
+        year = self._pyyda_syote("Vuosi:", 13, InputValidation.year)
+        journal = self._pyyda_syote("Lehti:", 13, InputValidation.not_empty)
+        volume = self._pyyda_syote("Vuosikerta:", 13, InputValidation.not_empty)
+        number = self._pyyda_syote("Numero:", 13, InputValidation.not_empty)
+        pages = self._pyyda_syote("Sivut:", 13, InputValidation.not_empty)
 
+        viite = Article(author, title, publisher, year, journal, volume, number,pages)
+        return viite
+    
+    def lue_kongerenssiviite(self):
+        author = self._pyyda_syote("Kirjoittaja:", 13, InputValidation.name)
+        title = self._pyyda_syote("Otsikko:", 13, InputValidation.not_empty)
+        publisher = self._pyyda_syote("Julkaisija:", 13, InputValidation.not_empty)
+        year = self._pyyda_syote("Vuosi:", 13, InputValidation.year)
+        booktitle = self._pyyda_syote("Otsikko:", 13, InputValidation.not_empty)
+        pages = pages = self._pyyda_syote("Sivut:", 13, InputValidation.not_empty)
+
+        viite = InProceedings(author, title, publisher, year, booktitle, pages)
         return viite
 
     def _pyyda_syote(self, kehote, kehotteen_pituus, validator):
