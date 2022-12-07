@@ -65,6 +65,9 @@ class TestInputValidation(unittest.TestCase):
     def test_palaute_epakelvolla_isbnsyotteella(self):
         self.assertEqual(InputValidation.error_message("isbn"), "ISBN on oltava muotoa 'XXXXXXXXXXXXXXXX' tai tyhjä.")
 
+    def test_tyhja_isbn_syote(self):
+        self.assertTrue(InputValidation.isbn(""))
+
     def test_palaute_epakelvolla_otsikkosyotteella(self):
         self.assertEqual(InputValidation.error_message("otsikko"), "Otsikko ei voi olla tyhjä.")
 
