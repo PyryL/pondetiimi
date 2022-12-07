@@ -56,3 +56,20 @@ class TestInputValidation(unittest.TestCase):
     def test_nimi_epakelvolla_muodolla(self):
         self.assertFalse(InputValidation.name("Dijkstra Edsger"))
     
+    def test_palaute_epakelvolla_nimisyotteella(self):
+        self.assertEqual(InputValidation.error_message("nimi"), "Syötteen on oltava muotoa 'Sukunimi, Etunimi; Sukunimi, Etunimi...'")
+
+    def test_palaute_epakelvolla_vuosisyotteella(self):
+        self.assertEqual(InputValidation.error_message("vuosi"), "Vuoden on oltava muotoa 'YYYY'.")
+
+    def test_palaute_epakelvolla_isbnsyotteella(self):
+        self.assertEqual(InputValidation.error_message("isbn"), "ISBN on oltava muotoa 'XXXXXXXXXXXXXXXX' tai tyhjä.")
+
+    def test_palaute_epakelvolla_otsikkosyotteella(self):
+        self.assertEqual(InputValidation.error_message("otsikko"), "Otsikko ei voi olla tyhjä.")
+
+    def test_palaute_epakelvolla_julkaisijasyotteella(self):
+        self.assertEqual(InputValidation.error_message("julkaisija"), "Julkaisija ei voi olla tyhjä.")
+
+    def test_palaute_epakelvolla_tuntemattomalla_syotteella(self):
+        self.assertEqual(InputValidation.error_message(), "Virheellinen syöte.")

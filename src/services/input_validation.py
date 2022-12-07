@@ -62,3 +62,27 @@ class InputValidation:
     @classmethod
     def not_empty(cls, input_string):
         return re.match(".+", input_string) is not None
+
+    @classmethod
+    def error_message(self, error_type="tyhja"):
+        '''
+        Palauttaa virheilmoituksen annetun virhetypin mukaan.
+        Args:
+            error_type (String): virhetyyppi
+        Returns
+            (String): virheilmoitus
+        '''
+        virheilmoitukset = {
+            "nimi": "Syötteen on oltava muotoa 'Sukunimi, Etunimi; Sukunimi, Etunimi...'",
+            "otsikko": "Otsikko ei voi olla tyhjä.",
+            "vuosi": "Vuoden on oltava muotoa 'YYYY'.",
+            "julkaisija": "Julkaisija ei voi olla tyhjä.",
+            "isbn": "ISBN on oltava muotoa 'XXXXXXXXXXXXXXXX' tai tyhjä.",
+            "sivut": "Sivujen on oltava muotoa 'XX-XX' tai tyhjä.",
+            "lehti": "Lehden nimi ei voi olla tyhjä.",
+            "vuosikerta": "Vuosikerran on oltava kokonaisluku.",
+            "numero": "Lehden numeron on oltava kokonaisluku.",
+            "tyhja": "Virheellinen syöte."
+        }
+
+        return virheilmoitukset[error_type]
