@@ -63,35 +63,54 @@ class UI:
             self._konsoli_io.tulosta(" " + selite)
 
     def lue_kirja(self):
-        author = self._pyyda_syote("Kirjoittaja:", 13, InputValidation.name, "nimi")
-        title = self._pyyda_syote("Otsikko:", 13, InputValidation.not_empty, "otsikko")
-        publisher = self._pyyda_syote("Julkaisija:", 13, InputValidation.not_empty, "julkaisija")
-        year = self._pyyda_syote("Vuosi:", 13, InputValidation.year, "vuosi")
-        isbn = self._pyyda_syote("ISBN:", 13, InputValidation.isbn, "isbn")
+        author = self._pyyda_syote("Kirjoittaja:", 13, 
+                                                InputValidation.name, "nimi")
+        title = self._pyyda_syote("Otsikko:", 13, 
+                                                InputValidation.not_empty, "otsikko")
+        publisher = self._pyyda_syote("Julkaisija:", 13, 
+                                                InputValidation.not_empty, "julkaisija")
+        year = self._pyyda_syote("Vuosi:", 13, 
+                                                InputValidation.year, "vuosi")
+        isbn = self._pyyda_syote("ISBN:", 13, 
+                                                InputValidation.isbn, "isbn")
 
         viite = Book(author, title, publisher, year, isbn)
         return viite
 
     def lue_artikkeli(self):
-        author = self._pyyda_syote("Kirjoittaja:", 13, InputValidation.name, "nimi")
-        title = self._pyyda_syote("Otsikko:", 13, InputValidation.not_empty, "otsikko")
-        publisher = self._pyyda_syote("Julkaisija:", 13, InputValidation.not_empty, "julkaisija")
-        year = self._pyyda_syote("Vuosi:", 13, InputValidation.year, "vuosi")
-        journal = self._pyyda_syote("Lehti:", 13, InputValidation.not_empty, "lehti")
-        volume = self._pyyda_syote("Vuosikerta:", 13, InputValidation.not_empty, "vuosikerta")
-        number = self._pyyda_syote("Numero:", 13, InputValidation.not_empty, "numero")
-        pages = self._pyyda_syote("Sivut:", 13, InputValidation.not_empty, "sivut")
+        author = self._pyyda_syote("Kirjoittaja:", 13, 
+                                                InputValidation.name, "nimi")
+        title = self._pyyda_syote("Otsikko:", 13, 
+                                                InputValidation.not_empty, "otsikko")
+        publisher = self._pyyda_syote("Julkaisija:", 13, 
+                                                InputValidation.not_empty, "julkaisija")
+        year = self._pyyda_syote("Vuosi:", 13, 
+                                                InputValidation.year, "vuosi")
+        journal = self._pyyda_syote("Lehti:", 13, 
+                                                InputValidation.not_empty, "lehti")
+        volume = self._pyyda_syote("Vuosikerta:", 13, 
+                                                InputValidation.not_empty, "vuosikerta")
+        number = self._pyyda_syote("Numero:", 13, 
+                                                InputValidation.not_empty, "numero")
+        pages = self._pyyda_syote("Sivut:", 13, 
+                                                InputValidation.not_empty, "sivut")
 
         viite = Article(author, title, publisher, year, journal, volume, number,pages)
         return viite
 
     def lue_kongerenssiviite(self):
-        author = self._pyyda_syote("Kirjoittaja:", 13, InputValidation.name, "nimi")
-        title = self._pyyda_syote("Otsikko:", 13, InputValidation.not_empty, "otsikko")
-        publisher = self._pyyda_syote("Julkaisija:", 13, InputValidation.not_empty, "julkaisija")
-        year = self._pyyda_syote("Vuosi:", 13, InputValidation.year, "vuosi")
-        booktitle = self._pyyda_syote("Kirjan otsikko:", 13, InputValidation.not_empty, "otsikko")
-        pages = pages = self._pyyda_syote("Sivut:", 13, InputValidation.not_empty, "sivut")
+        author = self._pyyda_syote("Kirjoittaja:", 13, 
+                                                InputValidation.name, "nimi")
+        title = self._pyyda_syote("Otsikko:", 13, 
+                                                InputValidation.not_empty, "otsikko")
+        publisher = self._pyyda_syote("Julkaisija:", 13, 
+                                                InputValidation.not_empty, "julkaisija")
+        year = self._pyyda_syote("Vuosi:", 13, 
+                                                InputValidation.year, "vuosi")
+        booktitle = self._pyyda_syote("Kirjan otsikko:", 13, 
+                                                InputValidation.not_empty, "otsikko")
+        pages = pages = self._pyyda_syote("Sivut:", 13, 
+                                                InputValidation.not_empty, "sivut")
 
         viite = InProceedings(author, title, publisher, year, booktitle, pages)
         return viite

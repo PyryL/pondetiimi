@@ -1,3 +1,5 @@
+from services.input_validation import InputValidation
+
 class Reference:
     '''
     Viiteluokkien kattoluokka.
@@ -20,7 +22,8 @@ class Reference:
         return self._author
 
     def set_author(self, author):
-        self._author = author
+        if InputValidation.name(author):
+            self._author = author
 
     def get_title(self):
         return self._title
@@ -32,7 +35,8 @@ class Reference:
         return self._publisher
 
     def set_publisher(self, publisher):
-        self._publisher = publisher
+        if InputValidation.not_empty(publisher):
+            self._publisher = publisher
 
     def get_isbn(self):
         return self._isbn
@@ -44,7 +48,8 @@ class Reference:
         return self._year
 
     def set_year(self, year):
-        self._year = year
+        if InputValidation.year(year):
+            self._year = year
 
     def get_as_dictionary(self):
         viite = {"author": self._author,

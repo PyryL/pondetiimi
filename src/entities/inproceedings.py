@@ -1,4 +1,5 @@
 from entities.reference import Reference
+from services.input_validation import InputValidation
 
 class InProceedings(Reference):
     '''
@@ -16,8 +17,9 @@ class InProceedings(Reference):
     def get_booktitle(self):
         return self._booktitle
 
-    def set_booktitle(self, journal):
-        self._booktitle = journal
+    def set_booktitle(self, booktitle):
+        if InputValidation.not_empty(booktitle):
+            self._booktitle = booktitle
 
     def get_pages(self):
         return self._pages
