@@ -61,11 +61,11 @@ class UI:
 
     def _tulosta_menu_ohje(self):
         komennot = {
-            "0X": "Luo uusi lähdeviite: [01] Kirja, [02] Artiikkeli, [03] Konferenssiviite",
-            "1": "Listaa kaikki lähdeviitteet",
-            "2": "Vie lähdeviitteet bibtex-tiedostoon",
-            "3": "Poista lähdeviite",
-            "4": "Lopeta ohjelma"
+            "0X": "Luo uusi lähdeviite: [01] Kirja, [02] Artikkeli, [03] Konferenssiviite",
+            "1": " Listaa kaikki lähdeviitteet",
+            "2": " Vie lähdeviitteet bibtex-tiedostoon",
+            "3": " Poista lähdeviite",
+            "4": " Lopeta ohjelma"
         }
         self._konsoli_io.tulosta("")
         for komento, selite in komennot.items():

@@ -21,3 +21,15 @@ class InProceedings(Reference):
 
     def get_pages(self):
         return self._pages
+
+    def get_as_dictionary(self):
+        viite = {"author": self._author,
+                 "title": self._title,
+                 "publisher": self._publisher,
+                 "year": self._year,
+                 "booktitle": self._booktitle,
+                 "pages": self._pages,
+                 "ID": self._id,
+                 "ENTRYTYPE": self._entrytype}
+
+        return viite

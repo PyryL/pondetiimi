@@ -35,3 +35,17 @@ class Article(Reference):
 
     def get_pages(self):
         return self._pages
+
+    def get_as_dictionary(self):
+        viite = {"author": self._author,
+                 "title": self._title,
+                 "publisher": self._publisher,
+                 "year": self._year,
+                 "journal": self._journal,
+                 "volume": self._volume,
+                 "number": self._number,
+                 "pages": self._pages,
+                 "ID": self._id,
+                 "ENTRYTYPE": self._entrytype}
+
+        return viite

@@ -16,3 +16,14 @@ class Book(Reference):
 
     def set_isbn(self, isbn):
         self._isbn = isbn
+
+    def get_as_dictionary(self):
+        viite = {"author": self._author,
+                 "title": self._title,
+                 "publisher": self._publisher,
+                 "year": self._year,
+                 "isbn": self._isbn,
+                 "ID": self._id,
+                 "ENTRYTYPE": self._entrytype}
+
+        return viite
