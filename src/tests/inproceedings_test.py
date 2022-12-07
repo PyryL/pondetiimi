@@ -16,11 +16,11 @@ class TestInProceedings(unittest.TestCase):
     def test_set_new_booktitle_with_empty_value_not_change_journal(self):
         self.inproceedings.set_booktitle('')
         self.assertEqual(self.inproceedings.get_booktitle(), 'Test Booktitle')
-    
+
     def test_set_new_booktitle(self):
         self.inproceedings.set_booktitle('Booktitle')
         self.assertEqual(self.inproceedings.get_booktitle(), 'Booktitle')
-    
+
     def test_get_volume_number_pages_values(self):
         self.assertEqual(self.inproceedings.get_pages(), '12-15')
 

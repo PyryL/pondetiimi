@@ -5,11 +5,12 @@ class Article(Reference):
     '''
     Artikkeliluokka.
     Args:
-        journal (String): 
+        journal (String):
         volume (String):
         number (String):
         pages (String):
         '''
+
     def __init__(self,author,
                     title, publisher,
                     year, journal = None,

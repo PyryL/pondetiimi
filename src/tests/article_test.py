@@ -16,11 +16,11 @@ class TestArticle(unittest.TestCase):
     def test_set_new_journal_with_empty_value_not_change_journal(self):
         self.article.set_journal('')
         self.assertEqual(self.article.get_journal(), 'Test Journal')
-    
+
     def test_set_new_journal_(self):
         self.article.set_journal('Journal')
         self.assertEqual(self.article.get_journal(), 'Journal')
-    
+
     def test_get_volume_number_pages_values(self):
         self.assertEqual(self.article.get_volume(), '2')
         self.assertEqual(self.article.get_number(), '5')

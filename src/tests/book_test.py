@@ -28,26 +28,26 @@ class TestBook(unittest.TestCase):
             text = file.read()
             self.assertIn('author = {Kurose,', text)
         os.remove('viitteet_test.bib')
-    
+
     def test_after_setting_correct_isbn_book_contains_right_isbn(self):
         self.book.set_isbn("978-1-292-15359-9")
-        self.assertEqual(self.book._isbn, "978-1-292-15359-9")
-    
+        self.assertEqual(self.book.get_isbn(), "978-1-292-15359-9")
+
     def test_after_setting_incorrect_isbn_book_isbn_not_changed(self):
         self.book.set_isbn("AAA-B-CCC-X")
-        self.assertEqual(self.book._isbn, None)
-    
+        self.assertEqual(self.book.get_isbn(), None)
+
     def test_id_in_correct_form(self):
         self.assertEqual(self.book.get_id(), 'Kurose2019')
-    
+
     def test_after_setting_author_with_incorrect_value_author_not_changed(self):
         self.book.set_author("Kurose")
         self.assertEqual(self.book.get_author(), 'Kurose, Jim; Ross, Keith')
-    
+
     def test_after_setting_author_with_correct_value_author_changed(self):
         self.book.set_author('Ross, Keith')
         self.assertEqual(self.book.get_author(), 'Ross, Keith')
-    
+
     def test_after_setting_year_with_incorrect_value_year_not_changed(self):
         self.book.set_year('12')
         self.assertEqual(self.book.get_year(), '2019')
