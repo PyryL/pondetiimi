@@ -1,4 +1,5 @@
 from entities.reference import Reference
+from services.input_validation import InputValidation
 
 class Article(Reference):
     '''
@@ -25,10 +26,11 @@ class Article(Reference):
         return self._journal
 
     def set_journal(self, journal):
-        self._journal = journal
+        if InputValidation.not_empty(journal):
+            self._journal = journal
 
     def get_volume(self):
-        return self.get_volume
+        return self._volume
 
     def get_number(self):
         return self._number
