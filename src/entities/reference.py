@@ -5,7 +5,7 @@ class Reference:
         self._publisher = publisher
         self._year = year
         self._isbn = isbn
-        self._id = id or "SukunimiVuosi"
+        self._id = id or self.generate_id() # Korjaa konstruktoria?
         self._entrytype = entrytype or "book"
 
     def get_author(self):
@@ -66,3 +66,9 @@ class Reference:
     # def generate_id(self):
     #     surname = self._author.split(",")
     #     return surname[0]+str(self._year)
+
+    def generate_id(self):
+        return self.get_author() + self.get_title() + str(self.get_year())
+
+    def get_id(self):
+        return self._id
