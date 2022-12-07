@@ -18,6 +18,8 @@ class InputValidation:
         # https://www.isbn-international.org/sites/default/files/ISBN-k%C3%A4ytt%C3%B6opas%20%28Finnish%20translation%20of%20seventh%20edition%29_0.pdf
 
         # tarkista syotteen muoto, eli numeroiden määrä eri osissa
+        if not input_string:
+            return True
         regexp = "^(97(8|9)[- ]?)?\\d{1,5}[- ]?\\d{1,7}[- ]?\\d{1,6}[- ]?\\d$"
         if not re.match(regexp, input_string):
             return False
