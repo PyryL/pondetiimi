@@ -61,7 +61,6 @@ class InputValidation:
         Returns
             (Boolean): True, jos syöte täyttää vaatimuksen.
         '''
-<<<<<<< HEAD
         return re.match("^(0|1|2|3|4|5)$", input_string) is not None
 
     @classmethod
@@ -74,10 +73,6 @@ class InputValidation:
             (Boolean): True, jos syöte täyttää vaatimuksen.
         '''
         return re.match("^(0|1|2|3|4|5|x)$", input_string) is not None
-
-=======
-        return re.match("^(01|02|03|1|2|3|4)$", input_string) is not None
->>>>>>> main
 
     @classmethod
     def not_empty(cls, input_string):

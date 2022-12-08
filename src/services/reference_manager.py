@@ -40,12 +40,26 @@ class ReferenceManager:
         viite_as_dictionary = viite.get_as_dictionary()
         self.bibtex_service.vie_viite_databaseen(viite_as_dictionary)
 
-<<<<<<< HEAD
+    # Refaktoroi
     def hae_viitteen_indeksi_viitteissa(self, uusi_viite):
-        for i in range(0, len(self.viitteet)):
-            if self.viitteet[i].get_author() == uusi_viite.get_author() and self.viitteet[i].get_title() == uusi_viite.get_title() and self.viitteet[i].get_publisher() == uusi_viite.get_publisher() and self.viitteet[i].get_year() == uusi_viite.get_year() and self.viitteet[i].get_isbn() == uusi_viite.get_isbn():
-                return i
+        if uusi_viite.get_entrytype() == "book":
+            for i in range(0, len(self.viitteet)):
+                if self.viitteet[i].get_entrytype() == "book":
+                    if self.viitteet[i].get_author() == uusi_viite.get_author() and self.viitteet[i].get_title() == uusi_viite.get_title() and self.viitteet[i].get_publisher() == uusi_viite.get_publisher() and self.viitteet[i].get_year() == uusi_viite.get_year() and self.viitteet[i].get_isbn() == uusi_viite.get_isbn():
+                        return i
 
+        elif uusi_viite.get_entrytype() == "article":
+            for i in range(0, len(self.viitteet)):
+                if self.viitteet[i].get_entrytype() == "article":
+                    if self.viitteet[i].get_author() == uusi_viite.get_author() and self.viitteet[i].get_title() == uusi_viite.get_title() and self.viitteet[i].get_publisher() == uusi_viite.get_publisher() and self.viitteet[i].get_year() == uusi_viite.get_year() and self.viitteet[i].get_isbn() == uusi_viite.get_isbn() and self.viitteet[i].get_volume() == uusi_viite.get_volume() and self.viitteet[i].get_number() == uusi_viite.get_number() and self.viitteet[i].get_pages() == uusi_viite.get_pages():
+                        return i
+
+        elif uusi_viite.get_entrytype() == "inproceedings":
+            for i in range(0, len(self.viitteet)):
+                if self.viitteet[i].get_entrytype() == "inproceedings":
+                    if self.viitteet[i].get_author() == uusi_viite.get_author() and self.viitteet[i].get_title() == uusi_viite.get_title() and self.viitteet[i].get_publisher() == uusi_viite.get_publisher() and self.viitteet[i].get_year() == uusi_viite.get_year() and self.viitteet[i].get_booktitle() == uusi_viite.get_booktitle() and self.viitteet[i].get_pages() == uusi_viite.get_pages():
+                        return i
+        
         return -1
 
     def hae_viitteista_kirjoittajalla(self, kirjoittaja):
@@ -84,6 +98,7 @@ class ReferenceManager:
         
         return lista_viitteista_haetulla_vuosiluvulla
 
+    #Johtaa virheeseen muilla kuin kirjoilla?
     def hae_viitteista_isbnlla(self, isbn):
         lista_viitteista_haetulla_isbnlla = []
 
@@ -94,6 +109,7 @@ class ReferenceManager:
         
         return lista_viitteista_haetulla_isbnlla
 
+    #Laajenna avainsana muihin viitetyyppeihin ja viitetekijöihin
     def hae_viitteista_avainsanalla(self, avainsana):
         lista_viitteista_haetulla_avainsanalla = []
         for viite in self.viitteet:
@@ -124,6 +140,8 @@ class ReferenceManager:
             #self.db_service.poista_viite_databasesta(poistettava_viite)
             """
             #ROBUST toteutus:
+            self.viitteet.pop(viitteen_numero)
+
             self.db_service.poista_viitetaulu_databasesta()
             self.db_service.luo_uusi_viitetaulu()
 
@@ -131,13 +149,16 @@ class ReferenceManager:
                 self.db_service.vie_viite_databaseen(viite)
 
             #TOTEUTA TOIMINNALLISUUS: self.bibtex_service.poista_viite(viite) tai tyhjennä bibtexdb ja vie uudestaan kaikki
+            self.bibtex_service.tyhjenna_bibdatabase()
+
+            for viite in self.viitteet:
+                self.vie_viite_bibtexdb(viite)
 
             return True # Oikean db-toiminnallisuuden varmistamisen toteuttaminen?
         
         return False
-=======
+    """
     def pois_viite_databasesta(self, viite):
         self.db_service.pois_viite_databasesta(viite)
         self.viitteet.remove(viite)
-    
->>>>>>> main
+    """

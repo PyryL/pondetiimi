@@ -5,7 +5,6 @@ from entities.inproceedings import InProceedings
 from services.input_validation import InputValidation
 from services.konsoli_io import Varit
 
-
 class UI:
     '''
     Sovelluksen käyttöliittymä.
@@ -21,36 +20,33 @@ class UI:
 
             komento = self._pyyda_syote("Anna komento:", None, InputValidation.menu_command)
 
-<<<<<<< HEAD
             if komento == "0":
-                """ Toiminnallisuuden toteutus loppuun:
                 self._tulosta_ohje_eri_viitetyyppien_lisaykselle()
+                # Korjaa validation ja lisää
                 lisattavan_viitetyypin_numero = self._pyyda_syote("Anna komento:", None, InputValidation.hakumenu_command)
-                ...
-                """
-
-                luettu_viite = self.lue_viite()
-
-                # Toteutus ok?
-                if not self.reference_manager.lisaa_uusi_viite(luettu_viite):
-                    self._konsoli_io.tulosta("Viite on jo listalla!", Varit.PUNAINEN)
-                else:
-                    self._konsoli_io.tulosta("Uusi viite lisätty!", Varit.VIHREA)
-=======
-            if komento[0] == "0":
-                if komento == "01":
+                
+                if lisattavan_viitetyypin_numero == "0":
                     luettu_viite = self.lue_kirja()
-                    self.reference_manager.lisaa_uusi_viite(luettu_viite)
-                    self._konsoli_io.tulosta("Uusi kirjaviite on lisätty!", Varit.VIHREA)
-                elif komento == "02":
+                    #TARK ONKO JO LISTALLA TOIMII KUNNOLLA?
+                    if not self.reference_manager.lisaa_uusi_viite(luettu_viite):
+                        self._konsoli_io.tulosta("Viite on jo listalla!", Varit.PUNAINEN)
+                    else:
+                        self._konsoli_io.tulosta("Uusi kirjaviite on lisätty!", Varit.VIHREA)
+                elif lisattavan_viitetyypin_numero == "1":
                     luettu_viite = self.lue_artikkeli()
-                    self.reference_manager.lisaa_uusi_viite(luettu_viite)
-                    self._konsoli_io.tulosta("Uusi artiikkeliviite on lisätty!", Varit.VIHREA)
-                elif komento == "03":
+
+                    if not self.reference_manager.lisaa_uusi_viite(luettu_viite):
+                        self._konsoli_io.tulosta("Viite on jo listalla!", Varit.PUNAINEN)
+                    else:
+                        self._konsoli_io.tulosta("Uusi artikkeliviite on lisätty!", Varit.VIHREA)
+                elif lisattavan_viitetyypin_numero == "2":
                     luettu_viite = self.lue_kongerenssiviite()
-                    self.reference_manager.lisaa_uusi_viite(luettu_viite)
-                    self._konsoli_io.tulosta("Uusi konferenssiviite on lisätty!", Varit.VIHREA)
->>>>>>> main
+
+                    if not self.reference_manager.lisaa_uusi_viite(luettu_viite):
+                        self._konsoli_io.tulosta("Viite on jo listalla!", Varit.PUNAINEN)
+                    else:
+                        self._konsoli_io.tulosta("Uusi konferenssiviite on lisätty!", Varit.VIHREA)
+
             elif komento == "1":
                 self.listaa_viitteet(self.reference_manager.hae_viitteet())
             elif komento == "2":
@@ -99,6 +95,7 @@ class UI:
                         self.listaa_viitteet(lista_viitteista_haetulla_vuosiluvulla)
                     else:
                         self._konsoli_io.tulosta("Viitteitä annetulla hakusanalla ei löytynyt.", Varit.PUNAINEN, lopetus="")               
+                #Ongelma muille viitetyypeille?
                 if hakukomento == "4":
                     isbn = self._pyyda_syote("Anna haettava isbn:", None, InputValidation.isbn)
                     lista_viitteista_haetulla_isbnlla = self.reference_manager.hae_viitteista_isbnlla(isbn)
@@ -120,27 +117,19 @@ class UI:
 
     def _tulosta_menu_ohje(self):
         komennot = {
-<<<<<<< HEAD
             "0": "Luo uusi lähdeviite",
             "1": "Listaa kaikki lähdeviitteet",
             "2": "Vie lähdeviitteet bibtex-tiedostoon",
             "3": "Poista lähdeviite",
             "4": "Hae hakusanalla",
             "5": "Lopeta ohjelma"
-=======
-            "0X": "Luo uusi lähdeviite: [01] Kirja, [02] Artikkeli, [03] Konferenssiviite",
-            "1": " Listaa kaikki lähdeviitteet",
-            "2": " Vie lähdeviitteet bibtex-tiedostoon",
-            "3": " Poista lähdeviite",
-            "4": " Lopeta ohjelma"
->>>>>>> main
         }
         self._konsoli_io.tulosta("")
         for komento, selite in komennot.items():
             self._konsoli_io.tulosta(" ", lopetus="")
             self._konsoli_io.tulosta(komento, Varit.SININEN, tummennus=True, lopetus="")
             self._konsoli_io.tulosta(" " + selite)
-    """
+    
     def _tulosta_ohje_eri_viitetyyppien_lisaykselle(self):
         komennot = {
             "0": "Lisää uusi kirjaviite",
@@ -153,7 +142,7 @@ class UI:
             self._konsoli_io.tulosta(" ", lopetus="")
             self._konsoli_io.tulosta(komento, Varit.SININEN, tummennus=True, lopetus="")
             self._konsoli_io.tulosta(" " + selite)
-    """
+    
     def _tulosta_haku_ohje(self):
         komennot = {
             "0": "Hae kirjoittajalla",
@@ -236,10 +225,10 @@ class UI:
 
     def listaa_viitteet(self, viitteet):
         eka_rivi = ""
+        eka_rivi += "-" * 207
 
-        eka_rivi += "-" * 100
+        toka_rivi = f"| Nro: |  Viitetyyppi:  | {'':5} Kirjoittajat: {'':5} | {'':10} Otsikko: {'':10} |  Julkaisija:  | Vuosi: | {'':5} ISBN: {'':5} | {'':6} Journal {'':7} | Volume: | Number: |   Booktitle:    |   Pages:   |"
 
-        toka_rivi = f"| Nro: | {'':9} Kirjoittajat: {'':9} | {'':17} Otsikko: {'':17} | Vuosi: |"
         vali_rivi = eka_rivi
         vika_rivi = eka_rivi
 
@@ -249,29 +238,42 @@ class UI:
         for i in range(len(viitteet)):
             self._konsoli_io.tulosta(vali_rivi)
 
-            authors_tuple = viitteet[i].get_author().split(", ")
-
+            authors_tuple = viitteet[i].get_author().split("; ")
+           
             title = viitteet[i].get_title()
+            publisher = viitteet[i].get_publisher()
             year = viitteet[i].get_year()
-            tulostettava_rivi = f"|  {i:3} | {authors_tuple[0]:33} | {title:44} | {year:6} |"
+            isbn = "-"
+            journal = "-"
+            volume = "-"
+            number = "-"
+            booktitle = "-"
+            pages = "-"
+            entry_type = viitteet[i].get_entrytype()
+
+            if entry_type == "book":
+                isbn = viitteet[i].get_isbn()
+            elif entry_type == "article":
+                journal = viitteet[i].get_journal()
+                volume = viitteet[i].get_volume()
+                number = viitteet[i].get_number()
+                pages = viitteet[i].get_pages()
+            elif entry_type == "proceedings":
+                booktitle = viitteet[i].get_booktitle()
+                pages = viitteet[i].get_pages()
+
+            tulostettava_rivi = f"|  {i:3} | {entry_type:14} | {authors_tuple[0]:25} | {title:30} | {publisher:13} | {year:6} | {isbn:17} | {journal:22} | {volume:7} | {number:7} | {booktitle:15} | {pages:10} |"
 
             self._konsoli_io.tulosta(tulostettava_rivi)
 
             for j in range(len(authors_tuple) - 1):
-                tulostettava_rivi = "|      | "
-                tulostettava_rivi += f"{authors_tuple[j + 1]:33} {'|'} {'':44} {'|'} {'':6} {'|'}"
+                tulostettava_rivi = f"|      | {'':14} | {authors_tuple[j + 1]:25} | {'':30} | {'':13} | {'':6} | {'':17} | {'':22} | {'':7} | {'':7} | {'':15} | {'':10} |"
                 self._konsoli_io.tulosta(tulostettava_rivi)
 
         self._konsoli_io.tulosta(vika_rivi)
 
     def _tulosta_figlet(self):
-<<<<<<< HEAD
-        f = Figlet(font='small')
-        #
-        self._konsoli_io.tulosta("\n")
-
-        self._konsoli_io.tulosta(f.renderText('BibTeX-viiteohjelma'), Varit.VIHREA)
-=======
         figlet = Figlet(font='small')
+        
+        self._konsoli_io.tulosta("\n")
         self._konsoli_io.tulosta(figlet.renderText('BibTeX-viiteohjelma'), Varit.VIHREA)
->>>>>>> main

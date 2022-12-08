@@ -12,12 +12,11 @@ class Reference:
         self._publisher = publisher
         self._year = year
         self._isbn = isbn
-<<<<<<< HEAD
-        self._id = id or self.generate_id() # Korjaa konstruktoria?
-=======
-        self._id = self._author.split(",")[0]+str(self._year) or "SukunimiVuosi"
->>>>>>> main
+        self._id = self.generate_id()
         self._entrytype = entrytype or "book"
+
+    def get_entrytype(self):
+        return self._entrytype
 
     def get_id(self):
         return self._id
@@ -65,17 +64,9 @@ class Reference:
                  "ENTRYTYPE": self._entrytype}
 
         return viite
-<<<<<<< HEAD
-
-    # Toiminnallisuus hajonnut?
-    # def generate_id(self):
-    #     surname = self._author.split(",")
-    #     return surname[0]+str(self._year)
 
     def generate_id(self):
         return self.get_author() + self.get_title() + str(self.get_year())
 
     def get_id(self):
         return self._id
-=======
->>>>>>> main
