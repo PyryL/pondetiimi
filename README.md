@@ -7,9 +7,9 @@
 
 ## Dokumentaatio
 
-[Product backlog](https://docs.google.com/spreadsheets/d/1GRM8AXspv3U0oPStXTyR-001euZUgXl-X6GAkoWaCAw/edit#gid=0)
-
-[Definition of Done](https://github.com/PyryL/pondetiimi/blob/main/documentation/definition_of_done.md)
+* [Product backlog](https://docs.google.com/spreadsheets/d/1GRM8AXspv3U0oPStXTyR-001euZUgXl-X6GAkoWaCAw/edit#gid=0)
+* [Definition of Done](https://github.com/PyryL/pondetiimi/blob/main/documentation/definition_of_done.md)
+* [Testikattavuusraportti](https://codecov.io/gh/PyryL/pondetiimi)
 
 ## Asennus ja käynnistys
 
