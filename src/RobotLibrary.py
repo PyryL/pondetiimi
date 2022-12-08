@@ -1,9 +1,13 @@
+# tämän tiedston nimen tulee olla juuri tässä muodossa
+# pylint: disable=invalid-name
+
 from ui.ui import UI
 from stub_io import StubIO
 from services.stub_reference_manager import StubReferenceManager
 from entities.reference import Reference
 
 class RobotLibrary:
+    '''komennot robot framework -testejä varten'''
     def __init__(self):
         self._io = StubIO()
         self._reference_manager = StubReferenceManager()
@@ -23,6 +27,7 @@ class RobotLibrary:
     def run_application(self):
         self._ui.run()
 
-    def add_new_reference(self, kirjoittaja, otsikko, julkaisija, vuosi, isbn):
-        viite = Reference(kirjoittaja, otsikko, julkaisija, vuosi, isbn)
+    def add_new_reference(self, *args):
+        '''argumentit kirjoittaja, otsikko, julkaisija, vuosi, isbn'''
+        viite = Reference(args[0], args[1], args[2], args[3], args[4])
         self._reference_manager.lisaa_uusi_viite(viite)
