@@ -127,7 +127,7 @@ class UI:
                 viite = self.reference_manager.hae_viite_doi(doi)
                 if viite is not None:
                     self._konsoli_io.tulosta("Viite löytyi.")
-                    self._konsoli_io.tulosta(viite)
+                    self._konsoli_io.tulosta(viite, Varit.KELTAINEN)
                 else:
                     self._konsoli_io.tulosta("Viitettä annetulla DOI:lla ei löytynyt.",
                                                 Varit.PUNAINEN, lopetus="")
