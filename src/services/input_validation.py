@@ -80,6 +80,16 @@ class InputValidation:
     def not_empty(cls, input_string):
         return re.match(".+", input_string) is not None
 
+
+    @classmethod
+    def doi(cls, input_string):
+        # tarkista, että DOI on oikeassa formaatissa
+        regexp = r'\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'<>])\S)+)\b'
+        if not re.match(regexp, input_string):
+            return False
+
+        return True
+
     @classmethod
     def error_message(cls, error_type="tyhja"):
         '''

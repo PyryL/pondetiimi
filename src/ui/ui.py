@@ -123,6 +123,15 @@ class UI:
                 if hakukomento == "x":
                     continue
             elif komento == "5":
+                doi = self._pyyda_syote("Anna haettava DOI:", None, InputValidation.doi)
+                viite = self.reference_manager.hae_viite_doi(doi)
+                if viite is not None:
+                    self._konsoli_io.tulosta("Viite löytyi.")
+                    self._konsoli_io.tulosta(viite)
+                else:
+                    self._konsoli_io.tulosta("Viitettä annetulla DOI:lla ei löytynyt.",
+                                                Varit.PUNAINEN, lopetus="")
+            elif komento == "6":
                 break
 
     def _tulosta_menu_ohje(self):
@@ -132,7 +141,8 @@ class UI:
             "2": "Vie lähdeviitteet bibtex-tiedostoon",
             "3": "Poista lähdeviite",
             "4": "Hae hakusanalla",
-            "5": "Lopeta ohjelma"
+            "5": "Hae viite DOI:n perusteella",
+            "6": "Lopeta ohjelma"
         }
         self._konsoli_io.tulosta("")
         for komento, selite in komennot.items():
