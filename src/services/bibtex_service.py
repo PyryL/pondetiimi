@@ -1,6 +1,7 @@
 from bibtexparser.bwriter import BibTexWriter
 from bibtexparser.bibdatabase import BibDatabase
 from pylatexenc.latexencode import UnicodeToLatexEncoder
+from bibtexparser.bparser import BibTexParser
 
 class FileIO:
     '''
@@ -21,6 +22,7 @@ class BibtexService:
         self.writer = BibTexWriter()
         self.database = BibDatabase()
         self.encoder = UnicodeToLatexEncoder(replacement_latex_protection='braces-all')
+        self.parser = BibTexParser()
         self.file_io = file_io
 
     def vie_viite_databaseen(self, viite): #Turha?
@@ -35,3 +37,15 @@ class BibtexService:
 
     def tyhjenna_bibdatabase(self):
         self.database = BibDatabase()
+
+    def muunna_bibtex_dictionaryksi(self, bibtex_tietue):
+        # Parse the BibTeX data
+        self.parser = BibTexParser()
+        self.parser.customization = convert_to_unicode
+        bib_database = self.bibtexparser.loads(bibtex_tietue, parser=self.parser)
+
+        # Transform the BibTeX data into a dictionary
+        bib_dict = bib_database.entries[0]
+
+        # Return the dictionary
+        return bib_dict
