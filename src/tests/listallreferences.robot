@@ -6,6 +6,7 @@ Test Setup  Add New Reference  Kirjoittaja Yksi, Kirjoittaja Kaksi  Otsikko  Jul
 *** Test Cases ***
 List All References Successfully
     Input List Command
+    Input Exit Command
     Run Application
     Output Should Contain  ----------------------------------------------------------------------------------------------------
 

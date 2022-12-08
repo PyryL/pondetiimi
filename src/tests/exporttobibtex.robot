@@ -6,7 +6,8 @@ Test Setup  Add New Reference  Kirjoittaja Yksi, Kirjoittaja Kaksi  Otsikko  Jul
 Export All References Succesfully To A Bibtex File
     Input Export Command
     Input  Tiedostonimi
+    Input Exit Command
     Run Application
-    Output Should Contain  Viitteet viety tiedostoon: Tiedostonimi.bib!
+    Output Should Contain  Viitteet viety tiedostoon
 
 *** Keywords ***

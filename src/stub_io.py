@@ -11,5 +11,10 @@ class StubIO:
             return self.inputs.pop(0)
         return "lopeta"
 
-    def tulosta(self, output):
+    def tulosta(self, output,
+                vari = None,
+                tummennus = False,
+                alleviivaus = False,
+                lopetus = None):
+        # muulla kuin tulostuksen tekstillä ei ole testien kannalta väliä
         self.outputs.append(output)

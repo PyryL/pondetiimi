@@ -26,26 +26,13 @@ class RobotLibrary:
         self._io.add_input(value)
 
     def output_should_contain(self, value):
-        outputs = self._io.outputs
+        for output in self._io.outputs:
+            if value in output:
+                return
+        raise AssertionError(
+            f"Output \"{value}\" is not in {str(outputs)}"
+        )
 
-        if not value in outputs:
-            raise AssertionError(
-                f"Output \"{value}\" is not in {str(outputs)}"
-            )
-    """
-    def output_should_equal(self, value):
-        outputs = self._io.outputs
-
-        output_string = ""
-
-        for output in outputs:
-            output_string += output + "\n"
-
-        if not value == output_string:
-            raise AssertionError(
-                f"Output \"{value}\" is not {output_string}"
-            )     
-    """
     def run_application(self):
         self._ui.run()
 

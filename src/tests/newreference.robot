@@ -2,9 +2,11 @@
 Resource  resource.robot
 
 *** Test Cases ***
-Create New Reference Successfully
-    Input New Command
-    Input Reference Details  Kirjoittaja Yksi  Otsikko  Julkaisija  2000  0000  
-    Output Should Contain  Uusi viite lisätty!
+Create New Book Reference Successfully
+    Input New Book Command
+    Input Reference Details  Sukunimi, Etunimi  Otsikko  Julkaisija  2000  9780596520687  
+    Input Exit Command
+    Run Application
+    Output Should Contain  Uusi kirjaviite on lisätty!
 
 *** Keywords ***

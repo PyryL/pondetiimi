@@ -2,14 +2,17 @@
 Library  ../RobotLibrary.py
 
 *** Keywords ***
-Input New Command
-    Input  uusi
+Input New Book Command
+    Input  01
 
 Input List Command
-    Input  listaa
+    Input  1
 
 Input Export Command
-    Input  vie
+    Input  2
+
+Input Exit Command
+    Input  4
 
 Input Reference Details
     [Arguments]  ${author}  ${title}  ${publisher}  ${year}  ${isbn}
@@ -18,4 +21,3 @@ Input Reference Details
     Input  ${publisher}  
     Input  ${year}  
     Input  ${isbn}
-    Run Application
