@@ -122,15 +122,28 @@ class UI:
                                                     Varit.PUNAINEN, lopetus="")
                 if hakukomento == "x":
                     continue
+
             elif komento == "5":
                 doi = self._pyyda_syote("Anna haettava DOI:", None, InputValidation.doi)
-                viite = self.reference_manager.hae_viite_doi(doi)
-                if viite is not None:
+                doi_viite = self.reference_manager.hae_viite_doi(doi)
+                if doi_viite is not None:
                     self._konsoli_io.tulosta("Viite löytyi.")
-                    self._konsoli_io.tulosta(viite, Varit.KELTAINEN)
+                    viite = Article(doi_viite["author"], 
+                                    doi_viite["title"], 
+                                    doi_viite["publisher"], 
+                                    doi_viite["year"], 
+                                    doi_viite["journal"], 
+                                    doi_viite["volume"], 
+                                    doi_viite["number"], 
+                                    "0")
+                    if not self.reference_manager.lisaa_uusi_viite(viite):
+                        self._konsoli_io.tulosta("Viite on jo listalla!", Varit.PUNAINEN)
+                    else:
+                        self._konsoli_io.tulosta("Uusi artikkeliviite on lisätty!", Varit.VIHREA)
                 else:
                     self._konsoli_io.tulosta("Viitettä annetulla DOI:lla ei löytynyt.",
                                                 Varit.PUNAINEN, lopetus="")
+
             elif komento == "6":
                 break
 
