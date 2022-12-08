@@ -4,6 +4,7 @@ class StubReferenceManager:
 
     def lisaa_uusi_viite(self, viite):
         self.viitteet.append(viite)
+        return True
 
     def hae_viitteet(self):
         return self.viitteet

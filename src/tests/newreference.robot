@@ -14,7 +14,7 @@ Create New Article Reference Successfully
     Input Article Reference Details  Sukunimi, Etunimi  Otsikko  Julkaisija  2000  Lehti  6  2  38-46
     Input Exit Command
     Run Application
-    Output Should Contain  Uusi artiikkeliviite on lisätty!
+    Output Should Contain  Uusi artikkeliviite on lisätty!
 
 Create New Inproceedings Reference Successfully
     Input New Inproceedings Command
