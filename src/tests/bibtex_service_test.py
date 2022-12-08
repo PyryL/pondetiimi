@@ -19,9 +19,8 @@ class TestBibtexService(unittest.TestCase):
             "John Doe åäöüß",       # testaa erikoismerkit
             "Title of the book",
             "Best sellers Inc",
-            2012,
-            "978-951-98548-9-2"
-        ).get_as_dictionary()
+            2012
+            ).get_as_dictionary()
 
     def test_viedyssa_tiedostossa_halutut_rivit(self):
         self.bibtext_service.vie_viite_databaseen(self.viite)
@@ -31,7 +30,6 @@ class TestBibtexService(unittest.TestCase):
             "title = {Title of the book}",
             "year = {2012}",
             "publisher = {Best sellers Inc}",
-            "isbn = {978-951-98548-9-2}"
         ]
         for rivi in halutut_rivit:
             self.assertTrue(rivi in self.file_io.content)

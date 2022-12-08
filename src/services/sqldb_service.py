@@ -50,13 +50,14 @@ class SqldbService:
         all_references = database.execute("SELECT * FROM VIITTEET")
 
         for row in all_references:
-            viite = Reference(row[1], row[2], row[3], row[4], row[5])
+            viite = Reference(row[1], row[2], row[3], row[4])
             viitteet.append(viite)
 
         database.close()
 
         return viitteet
 
+<<<<<<< HEAD
     def poista_viite_databasesta(self):
         #Toteutus puuttuu.
         pass
@@ -66,5 +67,11 @@ class SqldbService:
         database.isolation_level = None
 
         database.execute("DROP table VIITTEET")
+=======
+    def pois_viite_databasesta(self, viite):
+        database = sqlite3.connect("test.db")
+        database.isolation_level = None
+        database.execute("DELETE FROM test WHERE id_number = ?", (viite.get_id(),))
+>>>>>>> main
         database.commit()
         database.close()

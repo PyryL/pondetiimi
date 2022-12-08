@@ -13,8 +13,7 @@ class TestReferenceManager(unittest.TestCase):
             "John Doe",
             "Title of the book",
             "Best sellers Inc",
-            2012,
-            "978-951-98548-9-2"
+            2012
         )
 
     def test_alussa_entiset_viitteet_haettu_databasesta(self):

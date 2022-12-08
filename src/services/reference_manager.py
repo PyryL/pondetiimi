@@ -40,6 +40,7 @@ class ReferenceManager:
         viite_as_dictionary = viite.get_as_dictionary()
         self.bibtex_service.vie_viite_databaseen(viite_as_dictionary)
 
+<<<<<<< HEAD
     def hae_viitteen_indeksi_viitteissa(self, uusi_viite):
         for i in range(0, len(self.viitteet)):
             if self.viitteet[i].get_author() == uusi_viite.get_author() and self.viitteet[i].get_title() == uusi_viite.get_title() and self.viitteet[i].get_publisher() == uusi_viite.get_publisher() and self.viitteet[i].get_year() == uusi_viite.get_year() and self.viitteet[i].get_isbn() == uusi_viite.get_isbn():
@@ -134,3 +135,9 @@ class ReferenceManager:
             return True # Oikean db-toiminnallisuuden varmistamisen toteuttaminen?
         
         return False
+=======
+    def pois_viite_databasesta(self, viite):
+        self.db_service.pois_viite_databasesta(viite)
+        self.viitteet.remove(viite)
+    
+>>>>>>> main

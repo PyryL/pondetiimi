@@ -10,3 +10,4 @@ htmlcov
 # robot frameworkin outputit
 output.xml
 log.html
+report.html

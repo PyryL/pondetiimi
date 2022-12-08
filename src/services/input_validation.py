@@ -20,6 +20,8 @@ class InputValidation:
         # https://www.isbn-international.org/sites/default/files/ISBN-k%C3%A4ytt%C3%B6opas%20%28Finnish%20translation%20of%20seventh%20edition%29_0.pdf
 
         # tarkista syotteen muoto, eli numeroiden määrä eri osissa
+        if not input_string:
+            return True
         regexp = "^(97(8|9)[- ]?)?\\d{1,5}[- ]?\\d{1,7}[- ]?\\d{1,6}[- ]?\\d$"
         if not re.match(regexp, input_string):
             return False
@@ -59,6 +61,7 @@ class InputValidation:
         Returns
             (Boolean): True, jos syöte täyttää vaatimuksen.
         '''
+<<<<<<< HEAD
         return re.match("^(0|1|2|3|4|5)$", input_string) is not None
 
     @classmethod
@@ -72,7 +75,34 @@ class InputValidation:
         '''
         return re.match("^(0|1|2|3|4|5|x)$", input_string) is not None
 
+=======
+        return re.match("^(01|02|03|1|2|3|4)$", input_string) is not None
+>>>>>>> main
 
     @classmethod
     def not_empty(cls, input_string):
         return re.match(".+", input_string) is not None
+
+    @classmethod
+    def error_message(self, error_type="tyhja"):
+        '''
+        Palauttaa virheilmoituksen annetun virhetypin mukaan.
+        Args:
+            error_type (String): virhetyyppi
+        Returns
+            (String): virheilmoitus
+        '''
+        virheilmoitukset = {
+            "nimi": "Syötteen on oltava muotoa 'Sukunimi, Etunimi; Sukunimi, Etunimi...'",
+            "otsikko": "Otsikko ei voi olla tyhjä.",
+            "vuosi": "Vuoden on oltava muotoa 'YYYY'.",
+            "julkaisija": "Julkaisija ei voi olla tyhjä.",
+            "isbn": "ISBN on oltava muotoa 'XXXXXXXXXXXXXXXX' tai tyhjä.",
+            "sivut": "Sivujen on oltava muotoa 'XX-XX' tai tyhjä.",
+            "lehti": "Lehden nimi ei voi olla tyhjä.",
+            "vuosikerta": "Vuosikerran on oltava kokonaisluku.",
+            "numero": "Lehden numeron on oltava kokonaisluku.",
+            "tyhja": "Virheellinen syöte."
+        }
+
+        return virheilmoitukset[error_type]
