@@ -37,6 +37,7 @@ class BibtexService:
         self.database.entries.append(viite)
 
     def vie_viitteet_tiedostoon(self, tiedostonimi):
+        self.writer.indent = "      "
         self.file_io.write(f"{tiedostonimi}.bib", self.writer.write(self.database))
 
     def tyhjenna_bibdatabase(self):
