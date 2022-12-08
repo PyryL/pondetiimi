@@ -23,8 +23,8 @@ class UI:
             if komento == "0":
                 self._tulosta_ohje_eri_viitetyyppien_lisaykselle()
                 # Korjaa validation ja lisää
-                lisattavan_viitetyypin_numero = self._pyyda_syote("Anna komento:", 
-                                                                    None, InputValidation.hakumenu_command)
+                lisattavan_viitetyypin_numero = self._pyyda_syote("Anna komento:",
+                                                        None, InputValidation.hakumenu_command)
 
                 if lisattavan_viitetyypin_numero == "0":
                     luettu_viite = self.lue_kirja()
@@ -124,11 +124,11 @@ class UI:
                     continue
 
             elif komento == "5":
-                    luettu_viite = self.lue_doi()
-                    if not self.reference_manager.lisaa_uusi_viite(luettu_viite):
-                        self._konsoli_io.tulosta("Viite on jo listalla!", Varit.PUNAINEN)
-                    else:
-                        self._konsoli_io.tulosta("Uusi artikkeliviite on lisätty!", Varit.VIHREA)
+                luettu_viite = self.lue_doi()
+                if not self.reference_manager.lisaa_uusi_viite(luettu_viite):
+                    self._konsoli_io.tulosta("Viite on jo listalla!", Varit.PUNAINEN)
+                else:
+                    self._konsoli_io.tulosta("Uusi artikkeliviite on lisätty!", Varit.VIHREA)
 
 
             elif komento == "6":
@@ -172,7 +172,7 @@ class UI:
             "4": "Hae ISBN:llä",
             "5": "Hae avainsanalla",
             "x": "Palaa takaisin"
-        }       
+        }
         self._konsoli_io.tulosta("")
         for komento, selite in komennot.items():
             self._konsoli_io.tulosta(" ", lopetus="")
@@ -233,21 +233,21 @@ class UI:
         return viite
 
     def lue_doi(self):
-            doi = self._pyyda_syote("Anna haettava DOI:", None, InputValidation.doi)
-            doi_viite = self.reference_manager.hae_viite_doi(doi)
-            if doi_viite is not None:
-                self._konsoli_io.tulosta("Viite löytyi.")
-                viite = Article(doi_viite["author"], 
-                                doi_viite["title"], 
-                                doi_viite["publisher"], 
-                                doi_viite["year"], 
-                                doi_viite["journal"], 
-                                doi_viite["volume"], 
-                                doi_viite["number"], 
-                                    "0")
-                return viite
-            else:
-                self._konsoli_io.tulosta("Viitettä annetulla DOI:lla ei löytynyt.",
+        doi = self._pyyda_syote("Anna haettava DOI:", None, InputValidation.doi)
+        doi_viite = self.reference_manager.hae_viite_doi(doi)
+        if doi_viite is not None:
+            self._konsoli_io.tulosta("Viite löytyi.")
+            viite = Article(doi_viite["author"],
+                            doi_viite["title"],
+                            doi_viite["publisher"],
+                            doi_viite["year"],
+                            doi_viite["journal"],
+                            doi_viite["volume"],
+                            doi_viite["number"],
+                                "0")
+            return viite
+        
+        self._konsoli_io.tulosta("Viitettä annetulla DOI:lla ei löytynyt.",
                                                 Varit.PUNAINEN, lopetus="")
 
     def _pyyda_syote(self, kehote, kehotteen_pituus, validator, virheilmoitus_tyyppi="tyhja"):

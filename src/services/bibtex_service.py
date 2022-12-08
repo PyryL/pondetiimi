@@ -26,7 +26,7 @@ class BibtexService:
         self.writer = BibTexWriter()
         self.database = BibDatabase()
         self.encoder = UnicodeToLatexEncoder(replacement_latex_protection='braces-all')
-        self.parser = BibTexParser()    
+        self.parser = BibTexParser()
         self.file_io = file_io
 
     def vie_viite_databaseen(self, viite): #Turha?
@@ -58,9 +58,9 @@ class BibtexService:
         bibtex = self.kutsu_bibtex(doi)
         if bibtex is None:
             return None
-        else:
-            tietue = self.muunna_bibtex_dictionaryksi(bibtex)
-            return tietue
+
+        tietue = self.muunna_bibtex_dictionaryksi(bibtex)
+        return tietue
 
     def kutsu_bibtex(self, doi):
         url = 'http://dx.doi.org/' + doi
