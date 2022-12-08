@@ -12,8 +12,11 @@ class Reference:
         self._publisher = publisher
         self._year = year
         self._isbn = isbn
-        self._id = self._author.split(",")[0]+str(self._year) or "SukunimiVuosi"
+        self._id = self.generate_id()
         self._entrytype = entrytype or "book"
+
+    def get_entrytype(self):
+        return self._entrytype
 
     def get_id(self):
         return self._id
@@ -61,3 +64,14 @@ class Reference:
                  "ENTRYTYPE": self._entrytype}
 
         return viite
+
+    def generate_id(self):
+        # ensimmäinen sukunimi, nimen ensimmäinen sana ja vuosi
+        return (
+            self.get_author().split(",")[0] +
+            self.get_title().split(" ")[0] +
+            str(self.get_year())
+        )
+
+    def get_id(self):
+        return self._id

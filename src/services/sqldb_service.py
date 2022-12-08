@@ -1,25 +1,85 @@
 import sqlite3
 from entities.reference import Reference
+from entities.book import Book
+from entities.article import Article
+from entities.inproceedings import InProceedings
 
 class SqldbService:
     '''
     Tietokanta toiminnot.
     '''
+    def luo_uusi_viitetaulu(self):
+        database = sqlite3.connect("references.db")
+        database.isolation_level = None
+
+        database.execute('''CREATE TABLE VIITTEET
+         (ID,
+         AUTHOR,
+         TITLE,
+         PUBLISHER,
+         YEAR,
+         ISBN,
+         JOURNAL,
+         VOLUME,
+         NUMBER,
+         BOOKTITLE,
+         PAGES,
+         ENTRYTYPE
+         );''') 
+
+        database.commit()
+        database.close()
+
     def vie_viite_databaseen(self, viite):
         # Tarkistus, onko viite jo db:ssä puuttuu.
         #Tarkistus suoritettu ref_manager metodissa lisaa_uusi_viite()?
-        database = sqlite3.connect("test.db")
+
+        database = sqlite3.connect("references.db")
         database.isolation_level = None
 
-        values = (
+        values = 0
+
+        if viite.get_entrytype() == "book":
+            values = (
+            viite.get_id(),
             viite.get_author(),
             viite.get_title(),
             viite.get_publisher(),
             viite.get_year(),
-            viite.get_isbn()
-        )
+            viite.get_isbn(),
+            "", "", "", "", "",
+            viite.get_entrytype()
+            )
+        elif viite.get_entrytype() == "article":
+            values = (
+            viite.get_id(),
+            viite.get_author(),
+            viite.get_title(),
+            viite.get_publisher(),
+            viite.get_year(),
+            "",
+            viite.get_journal(),
+            viite.get_volume(),
+            viite.get_number(),
+            "",
+            viite.get_pages(),
+            viite.get_entrytype()
+            )
+        elif viite.get_entrytype() == "inproceedings":
+            values = (
+            viite.get_id(),
+            viite.get_author(),
+            viite.get_title(),
+            viite.get_publisher(),
+            viite.get_year(),
+            "", "", "", "",
+            viite.get_booktitle(),
+            viite.get_pages(),
+            viite.get_entrytype()
+            )
 
-        insert_sql="INSERT INTO test (author, title, publisher, year, isbn) VALUES (?, ?, ?, ?, ?)"
+        insert_sql="INSERT INTO VIITTEET (ID, AUTHOR, TITLE, PUBLISHER, YEAR, ISBN, JOURNAL, VOLUME, NUMBER, BOOKTITLE, PAGES, ENTRYTYPE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+
         database.execute(insert_sql, values)
         database.commit()
         database.close()
@@ -27,21 +87,43 @@ class SqldbService:
     def hae_viitteet_databasesta(self):
         viitteet = []
 
-        database = sqlite3.connect("test.db")
+        database = sqlite3.connect("references.db")
+
         database.isolation_level = None
-        all_references = database.execute("SELECT * FROM test")
+        all_references = database.execute("SELECT * FROM VIITTEET")
 
         for row in all_references:
-            viite = Reference(row[1], row[2], row[3], row[4])
+            viite = 0
+
+            if row[11] == "book":
+                viite = Book(row[1], row[2], row[3], row[4], row[5])
+            elif row[11] == "article":
+                viite = Article(row[1], row[2], row[3], row[4], row[6], row[7], row[8], row[10])
+            elif row[11] == "inproceedings":
+                viite = InProceedings(row[1], row[2], row[3], row[4], row[9], row[10])
+
             viitteet.append(viite)
 
         database.close()
 
         return viitteet
 
+    def poista_viite_databasesta(self):
+        #Toteutus puuttuu.
+        pass
+
+    def poista_viitetaulu_databasesta(self):
+        database = sqlite3.connect("references.db")
+        database.isolation_level = None
+
+        database.execute("DROP table VIITTEET")
+        
+        database.commit()
+        database.close()
+
+    """
     def pois_viite_databasesta(self, viite):
         database = sqlite3.connect("test.db")
         database.isolation_level = None
         database.execute("DELETE FROM test WHERE id_number = ?", (viite.get_id(),))
-        database.commit()
-        database.close()
+    """

@@ -5,6 +5,8 @@ class InputValidation:
 
     @classmethod
     def isbn(cls, input_string):
+        # Otettu pois käytöstä viitteiden lisäämisen helpottamiseksi.
+        # return True
         '''
         Tarkistetaan ISBN-syötteen oikellisuutta. ISBN syöte on 13 tai 10 merkkiä pitkä ja
         on oikeassa formaatissa.
@@ -53,13 +55,24 @@ class InputValidation:
     @classmethod
     def menu_command(cls, input_string):
         '''
-        Tarkistetaan Menu-syöte. Syöte on luku 0 - 4.
+        Tarkistetaan Menu-syöte. Syöte on luku 0 - 5.
         Args:
             input_string (String): annettu syöte
         Returns
             (Boolean): True, jos syöte täyttää vaatimuksen.
         '''
-        return re.match("^(01|02|03|1|2|3|4)$", input_string) is not None
+        return re.match("^(0|1|2|3|4|5)$", input_string) is not None
+
+    @classmethod
+    def hakumenu_command(cls, input_string):
+        '''
+        Tarkistetaan Hakumenu-syöte. Syöte on luku 0 - 5 tai kirjain x.
+        Args:
+            input_string (String): annettu syöte
+        Returns
+            (Boolean): True, jos syöte täyttää vaatimuksen.
+        '''
+        return re.match("^(0|1|2|3|4|5|x)$", input_string) is not None
 
     @classmethod
     def not_empty(cls, input_string):

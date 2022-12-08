@@ -7,7 +7,7 @@ class Book(Reference):
     Args:
         isbn (String):
     '''
-    def __init__(self,author, title, publisher, year, isbn=None):
+    def __init__(self,author, title, publisher, year, isbn):
         super().__init__(author, title, publisher, year)
         self._isbn = isbn
         self._type = "book"
