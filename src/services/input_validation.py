@@ -6,7 +6,7 @@ class InputValidation:
     @classmethod
     def isbn(cls, input_string):
         # Otettu pois käytöstä viitteiden lisäämisen helpottamiseksi.
-        return True
+        # return True
         '''
         Tarkistetaan ISBN-syötteen oikellisuutta. ISBN syöte on 13 tai 10 merkkiä pitkä ja
         on oikeassa formaatissa.

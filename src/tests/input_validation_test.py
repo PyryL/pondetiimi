@@ -22,6 +22,10 @@ class TestInputValidation(unittest.TestCase):
         # mutta yhteensä niitä on liian paljon (ei 10 eikä 13)
         self.assertFalse(InputValidation.isbn("978-1234-123456-12345-1"))
 
+    def test_isbn_epakelvolla_merkilla(self):
+        # merkki X ei ole numero
+        self.assertFalse(InputValidation.isbn("978-0-5X6-52068-7"))
+
     def test_vuosi_kelvolla_syotteella(self):
         self.assertTrue(InputValidation.year("1985"))
 
