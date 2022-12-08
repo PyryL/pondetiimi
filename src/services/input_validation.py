@@ -79,7 +79,7 @@ class InputValidation:
         return re.match(".+", input_string) is not None
 
     @classmethod
-    def error_message(self, error_type="tyhja"):
+    def error_message(cls, error_type="tyhja"):
         '''
         Palauttaa virheilmoituksen annetun virhetypin mukaan.
         Args:

@@ -23,8 +23,9 @@ class UI:
             if komento == "0":
                 self._tulosta_ohje_eri_viitetyyppien_lisaykselle()
                 # Korjaa validation ja lisää
-                lisattavan_viitetyypin_numero = self._pyyda_syote("Anna komento:", None, InputValidation.hakumenu_command)
-                
+                lisattavan_viitetyypin_numero = self._pyyda_syote("Anna komento:", 
+                                                                    None, InputValidation.hakumenu_command)
+
                 if lisattavan_viitetyypin_numero == "0":
                     luettu_viite = self.lue_kirja()
                     #TARK ONKO JO LISTALLA TOIMII KUNNOLLA?
@@ -57,12 +58,12 @@ class UI:
                 self._konsoli_io.tulosta(f"{tiedostonimi}.bib", tummennus=True)
             elif komento == "3":
                 poistettavan_lahdeviitteen_numero = int(self._pyyda_syote\
-                    ("Anna poistettavan lähdeviitteen numero:", None, InputValidation.not_empty)) #Korjaa inputvalidation
-                
+                    ("Anna poistettavan lähdeviitteen numero:", None, InputValidation.not_empty))
                 if self.reference_manager.poista_viite_viitteen_numeron_mukaan(poistettavan_lahdeviitteen_numero):
                     self._konsoli_io.tulosta("Viite poistettu!", Varit.VIHREA, lopetus="")
                 else:
-                    self._konsoli_io.tulosta("Viitettä annetulla viitteen numerolla ei ole. Viitteen poisto epäonnistui.", Varit.PUNAINEN, lopetus="") #Validointi varmistaa viitteen numeron ja tulostaa virheen?
+                    self._konsoli_io.tulosta("Viitettä annetulla viitteen numerolla ei ole. Viitteen poisto epäonnistui.",
+                                                Varit.PUNAINEN, lopetus="")
             elif komento == "4":
                 self._tulosta_haku_ohje()
                 hakukomento = self._pyyda_syote("Anna komento:", None, InputValidation.hakumenu_command)
@@ -73,28 +74,34 @@ class UI:
                     if len(lista_viitteista_haetulla_kirjoittajalla) > 0:
                         self.listaa_viitteet(lista_viitteista_haetulla_kirjoittajalla)
                     else:
-                        self._konsoli_io.tulosta("Viitteitä annetulla hakusanalla ei löytynyt.", Varit.PUNAINEN, lopetus="")
+                        self._konsoli_io.tulosta("Viitteitä annetulla hakusanalla ei löytynyt.",
+                                                    Varit.PUNAINEN, lopetus="")
                 if hakukomento == "1":
-                    otsikko = self._pyyda_syote("Anna haettava otsikko:", None, InputValidation.not_empty)
+                    otsikko = self._pyyda_syote("Anna haettava otsikko:",
+                                                None, InputValidation.not_empty)
                     lista_viitteista_haetulla_otsikolla = self.reference_manager.hae_viitteista_otsikolla(otsikko)
                     if len(lista_viitteista_haetulla_otsikolla) > 0:
                         self.listaa_viitteet(lista_viitteista_haetulla_otsikolla)
                     else:
-                        self._konsoli_io.tulosta("Viitteitä annetulla hakusanalla ei löytynyt.", Varit.PUNAINEN, lopetus="")               
+                        self._konsoli_io.tulosta("Viitteitä annetulla hakusanalla ei löytynyt.",
+                                                    Varit.PUNAINEN, lopetus="")
                 if hakukomento == "2":
-                    julkaisija = self._pyyda_syote("Anna haettava julkaisija:", None, InputValidation.not_empty)
+                    julkaisija = self._pyyda_syote("Anna haettava julkaisija:",
+                                                    None, InputValidation.not_empty)
                     lista_viitteista_haetulla_julkaisijalla = self.reference_manager.hae_viitteista_julkaisijalla(julkaisija)
                     if len(lista_viitteista_haetulla_julkaisijalla) > 0:
                         self.listaa_viitteet(lista_viitteista_haetulla_julkaisijalla)
                     else:
-                        self._konsoli_io.tulosta("Viitteitä annetulla hakusanalla ei löytynyt.", Varit.PUNAINEN, lopetus="")              
+                        self._konsoli_io.tulosta("Viitteitä annetulla hakusanalla ei löytynyt.",
+                                                    Varit.PUNAINEN, lopetus="")
                 if hakukomento == "3":
                     vuosiluku = self._pyyda_syote("Anna haettava vuosiluku:", None, InputValidation.year)
                     lista_viitteista_haetulla_vuosiluvulla = self.reference_manager.hae_viitteista_vuosiluvulla(vuosiluku)
                     if len(lista_viitteista_haetulla_vuosiluvulla) > 0:
                         self.listaa_viitteet(lista_viitteista_haetulla_vuosiluvulla)
                     else:
-                        self._konsoli_io.tulosta("Viitteitä annetulla hakusanalla ei löytynyt.", Varit.PUNAINEN, lopetus="")               
+                        self._konsoli_io.tulosta("Viitteitä annetulla hakusanalla ei löytynyt.",
+                                                    Varit.PUNAINEN, lopetus="")
                 #Ongelma muille viitetyypeille?
                 if hakukomento == "4":
                     isbn = self._pyyda_syote("Anna haettava isbn:", None, InputValidation.isbn)
@@ -102,14 +109,17 @@ class UI:
                     if len(lista_viitteista_haetulla_isbnlla) > 0:
                         self.listaa_viitteet(lista_viitteista_haetulla_isbnlla)
                     else:
-                        self._konsoli_io.tulosta("Viitteitä annetulla hakusanalla ei löytynyt.", Varit.PUNAINEN, lopetus="")               
+                        self._konsoli_io.tulosta("Viitteitä annetulla hakusanalla ei löytynyt.",
+                                                    Varit.PUNAINEN, lopetus="")
                 if hakukomento == "5":
-                    avainsana = self._pyyda_syote("Anna haettava avainsana:", None, InputValidation.not_empty)
+                    avainsana = self._pyyda_syote("Anna haettava avainsana:",
+                                                    None, InputValidation.not_empty)
                     lista_viitteista_haetulla_avainsanalla = self.reference_manager.hae_viitteista_avainsanalla(avainsana)
                     if len(lista_viitteista_haetulla_avainsanalla) > 0:
                         self.listaa_viitteet(lista_viitteista_haetulla_avainsanalla)
                     else:
-                        self._konsoli_io.tulosta("Viitteitä annetulla hakusanalla ei löytynyt.", Varit.PUNAINEN, lopetus="")                               
+                        self._konsoli_io.tulosta("Viitteitä annetulla hakusanalla ei löytynyt.",
+                                                    Varit.PUNAINEN, lopetus="")
                 if hakukomento == "x":
                     continue
             elif komento == "5":
@@ -129,20 +139,20 @@ class UI:
             self._konsoli_io.tulosta(" ", lopetus="")
             self._konsoli_io.tulosta(komento, Varit.SININEN, tummennus=True, lopetus="")
             self._konsoli_io.tulosta(" " + selite)
-    
+
     def _tulosta_ohje_eri_viitetyyppien_lisaykselle(self):
         komennot = {
             "0": "Lisää uusi kirjaviite",
             "1": "Lisää uusi artikkeliviite",
             "2": "Lisää uusi konferenssiviite",
             "x": "Palaa takaisin"
-        }       
+        }
         self._konsoli_io.tulosta("")
         for komento, selite in komennot.items():
             self._konsoli_io.tulosta(" ", lopetus="")
             self._konsoli_io.tulosta(komento, Varit.SININEN, tummennus=True, lopetus="")
             self._konsoli_io.tulosta(" " + selite)
-    
+
     def _tulosta_haku_ohje(self):
         komennot = {
             "0": "Hae kirjoittajalla",
@@ -160,53 +170,53 @@ class UI:
             self._konsoli_io.tulosta(" " + selite)
 
     def lue_kirja(self):
-        author = self._pyyda_syote("Kirjoittaja:", 13, 
+        author = self._pyyda_syote("Kirjoittaja:", 13,
                                                 InputValidation.name, "nimi")
-        title = self._pyyda_syote("Otsikko:", 13, 
+        title = self._pyyda_syote("Otsikko:", 13,
                                                 InputValidation.not_empty, "otsikko")
-        publisher = self._pyyda_syote("Julkaisija:", 13, 
+        publisher = self._pyyda_syote("Julkaisija:", 13,
                                                 InputValidation.not_empty, "julkaisija")
-        year = self._pyyda_syote("Vuosi:", 13, 
+        year = self._pyyda_syote("Vuosi:", 13,
                                                 InputValidation.year, "vuosi")
-        isbn = self._pyyda_syote("ISBN:", 13, 
+        isbn = self._pyyda_syote("ISBN:", 13,
                                                 InputValidation.isbn, "isbn")
 
         viite = Book(author, title, publisher, year, isbn)
         return viite
 
     def lue_artikkeli(self):
-        author = self._pyyda_syote("Kirjoittaja:", 13, 
+        author = self._pyyda_syote("Kirjoittaja:", 13,
                                                 InputValidation.name, "nimi")
-        title = self._pyyda_syote("Otsikko:", 13, 
+        title = self._pyyda_syote("Otsikko:", 13,
                                                 InputValidation.not_empty, "otsikko")
-        publisher = self._pyyda_syote("Julkaisija:", 13, 
+        publisher = self._pyyda_syote("Julkaisija:", 13,
                                                 InputValidation.not_empty, "julkaisija")
-        year = self._pyyda_syote("Vuosi:", 13, 
+        year = self._pyyda_syote("Vuosi:", 13,
                                                 InputValidation.year, "vuosi")
-        journal = self._pyyda_syote("Lehti:", 13, 
+        journal = self._pyyda_syote("Lehti:", 13,
                                                 InputValidation.not_empty, "lehti")
-        volume = self._pyyda_syote("Vuosikerta:", 13, 
+        volume = self._pyyda_syote("Vuosikerta:", 13,
                                                 InputValidation.not_empty, "vuosikerta")
-        number = self._pyyda_syote("Numero:", 13, 
+        number = self._pyyda_syote("Numero:", 13,
                                                 InputValidation.not_empty, "numero")
-        pages = self._pyyda_syote("Sivut:", 13, 
+        pages = self._pyyda_syote("Sivut:", 13,
                                                 InputValidation.not_empty, "sivut")
 
         viite = Article(author, title, publisher, year, journal, volume, number,pages)
         return viite
 
     def lue_kongerenssiviite(self):
-        author = self._pyyda_syote("Kirjoittaja:", 13, 
+        author = self._pyyda_syote("Kirjoittaja:", 13,
                                                 InputValidation.name, "nimi")
-        title = self._pyyda_syote("Otsikko:", 13, 
+        title = self._pyyda_syote("Otsikko:", 13,
                                                 InputValidation.not_empty, "otsikko")
-        publisher = self._pyyda_syote("Julkaisija:", 13, 
+        publisher = self._pyyda_syote("Julkaisija:", 13,
                                                 InputValidation.not_empty, "julkaisija")
-        year = self._pyyda_syote("Vuosi:", 13, 
+        year = self._pyyda_syote("Vuosi:", 13,
                                                 InputValidation.year, "vuosi")
-        booktitle = self._pyyda_syote("Kirjan otsikko:", 13, 
+        booktitle = self._pyyda_syote("Kirjan otsikko:", 13,
                                                 InputValidation.not_empty, "otsikko")
-        pages = pages = self._pyyda_syote("Sivut:", 13, 
+        pages = pages = self._pyyda_syote("Sivut:", 13,
                                                 InputValidation.not_empty, "sivut")
 
         viite = InProceedings(author, title, publisher, year, booktitle, pages)
@@ -239,7 +249,7 @@ class UI:
             self._konsoli_io.tulosta(vali_rivi)
 
             authors_tuple = viitteet[i].get_author().split("; ")
-           
+
             title = viitteet[i].get_title()
             publisher = viitteet[i].get_publisher()
             year = viitteet[i].get_year()
@@ -274,6 +284,6 @@ class UI:
 
     def _tulosta_figlet(self):
         figlet = Figlet(font='small')
-        
+
         self._konsoli_io.tulosta("\n")
         self._konsoli_io.tulosta(figlet.renderText('BibTeX-viiteohjelma'), Varit.VIHREA)

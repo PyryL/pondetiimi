@@ -7,7 +7,8 @@ from services.sqldb_service import SqldbService
 
 class TestBook(unittest.TestCase):
     def setUp(self):
-        self.book = Book('Kurose, Jim; Ross, Keith', 'Computer Networking', 'Pearson', '2019', '9780596520687')
+        self.book = Book('Kurose, Jim; Ross, Keith',
+                        'Computer Networking', 'Pearson', '2019', '9780596520687')
         self.bibtex_service = BibtexService()
         self.db_service = SqldbService()
         self.reference_manager = ReferenceManager(self.bibtex_service, self.db_service)
