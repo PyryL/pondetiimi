@@ -182,3 +182,8 @@ class ReferenceManager:
         self.db_service.pois_viite_databasesta(viite)
         self.viitteet.remove(viite)
     """
+
+    def hae_viite_doi(self, doi):
+        viite = self.bibtex_service.hae_bibtex_doilla(doi)
+
+        return viite

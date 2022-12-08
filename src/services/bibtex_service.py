@@ -1,7 +1,11 @@
+import bibtexparser
 from bibtexparser.bwriter import BibTexWriter
 from bibtexparser.bibdatabase import BibDatabase
 from pylatexenc.latexencode import UnicodeToLatexEncoder
 from bibtexparser.bparser import BibTexParser
+from bibtexparser.customization import convert_to_unicode
+
+import requests
 
 class FileIO:
     '''
@@ -22,7 +26,7 @@ class BibtexService:
         self.writer = BibTexWriter()
         self.database = BibDatabase()
         self.encoder = UnicodeToLatexEncoder(replacement_latex_protection='braces-all')
-        self.parser = BibTexParser()
+        self.parser = BibTexParser()    
         self.file_io = file_io
 
     def vie_viite_databaseen(self, viite): #Turha?
@@ -40,12 +44,29 @@ class BibtexService:
 
     def muunna_bibtex_dictionaryksi(self, bibtex_tietue):
         # Parse the BibTeX data
-        self.parser = BibTexParser()
         self.parser.customization = convert_to_unicode
-        bib_database = self.bibtexparser.loads(bibtex_tietue, parser=self.parser)
+        bib_database = bibtexparser.loads(bibtex_tietue, parser=self.parser)
 
         # Transform the BibTeX data into a dictionary
         bib_dict = bib_database.entries[0]
 
         # Return the dictionary
         return bib_dict
+
+    def hae_bibtex_doilla(self, doi):
+        bibtex = self.kutsu_bibtex(doi)
+        if bibtex is None:
+            return None
+        else:
+            tietue = self.muunna_bibtex_dictionaryksi(bibtex)
+            return tietue
+
+    def kutsu_bibtex(self, doi):
+        url = 'http://dx.doi.org/' + doi
+        headers = {'Accept': 'application/x-bibtex'}
+        response = requests.get(url, headers=headers)
+
+        if response.status_code == 200:
+            return response.text
+        else:
+            return None
