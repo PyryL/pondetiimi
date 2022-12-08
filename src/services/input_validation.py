@@ -5,8 +5,6 @@ class InputValidation:
 
     @classmethod
     def isbn(cls, input_string):
-        # Otettu pois käytöstä viitteiden lisäämisen helpottamiseksi.
-        # return True
         '''
         Tarkistetaan ISBN-syötteen oikellisuutta. ISBN syöte on 13 tai 10 merkkiä pitkä ja
         on oikeassa formaatissa.
@@ -19,14 +17,18 @@ class InputValidation:
         # laatimisessa käytetty virallista ohjetta täällä:
         # https://www.isbn-international.org/sites/default/files/ISBN-k%C3%A4ytt%C3%B6opas%20%28Finnish%20translation%20of%20seventh%20edition%29_0.pdf
 
-        # tarkista syotteen muoto, eli numeroiden määrä eri osissa
-        if not input_string:
+        # hyväksy tilanne, jossa ei ole annettu ISBN:ää ollenkaan
+        if input_string == "":
             return True
+
+        # tarkista, että eri osissa on jokaisessa oikea määrä numeroita
+        # lisäksi tarkista osien erottimein oikeellisuus
         regexp = "^(97(8|9)[- ]?)?\\d{1,5}[- ]?\\d{1,7}[- ]?\\d{1,6}[- ]?\\d$"
         if not re.match(regexp, input_string):
             return False
 
-        pelkat_numerot = input_string.replace("-", "").replace(" ", "")
+        # tarkista lisäksi, että numeroita on yhteensä oikea määrä
+        pelkat_numerot = [char for char in input_string if char in "0123456789"]
         return len(pelkat_numerot) in [10, 13]
 
     @classmethod
