@@ -1,5 +1,4 @@
 from entities.reference import Reference
-from services.input_validation import InputValidation
 
 class Book(Reference):
     '''
@@ -14,10 +13,6 @@ class Book(Reference):
 
     def get_isbn(self):
         return self._isbn
-
-    def set_isbn(self, isbn):
-        if InputValidation.isbn(isbn):
-            self._isbn = isbn
 
     def get_as_dictionary(self):
         viite = {"author": self._author,

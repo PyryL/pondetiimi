@@ -45,7 +45,8 @@ class Reference:
         return self._isbn
 
     def set_isbn(self, isbn):
-        self._isbn = isbn
+        if InputValidation.isbn(isbn):
+            self._isbn = isbn
 
     def get_year(self):
         return self._year
@@ -72,6 +73,3 @@ class Reference:
             self.get_title().split(" ")[0] +
             str(self.get_year())
         )
-
-    def get_id(self):
-        return self._id
