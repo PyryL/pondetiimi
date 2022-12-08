@@ -7,7 +7,7 @@ from services.sqldb_service import SqldbService
 
 class TestBook(unittest.TestCase):
     def setUp(self):
-        self.book = Book('Kurose, Jim; Ross, Keith', 'Computer Networking', 'Pearson', '2019')
+        self.book = Book('Kurose, Jim; Ross, Keith', 'Computer Networking', 'Pearson', '2019', '9780596520687')
         self.bibtex_service = BibtexService()
         self.db_service = SqldbService()
         self.reference_manager = ReferenceManager(self.bibtex_service, self.db_service)
@@ -35,10 +35,10 @@ class TestBook(unittest.TestCase):
 
     def test_after_setting_incorrect_isbn_book_isbn_not_changed(self):
         self.book.set_isbn("AAA-B-CCC-X")
-        self.assertEqual(self.book.get_isbn(), None)
+        self.assertEqual(self.book.get_isbn(), '9780596520687')
 
     def test_id_in_correct_form(self):
-        self.assertEqual(self.book.get_id(), 'Kurose2019')
+        self.assertEqual(self.book.get_id(), 'KuroseComputer2019')
 
     def test_after_setting_author_with_incorrect_value_author_not_changed(self):
         self.book.set_author("Kurose")

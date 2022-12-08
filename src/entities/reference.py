@@ -66,7 +66,12 @@ class Reference:
         return viite
 
     def generate_id(self):
-        return self.get_author() + self.get_title() + str(self.get_year())
+        # ensimmäinen sukunimi, nimen ensimmäinen sana ja vuosi
+        return (
+            self.get_author().split(",")[0] +
+            self.get_title().split(" ")[0] +
+            str(self.get_year())
+        )
 
     def get_id(self):
         return self._id
