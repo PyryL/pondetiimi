@@ -4,7 +4,7 @@ class InputValidation:
     ''' Syötteiden validointi. '''
 
     @classmethod
-    def isbn(cls, input_string):
+    def isbn(cls, input_string:str) -> bool:
         '''
         Tarkistetaan ISBN-syötteen oikellisuutta. ISBN syöte on 13 tai 10 merkkiä pitkä ja
         on oikeassa formaatissa.
@@ -32,7 +32,7 @@ class InputValidation:
         return len(pelkat_numerot) in [10, 13]
 
     @classmethod
-    def year(cls, input_string):
+    def year(cls, input_string:str) -> bool:
         '''
         Tarkistetaan Year-syötteen oikellisuutta. Syöte on muotoa 4 lukua.
         Args:
@@ -43,7 +43,7 @@ class InputValidation:
         return re.match("^\\d{4}$", input_string) is not None
 
     @classmethod
-    def name(cls, input_string):
+    def name(cls, input_string:str) -> bool:
         '''
         Tarkistetaan Author-syöte. Syöte on muotoa "Sukunimi, Etunimi; Sukunimi, Etunimi..."
         Args:
@@ -55,7 +55,7 @@ class InputValidation:
         return re.match("^([A-ZÄÖ][a-zäö]+, [A-ZÄÖ][a-zäö]+;? ?)+$", input_string) is not None
 
     @classmethod
-    def menu_command(cls, input_string):
+    def menu_command(cls, input_string:str) -> bool:
         '''
         Tarkistetaan Menu-syöte. Syöte on luku 0 - 5.
         Args:
@@ -66,7 +66,7 @@ class InputValidation:
         return re.match("^(0|1|2|3|4|5|6)$", input_string) is not None
 
     @classmethod
-    def hakumenu_command(cls, input_string):
+    def hakumenu_command(cls, input_string:str) -> bool:
         '''
         Tarkistetaan Hakumenu-syöte. Syöte on luku 0 - 5 tai kirjain x.
         Args:
@@ -77,21 +77,20 @@ class InputValidation:
         return re.match("^(0|1|2|3|4|5|x)$", input_string) is not None
 
     @classmethod
-    def not_empty(cls, input_string):
+    def not_empty(cls, input_string:str) -> bool:
         return re.match(".+", input_string) is not None
 
 
     @classmethod
-    def doi(cls, input_string):
+    def doi(cls, input_string:str) -> bool:
         # tarkista, että DOI on oikeassa formaatissa
         regexp = r'\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'<>])\S)+)\b'
         if not re.match(regexp, input_string):
             return False
-
         return True
 
     @classmethod
-    def error_message(cls, error_type="tyhja"):
+    def error_message(cls, error_type:str="tyhja") -> str:
         '''
         Palauttaa virheilmoituksen annetun virhetypin mukaan.
         Args:
