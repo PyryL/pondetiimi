@@ -19,7 +19,7 @@ class KonsoliIO:
     '''
     Käyttäjäsyötteiden hallinointi.
     '''
-    def lue(self, teksti):
+    def lue(self, teksti = ""):
         return input(teksti)
 
     def tulosta(self, teksti,

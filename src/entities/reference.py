@@ -10,7 +10,7 @@ class Reference:
         self._author = author
         self._title = title
         self._publisher = publisher
-        self._year = year
+        self._year = str(year)
         self._isbn = isbn
         self._id = self.generate_id()
         self._entrytype = entrytype or "book"

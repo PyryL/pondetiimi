@@ -228,7 +228,7 @@ class UI:
 
         while True:
             self._konsoli_io.tulosta(f"{kehote:<{kehotteen_pituus}}", Varit.KELTAINEN, lopetus="")
-            syote = self._konsoli_io.lue("")
+            syote = self._konsoli_io.lue()
             if validator(syote):
                 return syote
             self._konsoli_io.tulosta(InputValidation.error_message(virheilmoitus_tyyppi), Varit.PUNAINEN)
