@@ -82,7 +82,7 @@ class ReferenceManager:
         lista_viitteista_haetulla_kirjoittajalla = []
 
         for viite in self.viitteet:
-            if viite.get_author() == kirjoittaja:
+            if viite.get_author()== kirjoittaja:
                 lista_viitteista_haetulla_kirjoittajalla.append(viite)
 
         return lista_viitteista_haetulla_kirjoittajalla
@@ -91,7 +91,7 @@ class ReferenceManager:
         lista_viitteista_haetulla_otsikolla = []
 
         for viite in self.viitteet:
-            if viite.get_title() == otsikko:
+            if viite.get_title().lower() == otsikko.lower():
                 lista_viitteista_haetulla_otsikolla.append(viite)
 
         return lista_viitteista_haetulla_otsikolla
@@ -100,7 +100,7 @@ class ReferenceManager:
         lista_viitteista_haetulla_julkaisijalla = []
 
         for viite in self.viitteet:
-            if viite.get_publisher() == julkaisija:
+            if viite.get_publisher().lower() in julkaisija.lower():
                 lista_viitteista_haetulla_julkaisijalla.append(viite)
 
         return lista_viitteista_haetulla_julkaisijalla
@@ -130,8 +130,8 @@ class ReferenceManager:
         lista_viitteista_haetulla_avainsanalla = []
         for viite in self.viitteet:
             #Toteutus ok?
-            if avainsana in viite.get_author() or avainsana in viite.get_title()\
-                or avainsana in viite.get_publisher():
+            if avainsana.lower() in viite.get_author().lower() or avainsana.lower() in viite.get_title().lower()\
+                or avainsana.lower() in viite.get_publisher().lower() or avainsana in viite.get_year():
                 # or avainsana in viite.get_year() or avainsana in viite.get_isbn():
                 lista_viitteista_haetulla_avainsanalla.append(viite)
 
