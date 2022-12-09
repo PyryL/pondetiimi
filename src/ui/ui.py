@@ -54,12 +54,14 @@ class UI:
             elif komento == "1":
                 self.listaa_viitteet(self.reference_manager.hae_viitteet())
             elif komento == "2":
+                self.tarkastele_viitetta()
+            elif komento == "3":
                 tiedostonimi = self._pyyda_syote\
                     ("Anna tiedostonimi:", None, InputValidation.not_empty)
                 self.reference_manager.vie_viitteet_tiedostoon(tiedostonimi)
                 self._konsoli_io.tulosta("Viitteet viety tiedostoon: ", Varit.VIHREA, lopetus="")
                 self._konsoli_io.tulosta(f"{tiedostonimi}.bib", tummennus=True)
-            elif komento == "3":
+            elif komento == "4":
                 self.listaa_viitteet(self.reference_manager.hae_viitteet())
                 poistettavan_lahdeviitteen_numero = int(self._pyyda_syote\
                     ("Anna poistettavan lähdeviitteen numero:", None, InputValidation.not_empty))
@@ -68,7 +70,7 @@ class UI:
                 else:
                     self._konsoli_io.tulosta("Viitettä annetulla viitteen numerolla ei ole. Viitteen poisto epäonnistui.",
                                                 Varit.PUNAINEN, lopetus="")
-            elif komento == "4":
+            elif komento == "5":
                 self._tulosta_haku_ohje()
                 hakukomento = self._pyyda_syote("Anna komento:", None, InputValidation.hakumenu_command)
                 #INPUT VALIDATION ok?
@@ -127,7 +129,7 @@ class UI:
                 if hakukomento == "x":
                     continue
 
-            elif komento == "5":
+            elif komento == "6":
                 luettu_viite = self.lue_doi()
                 if not self.reference_manager.lisaa_uusi_viite(luettu_viite):
                     self._konsoli_io.tulosta("Viite on jo listalla!", Varit.PUNAINEN)
@@ -135,18 +137,19 @@ class UI:
                     self._konsoli_io.tulosta("Uusi artikkeliviite on lisätty!", Varit.VIHREA)
 
 
-            elif komento == "6":
+            elif komento == "7":
                 break
 
     def _tulosta_menu_ohje(self):
         komennot = {
             "0": "Luo uusi lähdeviite",
             "1": "Listaa kaikki lähdeviitteet",
-            "2": "Vie lähdeviitteet bibtex-tiedostoon",
-            "3": "Poista lähdeviite",
-            "4": "Hae hakusanalla",
-            "5": "Hae viite DOI:n perusteella",
-            "6": "Lopeta ohjelma"
+            "2": "Tarkastele viitettä tarkemmin",
+            "3": "Vie lähdeviitteet bibtex-tiedostoon",
+            "4": "Poista lähdeviite",
+            "5": "Hae hakusanalla",
+            "6": "Hae viite DOI:n perusteella",
+            "7": "Lopeta ohjelma"
         }
         self._konsoli_io.tulosta("")
         for komento, selite in komennot.items():
@@ -270,6 +273,43 @@ class UI:
             for i, viite in enumerate(viitteet)
         ])
         self._konsoli_io.tulosta(str(table))
+
+    def tarkastele_viitetta(self):
+        viitteet = self.reference_manager.hae_viitteet()
+        self.listaa_viitteet(viitteet)
+
+        def validator(input_string):
+            try:
+                _ = viitteet[int(input_string)]
+                return True
+            except (ValueError, IndexError):
+                return False
+
+        viitteen_id = self._pyyda_syote("Anna viitteen numero:", None, validator)
+        viite = viitteet[int(viitteen_id)]
+
+        kuvaukset = {
+            "author": "Kirjoittaja",
+            "title": "Otsikko",
+            "publisher": "Julkaisija",
+            "year": "Vuosi",
+            "isbn": "ISBN",
+            "ID": "ID",
+            "journal": "Lehti",
+            "volume": "Vuosikerta",
+            "number": "Numero",
+            "pages": "Sivut"
+        }
+        kuvaus_pituus = max(len(kuvaus) for kuvaus in kuvaukset.values()) + 1
+        self._konsoli_io.tulosta("")
+        for avain, arvo in viite.get_as_dictionary().items():
+            if avain in kuvaukset:
+                self._konsoli_io.tulosta(
+                    f"{kuvaukset[avain]+':' : <{kuvaus_pituus}}",
+                    tummennus=True,
+                    lopetus=""
+                )
+                self._konsoli_io.tulosta(" " + arvo, Varit.VIHREA)
 
     def _tulosta_figlet(self):
         figlet = Figlet(font='small')

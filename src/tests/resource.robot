@@ -18,10 +18,10 @@ Input List Command
     Input  1
 
 Input Export Command
-    Input  2
+    Input  3
 
 Input Exit Command
-    Input  6
+    Input  7
 
 Input Book Reference Details
     [Arguments]  ${author}  ${title}  ${publisher}  ${year}  ${isbn}
