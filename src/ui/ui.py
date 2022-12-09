@@ -18,7 +18,9 @@ class UI:
             self._tulosta_figlet()
             self._tulosta_menu_ohje()
 
+            self._konsoli_io.tulosta("")
             komento = self._pyyda_syote("Anna komento:", None, InputValidation.menu_command)
+            self._konsoli_io.tulosta("")
 
             if komento == "0":
                 self._tulosta_ohje_eri_viitetyyppien_lisaykselle()
@@ -157,7 +159,6 @@ class UI:
             "2": "Lisää uusi konferenssiviite",
             "x": "Palaa takaisin"
         }
-        self._konsoli_io.tulosta("")
         for komento, selite in komennot.items():
             self._konsoli_io.tulosta(" ", lopetus="")
             self._konsoli_io.tulosta(komento, Varit.SININEN, tummennus=True, lopetus="")
@@ -173,7 +174,6 @@ class UI:
             "5": "Hae avainsanalla",
             "x": "Palaa takaisin"
         }
-        self._konsoli_io.tulosta("")
         for komento, selite in komennot.items():
             self._konsoli_io.tulosta(" ", lopetus="")
             self._konsoli_io.tulosta(komento, Varit.SININEN, tummennus=True, lopetus="")
