@@ -80,6 +80,23 @@ class InputValidation:
     def not_empty(cls, input_string:str) -> bool:
         return re.match(".+", input_string) is not None
 
+    @classmethod
+    def article_number(cls, input_string:str) -> bool:
+        # hyväksy tyhjä syöte sekä kaikki pelkistä numeroista koostuvat syötteet
+        if input_string == "":
+            return True
+        return re.match("^\d+$", input_string)
+
+    @classmethod
+    def pages(cls, input_string:str) -> bool:
+        # hyväksy tyhjä syöte sekä kaikki muotoa a-b olevat syötteet, missä kokonaisluvut a<=b
+        if input_string == "":
+            return True
+        match = re.match("^(\d+)-(\d+)$", input_string)
+        if not match:
+            return False
+        start_page, end_page = match.groups()
+        return int(start_page) <= int(end_page)
 
     @classmethod
     def doi(cls, input_string:str) -> bool:
@@ -107,7 +124,7 @@ class InputValidation:
             "sivut": "Sivujen on oltava muotoa 'XX-XX' tai tyhjä.",
             "lehti": "Lehden nimi ei voi olla tyhjä.",
             "vuosikerta": "Vuosikerran on oltava kokonaisluku.",
-            "numero": "Lehden numeron on oltava kokonaisluku.",
+            "numero": "Lehden numeron on oltava kokonaisluku tai tyhjä.",
             "tyhja": "Virheellinen syöte."
         }
 

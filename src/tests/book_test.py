@@ -57,9 +57,9 @@ class TestBook(unittest.TestCase):
         self.book.set_year('2020')
         self.assertEqual(self.book.get_year(), '2020')
 
-    def test_after_setting_publisher_with_empty_value_publishe_not_changed(self):
+    def test_after_setting_publisher_with_empty_value_publisher_changed(self):
         self.book.set_publisher("")
-        self.assertEqual(self.book.get_publisher(), 'Pearson')
+        self.assertEqual(self.book.get_publisher(), '')
 
     def test_after_setting_publisher_with_correct_value_publisher_changed(self):
         self.book.set_publisher("Test Pearson")

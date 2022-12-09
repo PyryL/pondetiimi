@@ -199,8 +199,7 @@ class UI:
                                                 InputValidation.name, "nimi")
         title = self._pyyda_syote("Otsikko:", 13,
                                                 InputValidation.not_empty, "otsikko")
-        publisher = self._pyyda_syote("Julkaisija:", 13,
-                                                InputValidation.not_empty, "julkaisija")
+        publisher = self._pyyda_syote("Julkaisija:", 13, None, "julkaisija")
         year = self._pyyda_syote("Vuosi:", 13,
                                                 InputValidation.year, "vuosi")
         journal = self._pyyda_syote("Lehti:", 13,
@@ -208,9 +207,9 @@ class UI:
         volume = self._pyyda_syote("Vuosikerta:", 13,
                                                 InputValidation.not_empty, "vuosikerta")
         number = self._pyyda_syote("Numero:", 13,
-                                                InputValidation.not_empty, "numero")
+                                                InputValidation.article_number, "numero")
         pages = self._pyyda_syote("Sivut:", 13,
-                                                InputValidation.not_empty, "sivut")
+                                                InputValidation.pages, "sivut")
 
         viite = Article(author, title, publisher, year, journal, volume, number,pages)
         return viite
@@ -220,14 +219,13 @@ class UI:
                                                 InputValidation.name, "nimi")
         title = self._pyyda_syote("Otsikko:", 13,
                                                 InputValidation.not_empty, "otsikko")
-        publisher = self._pyyda_syote("Julkaisija:", 13,
-                                                InputValidation.not_empty, "julkaisija")
+        publisher = self._pyyda_syote("Julkaisija:", 13, None, "julkaisija")
         year = self._pyyda_syote("Vuosi:", 13,
                                                 InputValidation.year, "vuosi")
         booktitle = self._pyyda_syote("Kirjan otsikko:", 13,
                                                 InputValidation.not_empty, "otsikko")
         pages = pages = self._pyyda_syote("Sivut:", 13,
-                                                InputValidation.not_empty, "sivut")
+                                                InputValidation.pages, "sivut")
 
         viite = InProceedings(author, title, publisher, year, booktitle, pages)
         return viite
@@ -257,7 +255,7 @@ class UI:
         while True:
             self._konsoli_io.tulosta(f"{kehote:<{kehotteen_pituus}}", Varit.KELTAINEN, lopetus="")
             syote = self._konsoli_io.lue()
-            if validator(syote):
+            if validator is None or validator(syote):
                 return syote
             self._konsoli_io.tulosta(InputValidation.error_message(virheilmoitus_tyyppi), Varit.PUNAINEN)
 
