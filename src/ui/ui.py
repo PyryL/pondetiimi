@@ -60,6 +60,7 @@ class UI:
                 self._konsoli_io.tulosta("Viitteet viety tiedostoon: ", Varit.VIHREA, lopetus="")
                 self._konsoli_io.tulosta(f"{tiedostonimi}.bib", tummennus=True)
             elif komento == "3":
+                self.listaa_viitteet(self.reference_manager.hae_viitteet())
                 poistettavan_lahdeviitteen_numero = int(self._pyyda_syote\
                     ("Anna poistettavan lähdeviitteen numero:", None, InputValidation.not_empty))
                 if self.reference_manager.poista_viite_viitteen_numeron_mukaan(poistettavan_lahdeviitteen_numero):
