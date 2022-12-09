@@ -107,7 +107,7 @@ class InputValidation:
         return True
 
     @classmethod
-    def error_message(cls, error_type:str) -> str:
+    def error_message(cls, error_type:str="tyhja") -> str:
         '''
         Palauttaa virheilmoituksen annetun virhetypin mukaan.
         Args:
