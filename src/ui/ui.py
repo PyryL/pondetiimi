@@ -1,4 +1,5 @@
 from pyfiglet import Figlet
+from prettytable import PrettyTable, SINGLE_BORDER as PrettyTableStyle
 from entities.book import Book
 from entities.article import Article
 from entities.inproceedings import InProceedings
@@ -260,53 +261,14 @@ class UI:
             self._konsoli_io.tulosta(InputValidation.error_message(virheilmoitus_tyyppi), Varit.PUNAINEN)
 
     def listaa_viitteet(self, viitteet):
-        eka_rivi = ""
-        eka_rivi += "-" * 207
-
-        toka_rivi = f"| Nro: |  Viitetyyppi:  | {'':5} Kirjoittajat: {'':5} | {'':10} Otsikko: {'':10} |  Julkaisija:  | Vuosi: | {'':5} ISBN: {'':5} | {'':6} Journal {'':7} | Volume: | Number: |   Booktitle:    |   Pages:   |"
-
-        vali_rivi = eka_rivi
-        vika_rivi = eka_rivi
-
-        self._konsoli_io.tulosta("\n" + eka_rivi)
-        self._konsoli_io.tulosta(toka_rivi)
-
-        for i in range(len(viitteet)):
-            self._konsoli_io.tulosta(vali_rivi)
-
-            authors_tuple = viitteet[i].get_author().split("; ")
-
-            title = viitteet[i].get_title()
-            publisher = viitteet[i].get_publisher()
-            year = viitteet[i].get_year()
-            isbn = "-"
-            journal = "-"
-            volume = "-"
-            number = "-"
-            booktitle = "-"
-            pages = "-"
-            entry_type = viitteet[i].get_entrytype()
-
-            if entry_type == "book":
-                isbn = viitteet[i].get_isbn()
-            elif entry_type == "article":
-                journal = viitteet[i].get_journal()
-                volume = viitteet[i].get_volume()
-                number = viitteet[i].get_number()
-                pages = viitteet[i].get_pages()
-            elif entry_type == "proceedings":
-                booktitle = viitteet[i].get_booktitle()
-                pages = viitteet[i].get_pages()
-
-            tulostettava_rivi = f"|  {i:3} | {entry_type:14} | {authors_tuple[0]:25} | {title:30} | {publisher:13} | {year:6} | {isbn:17} | {journal:22} | {volume:7} | {number:7} | {booktitle:15} | {pages:10} |"
-
-            self._konsoli_io.tulosta(tulostettava_rivi)
-
-            for j in range(len(authors_tuple) - 1):
-                tulostettava_rivi = f"|      | {'':14} | {authors_tuple[j + 1]:25} | {'':30} | {'':13} | {'':6} | {'':17} | {'':22} | {'':7} | {'':7} | {'':15} | {'':10} |"
-                self._konsoli_io.tulosta(tulostettava_rivi)
-
-        self._konsoli_io.tulosta(vika_rivi)
+        table = PrettyTable(["Nro", "Kirjoittajat", "Otsikko", "Vuosi"], align='l', max_width=40)
+        table.set_style(PrettyTableStyle)
+        table.align["Nro"] = "c"
+        table.add_rows([
+            (i, viite.get_author().replace("; ", "\n"), viite.get_title(), viite.get_year())
+            for i, viite in enumerate(viitteet)
+        ])
+        self._konsoli_io.tulosta(str(table))
 
     def _tulosta_figlet(self):
         figlet = Figlet(font='small')

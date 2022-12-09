@@ -8,6 +8,9 @@ List All References Successfully
     Input List Command
     Input Exit Command
     Run Application
-    Output Should Contain  ----------------------------------------------------------------------------------------------------
+    Output Should Contain  Nro
+    Output Should Contain  Kirjoittajat
+    Output Should Contain  Otsikko
+    Output Should Contain  Vuosi
 
 *** Keywords ***
