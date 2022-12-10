@@ -52,7 +52,10 @@ class InputValidation:
             (Boolean): True, jos syöte täyttää vaatimuksen.
         '''
         # hyväksytään kaikki merkkijonot
-        return re.match("^([A-ZÄÖ][a-zäö]+, [A-ZÄÖ][a-zäö]+;? ?)+$", input_string) is not None
+
+        if input_string == "":
+            return True
+        return re.match("^([A-ZÄÖ][a-zäö]+, [A-ZÄÖ][a-zäö]+)", input_string) is not None
 
     @classmethod
     def menu_command(cls, input_string:str) -> bool:

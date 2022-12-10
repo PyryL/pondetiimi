@@ -185,8 +185,7 @@ class UI:
             self._konsoli_io.tulosta(" " + selite)
 
     def lue_kirja(self):
-        author = self._pyyda_syote("Kirjoittaja:", 13,
-                                                InputValidation.name, "nimi")
+        author = self.lue_nimet()
         title = self._pyyda_syote("Otsikko:", 13,
                                                 InputValidation.not_empty, "otsikko")
         publisher = self._pyyda_syote("Julkaisija:", 13,
@@ -200,8 +199,7 @@ class UI:
         return viite
 
     def lue_artikkeli(self):
-        author = self._pyyda_syote("Kirjoittaja:", 13,
-                                                InputValidation.name, "nimi")
+        author = self.lue_nimet()
         title = self._pyyda_syote("Otsikko:", 13,
                                                 InputValidation.not_empty, "otsikko")
         publisher = self._pyyda_syote("Julkaisija:", 13, None, "julkaisija")
@@ -220,8 +218,7 @@ class UI:
         return viite
 
     def lue_kongerenssiviite(self):
-        author = self._pyyda_syote("Kirjoittaja:", 13,
-                                                InputValidation.name, "nimi")
+        author = self.lue_nimet()
         title = self._pyyda_syote("Otsikko:", 13,
                                                 InputValidation.not_empty, "otsikko")
         publisher = self._pyyda_syote("Julkaisija:", 13, None, "julkaisija")
@@ -234,6 +231,23 @@ class UI:
 
         viite = InProceedings(author, title, publisher, year, booktitle, pages)
         return viite
+    
+    def lue_nimet(self):
+        nimilista = []
+        self._konsoli_io.tulosta("Syöta tekijät yksi kerrallaan muodossa Sukunimi, Etunimi. Tyhjä syöte lopettaa.\n",
+                                         Varit.KELTAINEN)
+        while True:
+            author = self._pyyda_syote("Kirjoittaja:", 13,
+                                        InputValidation.name, "nimi")
+            if author == "":
+                break
+            nimilista.append(author)
+        if not len(nimilista):
+            self._konsoli_io.tulosta("Viitteella on oltava vähintään yksi kirjoittaja!",
+                                         Varit.PUNAINEN)
+            self.lue_nimet()
+        else:
+            return ' '.join(nimi+';' for nimi in nimilista)
 
     def lue_doi(self):
         doi = self._pyyda_syote("Anna haettava DOI:", None, InputValidation.doi)
