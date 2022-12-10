@@ -1,10 +1,11 @@
 import re
 
+
 class InputValidation:
     ''' Syötteiden validointi. '''
 
     @classmethod
-    def isbn(cls, input_string:str) -> bool:
+    def isbn(cls, input_string: str) -> bool:
         '''
         Tarkistetaan ISBN-syötteen oikellisuutta. ISBN syöte on 13 tai 10 merkkiä pitkä ja
         on oikeassa formaatissa.
@@ -28,11 +29,12 @@ class InputValidation:
             return False
 
         # tarkista lisäksi, että numeroita on yhteensä oikea määrä
-        pelkat_numerot = [char for char in input_string if char in "0123456789"]
+        pelkat_numerot = [
+            char for char in input_string if char in "0123456789"]
         return len(pelkat_numerot) in [10, 13]
 
     @classmethod
-    def year(cls, input_string:str) -> bool:
+    def year(cls, input_string: str) -> bool:
         '''
         Tarkistetaan Year-syötteen oikellisuutta. Syöte on muotoa 4 lukua.
         Args:
@@ -43,7 +45,7 @@ class InputValidation:
         return re.match("^\\d{4}$", input_string) is not None
 
     @classmethod
-    def name(cls, input_string:str) -> bool:
+    def name(cls, input_string: str) -> bool:
         '''
         Tarkistetaan Author-syöte. Syöte on muotoa "Sukunimi, Etunimi; Sukunimi, Etunimi..."
         Args:
@@ -55,7 +57,7 @@ class InputValidation:
         return re.match("^([A-ZÄÖ][a-zäö]+, [A-ZÄÖ][a-zäö]+;? ?)+$", input_string) is not None
 
     @classmethod
-    def menu_command(cls, input_string:str) -> bool:
+    def menu_command(cls, input_string: str) -> bool:
         '''
         Tarkistetaan Menu-syöte. Syöte on luku 0 - 5.
         Args:
@@ -66,7 +68,7 @@ class InputValidation:
         return re.match("^[0-7]$", input_string) is not None
 
     @classmethod
-    def hakumenu_command(cls, input_string:str) -> bool:
+    def hakumenu_command(cls, input_string: str) -> bool:
         '''
         Tarkistetaan Hakumenu-syöte. Syöte on luku 0 - 5 tai kirjain x.
         Args:
@@ -77,29 +79,29 @@ class InputValidation:
         return re.match("^(0|1|2|3|4|5|x)$", input_string) is not None
 
     @classmethod
-    def not_empty(cls, input_string:str) -> bool:
+    def not_empty(cls, input_string: str) -> bool:
         return re.match(".+", input_string) is not None
 
     @classmethod
-    def article_number(cls, input_string:str) -> bool:
+    def article_number(cls, input_string: str) -> bool:
         # hyväksy tyhjä syöte sekä kaikki pelkistä numeroista koostuvat syötteet
         if input_string == "":
             return True
-        return re.match("^\d+$", input_string)
+        return re.match("^\\d+$", input_string)
 
     @classmethod
-    def pages(cls, input_string:str) -> bool:
+    def pages(cls, input_string: str) -> bool:
         # hyväksy tyhjä syöte sekä kaikki muotoa a-b olevat syötteet, missä kokonaisluvut a<=b
         if input_string == "":
             return True
-        match = re.match("^(\d+)-(\d+)$", input_string)
+        match = re.match("^(\\d+)-(\\d+)$", input_string)
         if not match:
             return False
         start_page, end_page = match.groups()
         return int(start_page) <= int(end_page)
 
     @classmethod
-    def doi(cls, input_string:str) -> bool:
+    def doi(cls, input_string: str) -> bool:
         # tarkista, että DOI on oikeassa formaatissa
         regexp = r'\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'<>])\S)+)\b'
         if not re.match(regexp, input_string):
@@ -107,7 +109,7 @@ class InputValidation:
         return True
 
     @classmethod
-    def error_message(cls, error_type:str="tyhja") -> str:
+    def error_message(cls, error_type: str = "tyhja") -> str:
         '''
         Palauttaa virheilmoituksen annetun virhetypin mukaan.
         Args:
