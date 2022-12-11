@@ -90,6 +90,10 @@ class InputValidation:
         return True
 
     @classmethod
+    def hakusana(cls, input_string:str) -> bool:
+        return True
+
+    @classmethod
     def error_message(cls, error_type:str="tyhja") -> str:
         '''
         Palauttaa virheilmoituksen annetun virhetypin mukaan.
