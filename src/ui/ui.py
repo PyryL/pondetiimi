@@ -17,6 +17,10 @@ class UI:
     def run(self):
         while True:
             self._tulosta_figlet()
+
+            if len(self.reference_manager.get_filtterit()) > 0:
+                self._tulosta_filtterit_ja_operandit(self.reference_manager.get_filtterit(), "and")
+
             self._tulosta_menu_ohje()
 
             self._konsoli_io.tulosta("")
@@ -28,7 +32,6 @@ class UI:
                 # Korjaa validation ja lisää
                 lisattavan_viitetyypin_numero = self._pyyda_syote("Anna komento:",
                                                         None, InputValidation.hakumenu_command)
-
                 if lisattavan_viitetyypin_numero == "0":
                     luettu_viite = self.lue_kirja()
                     #TARK ONKO JO LISTALLA TOIMII KUNNOLLA?
@@ -50,18 +53,27 @@ class UI:
                         self._konsoli_io.tulosta("Viite on jo listalla!", Varit.PUNAINEN)
                     else:
                         self._konsoli_io.tulosta("Uusi konferenssiviite on lisätty!", Varit.VIHREA)
-
             elif komento == "1":
-                self.listaa_viitteet(self.reference_manager.hae_viitteet())
+                if len(self.reference_manager.get_filtterit()) > 0:
+                    filtteroity_lista = self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and() #Nyt vain yksi operandi 'AND'
+                    
+                    if len(filtteroity_lista) > 0:
+                        self.listaa_viitteet(filtteroity_lista)
+                    else:
+                        self._konsoli_io.tulosta("\nViitteitä asetetuilla filttereillä ei löytynyt!",
+                                                Varit.PUNAINEN, lopetus="")
+                else:
+                    self.listaa_viitteet(self.reference_manager.hae_viitteet())
+            #elif komento == "2":
+                #self.tarkastele_viitetta()
             elif komento == "2":
-                self.tarkastele_viitetta()
-            elif komento == "3":
                 tiedostonimi = self._pyyda_syote\
                     ("Anna tiedostonimi:", None, InputValidation.not_empty)
                 self.reference_manager.vie_viitteet_tiedostoon(tiedostonimi)
                 self._konsoli_io.tulosta("Viitteet viety tiedostoon: ", Varit.VIHREA, lopetus="")
                 self._konsoli_io.tulosta(f"{tiedostonimi}.bib", tummennus=True)
-            elif komento == "4":
+            
+            elif komento == "3":
                 self.listaa_viitteet(self.reference_manager.hae_viitteet())
                 poistettavan_lahdeviitteen_numero = int(self._pyyda_syote\
                     ("Anna poistettavan lähdeviitteen numero:", None, InputValidation.not_empty))
@@ -70,66 +82,45 @@ class UI:
                 else:
                     self._konsoli_io.tulosta("Viitettä annetulla viitteen numerolla ei ole. Viitteen poisto epäonnistui.",
                                                 Varit.PUNAINEN, lopetus="")
-            elif komento == "5":
-                self._tulosta_haku_ohje()
-                hakukomento = self._pyyda_syote("Anna komento:", None, InputValidation.hakumenu_command)
-                #INPUT VALIDATION ok?
-                if hakukomento == "0":
-                    kirjoittaja = self._pyyda_syote("Anna haettava kirjoittaja:", None, InputValidation.name)
-                    lista_viitteista_haetulla_kirjoittajalla = self.reference_manager.hae_viitteista_kirjoittajalla(kirjoittaja)
-                    if len(lista_viitteista_haetulla_kirjoittajalla) > 0:
-                        self.listaa_viitteet(lista_viitteista_haetulla_kirjoittajalla)
-                    else:
-                        self._konsoli_io.tulosta("Viitteitä annetulla hakusanalla ei löytynyt.",
-                                                    Varit.PUNAINEN, lopetus="")
-                if hakukomento == "1":
-                    otsikko = self._pyyda_syote("Anna haettava otsikko:",
-                                                None, InputValidation.not_empty)
-                    lista_viitteista_haetulla_otsikolla = self.reference_manager.hae_viitteista_otsikolla(otsikko)
-                    if len(lista_viitteista_haetulla_otsikolla) > 0:
-                        self.listaa_viitteet(lista_viitteista_haetulla_otsikolla)
-                    else:
-                        self._konsoli_io.tulosta("Viitteitä annetulla hakusanalla ei löytynyt.",
-                                                    Varit.PUNAINEN, lopetus="")
-                if hakukomento == "2":
-                    julkaisija = self._pyyda_syote("Anna haettava julkaisija:",
-                                                    None, InputValidation.not_empty)
-                    lista_viitteista_haetulla_julkaisijalla = self.reference_manager.hae_viitteista_julkaisijalla(julkaisija)
-                    if len(lista_viitteista_haetulla_julkaisijalla) > 0:
-                        self.listaa_viitteet(lista_viitteista_haetulla_julkaisijalla)
-                    else:
-                        self._konsoli_io.tulosta("Viitteitä annetulla hakusanalla ei löytynyt.",
-                                                    Varit.PUNAINEN, lopetus="")
-                if hakukomento == "3":
-                    vuosiluku = self._pyyda_syote("Anna haettava vuosiluku:", None, InputValidation.year)
-                    lista_viitteista_haetulla_vuosiluvulla = self.reference_manager.hae_viitteista_vuosiluvulla(vuosiluku)
-                    if len(lista_viitteista_haetulla_vuosiluvulla) > 0:
-                        self.listaa_viitteet(lista_viitteista_haetulla_vuosiluvulla)
-                    else:
-                        self._konsoli_io.tulosta("Viitteitä annetulla hakusanalla ei löytynyt.",
-                                                    Varit.PUNAINEN, lopetus="")
-                #Ongelma muille viitetyypeille?
-                if hakukomento == "4":
-                    isbn = self._pyyda_syote("Anna haettava isbn:", None, InputValidation.isbn)
-                    lista_viitteista_haetulla_isbnlla = self.reference_manager.hae_viitteista_isbnlla(isbn)
-                    if len(lista_viitteista_haetulla_isbnlla) > 0:
-                        self.listaa_viitteet(lista_viitteista_haetulla_isbnlla)
-                    else:
-                        self._konsoli_io.tulosta("Viitteitä annetulla hakusanalla ei löytynyt.",
-                                                    Varit.PUNAINEN, lopetus="")
-                if hakukomento == "5":
-                    avainsana = self._pyyda_syote("Anna haettava avainsana:",
-                                                    None, InputValidation.not_empty)
-                    lista_viitteista_haetulla_avainsanalla = self.reference_manager.hae_viitteista_avainsanalla(avainsana)
-                    if len(lista_viitteista_haetulla_avainsanalla) > 0:
-                        self.listaa_viitteet(lista_viitteista_haetulla_avainsanalla)
-                    else:
-                        self._konsoli_io.tulosta("Viitteitä annetulla hakusanalla ei löytynyt.",
-                                                    Varit.PUNAINEN, lopetus="")
-                if hakukomento == "x":
+
+            elif komento == "4":
+                while(True):                   
+                    if len(self.reference_manager.get_hakusanat()) > 0:
+                        self._tulosta_hakusanat_ja_operandit(self.reference_manager.get_hakusanat(), "and")
+
+                    hakusana = self._pyyda_syote("\nLisää hakusana [tyhjä lopettaa]:", None, InputValidation.hakusana) #Lisää InputValidation.hakusana
+
+                    if hakusana == "":
+                        break
+
+                    if self.reference_manager.hakusana_jo_lisatty(hakusana): #Kirjainkoolla merkitystä?
+                        self._konsoli_io.tulosta("\nHakusana on jo annettu.\n",
+                                                Varit.PUNAINEN, lopetus="")
+                        continue
+
+                    self.reference_manager.lisaa_hakusana(hakusana)
+
+                if len(self.reference_manager.get_hakusanat()) == 0:
+                    self._konsoli_io.tulosta("\nHakusanoja ei annettu. Haku epäonnistui.",
+                                                Varit.PUNAINEN, lopetus="")
                     continue
 
-            elif komento == "6":
+                hakutuloslista = self.reference_manager.hae_hakusanoilla_kun_operandi_and() #Nyt vain yksi operandi 'AND'
+            
+                if len(hakutuloslista) > 0:
+                    self._konsoli_io.tulosta("\nHakusanojen syöttö lopetettu.\n",
+                                                Varit.VIHREA, lopetus="")
+                    self._tulosta_kaytetyt_hakusanat_ja_operandit(self.reference_manager.get_hakusanat(), "and")
+                    self._konsoli_io.tulosta("")
+                    self.listaa_viitteet(hakutuloslista)
+                else:
+                    self._konsoli_io.tulosta("\nHakutuloksia annetuilla hakusanoilla ei löytynyt!",
+                                                Varit.PUNAINEN, lopetus="")
+
+                self.reference_manager.tyhjenna_hakusanat()
+
+            elif komento == "5":
+
                 luettu_viite = self.lue_doi()
                 if not self.reference_manager.lisaa_uusi_viite(luettu_viite):
                     self._konsoli_io.tulosta("Viite on jo listalla!", Varit.PUNAINEN)
@@ -137,19 +128,45 @@ class UI:
                     self._konsoli_io.tulosta("Uusi artikkeliviite on lisätty!", Varit.VIHREA)
 
 
-            elif komento == "7":
-                break
+            elif komento == "6":
+                while(True):
+                    if len(self.reference_manager.get_filtterit()) > 0:
+                        self._tulosta_filtterit_ja_operandit(self.reference_manager.get_filtterit(), "and")
 
+                    filtteri = self._pyyda_syote("\nLisää filtteri [tyhjä lopettaa]:", None, InputValidation.hakusana) #Lisää InputValidation.filtteri
+
+                    if filtteri == "":
+                        #Tulosta: filttereitä ei annettu?
+                        break
+
+                    if self.reference_manager.filtteri_jo_lisatty(filtteri): #Kirjainkoolla merkitystä?
+                        self._konsoli_io.tulosta("\nFiltteri on jo lisätty.\n",
+                                                Varit.PUNAINEN, lopetus="")
+                        continue
+
+                    self.reference_manager.lisaa_filtteri(filtteri)
+
+                self._konsoli_io.tulosta("\nFilttereiden syöttö lopetettu.\n",
+                                            Varit.VIHREA, lopetus="")
+            elif komento == "7":
+                self.reference_manager.poista_filtterit()
+                self._konsoli_io.tulosta("\nFiltterit poistettu!\n",
+                                            Varit.VIHREA, lopetus="")
+            elif komento == "8":
+                break
+    
     def _tulosta_menu_ohje(self):
         komennot = {
             "0": "Luo uusi lähdeviite",
             "1": "Listaa kaikki lähdeviitteet",
-            "2": "Tarkastele viitettä tarkemmin",
-            "3": "Vie lähdeviitteet bibtex-tiedostoon",
-            "4": "Poista lähdeviite",
-            "5": "Hae hakusanalla",
-            "6": "Hae viite DOI:n perusteella",
-            "7": "Lopeta ohjelma"
+            "2": "Vie lähdeviitteet bibtex-tiedostoon",
+            "3": "Poista lähdeviite",
+            "4": "Hae hakusanalla",
+            "5": "Hae viite DOI:n perusteella",
+            "6": "Lisää filttereitä",
+            "7": "Poista filtterit",
+            "8": "Lopeta ohjelma"
+
         }
         self._konsoli_io.tulosta("")
         for komento, selite in komennot.items():
@@ -168,7 +185,7 @@ class UI:
             self._konsoli_io.tulosta(" ", lopetus="")
             self._konsoli_io.tulosta(komento, Varit.SININEN, tummennus=True, lopetus="")
             self._konsoli_io.tulosta(" " + selite)
-
+    #
     def _tulosta_haku_ohje(self):
         komennot = {
             "0": "Hae kirjoittajalla",
@@ -183,6 +200,49 @@ class UI:
             self._konsoli_io.tulosta(" ", lopetus="")
             self._konsoli_io.tulosta(komento, Varit.SININEN, tummennus=True, lopetus="")
             self._konsoli_io.tulosta(" " + selite)
+
+    """ Ei käytössä:
+    def _tulosta_operandi_ohje(self):
+        komennot = {
+            "0": "AND",
+            "1": "OR",
+            #"x": "Palaa takaisin"
+        }
+        self._konsoli_io.tulosta("")
+        for komento, selite in komennot.items():
+            self._konsoli_io.tulosta(" ", lopetus="")
+            self._konsoli_io.tulosta(komento, Varit.SININEN, tummennus=True, lopetus="")
+            self._konsoli_io.tulosta(" " + selite)
+    """
+
+    #Refaktoroi _tulosta_kaytetyt_hakusanat_ja_operandit() kanssa:
+    def _tulosta_hakusanat_ja_operandit(self, hakusanat, operandi):
+        hakusanat_string = "\nKäytetyt hakusanat: '" + hakusanat[0] +"'"
+
+        for i in range(len(hakusanat)-1):
+            hakusanat_string += " " + operandi + " '" + hakusanat[i+1] + "'"
+        
+        self._konsoli_io.tulosta(hakusanat_string, Varit.VIHREA)
+
+    def _tulosta_kaytetyt_hakusanat_ja_operandit(self, hakusanat, operandi):
+        hakusanat_string = "\nHakutulokset hakusanoilla: '" + hakusanat[0] +"'"
+
+        for i in range(len(hakusanat)-1):
+            hakusanat_string += " " + operandi + " '" + hakusanat[i+1] + "'"
+        
+        hakusanat_string += ":"
+
+        self._konsoli_io.tulosta(hakusanat_string, Varit.VIHREA)
+
+    def _tulosta_filtterit_ja_operandit(self, filtterit, operandi):
+        filtterit_string = "\nKäytössä filtterit: '" + filtterit[0] +"'"
+
+        for i in range(len(filtterit)-1):
+            filtterit_string += " " + operandi + " '" + filtterit[i+1] + "'"
+        
+        filtterit_string += ":"
+
+        self._konsoli_io.tulosta(filtterit_string, Varit.VIHREA)
 
     def lue_kirja(self):
         author = self.lue_nimet()

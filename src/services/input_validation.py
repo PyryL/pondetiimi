@@ -66,7 +66,9 @@ class InputValidation:
         Returns
             (Boolean): True, jos syöte täyttää vaatimuksen.
         '''
-        return re.match("^[0-7]$", input_string) is not None
+
+        return re.match("^[0-8]$", input_string) is not None
+
 
     @classmethod
     def hakumenu_command(cls, input_string:str) -> bool:
@@ -107,6 +109,10 @@ class InputValidation:
         regexp = r'\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'<>])\S)+)\b'
         if not re.match(regexp, input_string):
             return False
+        return True
+
+    @classmethod
+    def hakusana(cls, input_string:str) -> bool:
         return True
 
     @classmethod
