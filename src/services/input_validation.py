@@ -63,7 +63,7 @@ class InputValidation:
         Returns
             (Boolean): True, jos syöte täyttää vaatimuksen.
         '''
-        return re.match("^(0|1|2|3|4|5|6)$", input_string) is not None
+        return re.match("^(0|1|2|3|4|5|6|7|8)$", input_string) is not None
 
     @classmethod
     def hakumenu_command(cls, input_string:str) -> bool:

@@ -13,6 +13,71 @@ class ReferenceManager:
         self.tallennettujen_hakusanojen_operandi = "AND" #Default yksi operandi
         #self.tallennettujen_hakusanojen_operandit= [] Useita operandeja
 
+        self.tallennetut_filtterit = []
+
+    def get_filtterit(self):
+        return self.tallennetut_filtterit
+
+    def filtteri_jo_lisatty(self, filtteri):
+        for tallennettu_filtteri in self.tallennetut_filtterit:
+            #if tallennettu_hakusana.casefold() == hakusana.casefold():
+            if tallennettu_filtteri == filtteri:
+                return True
+        return False
+
+    def lisaa_filtteri(self, filtteri):
+        if self.filtteri_jo_lisatty(filtteri):
+            return False
+        """
+        for tallennettu_hakusana in self.tallennetut_hakusanat:
+            if tallennettu_hakusana == hakusana:
+                return False
+        """
+        self.tallennetut_filtterit.append(filtteri)
+        return True
+
+    def poista_filtterit(self):
+        self.tallennetut_filtterit.clear()
+
+    def hae_filtterihakusanoilla_kun_operandi_and(self):
+        return self.hae_viitelistasta_matchit_hakusanalistalla_kun_operandi_and(self.viitteet, self.tallennetut_filtterit)
+
+    # Refaktoroi
+    #Laajenna avainsana muihin viitetyyppeihin ja viitetekijöihin
+    def hae_viitelistasta_hakusanalla(self, viitelista, hakusana):
+        lista_viitteista_haetulla_hakusanalla = []
+        for viite in viitelista:
+            if hakusana.casefold() in viite.get_author().casefold() or hakusana.casefold() in viite.get_title().casefold()\
+                or hakusana in viite.get_publisher().casefold():
+                # or avainsana in viite.get_year() or avainsana in viite.get_isbn():
+                lista_viitteista_haetulla_hakusanalla.append(viite)
+
+        return lista_viitteista_haetulla_hakusanalla
+
+    # Refaktoroi
+    def hae_viitelistasta_matchit_hakusanalistalla_kun_operandi_and(self, viitelista, hakusanalista):
+        hakusanojen_match_lista = []
+        hakusanojen_match_listasta_poistettavien_lista = []
+        ensimmaisen_hakusanan_match_lista = self.hae_viitelistasta_hakusanalla(viitelista, hakusanalista[0])
+
+        for i in range(len(ensimmaisen_hakusanan_match_lista)):
+            for j in range(len(hakusanalista) - 1):
+                #Erittele eri tapaukset eri viitetyypeille ja lisää haut eri viitetekijöille:
+                kytkin = False
+
+                if not (hakusanalista[j+1].casefold() in ensimmaisen_hakusanan_match_lista[i].get_author().casefold() or hakusanalista[j+1].casefold() in ensimmaisen_hakusanan_match_lista[i].get_title().casefold()\
+                    or hakusanalista[j+1].casefold() in ensimmaisen_hakusanan_match_lista[i].get_publisher().casefold()):
+                    kytkin = True
+
+                if kytkin:
+                    hakusanojen_match_listasta_poistettavien_lista.append(ensimmaisen_hakusanan_match_lista[i])
+
+        for ensimmaisen_hakusanan_match in ensimmaisen_hakusanan_match_lista:
+            if self.hae_viitteen_indeksi_viitelistassa(ensimmaisen_hakusanan_match, hakusanojen_match_listasta_poistettavien_lista) == -1:
+                hakusanojen_match_lista.append(ensimmaisen_hakusanan_match)
+
+        return hakusanojen_match_lista
+
     def tyhjenna_hakusanat(self):
         self.tallennetut_hakusanat.clear()
 
