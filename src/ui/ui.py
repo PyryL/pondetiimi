@@ -64,15 +64,16 @@ class UI:
                                                 Varit.PUNAINEN, lopetus="")
                 else:
                     self.listaa_viitteet(self.reference_manager.hae_viitteet())
+            #elif komento == "2":
+                #self.tarkastele_viitetta()
             elif komento == "2":
-                self.tarkastele_viitetta()
-            elif komento == "3":
                 tiedostonimi = self._pyyda_syote\
                     ("Anna tiedostonimi:", None, InputValidation.not_empty)
                 self.reference_manager.vie_viitteet_tiedostoon(tiedostonimi)
                 self._konsoli_io.tulosta("Viitteet viety tiedostoon: ", Varit.VIHREA, lopetus="")
                 self._konsoli_io.tulosta(f"{tiedostonimi}.bib", tummennus=True)
-            '''elif komento == "4":
+            
+            elif komento == "3":
                 self.listaa_viitteet(self.reference_manager.hae_viitteet())
                 poistettavan_lahdeviitteen_numero = int(self._pyyda_syote\
                     ("Anna poistettavan lähdeviitteen numero:", None, InputValidation.not_empty))
@@ -80,7 +81,7 @@ class UI:
                     self._konsoli_io.tulosta("Viite poistettu!", Varit.VIHREA, lopetus="")
                 else:
                     self._konsoli_io.tulosta("Viitettä annetulla viitteen numerolla ei ole. Viitteen poisto epäonnistui.",
-                                                Varit.PUNAINEN, lopetus="")'''
+                                                Varit.PUNAINEN, lopetus="")
 
             elif komento == "4":
                 while(True):                   
