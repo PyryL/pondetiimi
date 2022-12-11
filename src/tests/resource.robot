@@ -18,7 +18,7 @@ Input List Command
     Input  1
 
 Input Export Command
-    Input  3
+    Input  2
 
 Input Exit Command
     Input  8
