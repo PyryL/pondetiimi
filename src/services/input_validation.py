@@ -18,8 +18,7 @@ class InputValidation:
         # https://www.isbn-international.org/sites/default/files/ISBN-k%C3%A4ytt%C3%B6opas%20%28Finnish%20translation%20of%20seventh%20edition%29_0.pdf
 
         # hyväksy tilanne, jossa ei ole annettu ISBN:ää ollenkaan
-        if input_string == "":
-            return True
+        is_empty(input_string)
 
         # tarkista, että eri osissa on jokaisessa oikea määrä numeroita
         # lisäksi tarkista osien erottimein oikeellisuus
@@ -53,8 +52,7 @@ class InputValidation:
         '''
         # hyväksytään kaikki merkkijonot
 
-        if input_string == "":
-            return True
+        is_empty(input_string)
         return re.match("^([A-ZÄÖ][a-zäö]+, [A-ZÄÖ][a-zäö]+)", input_string) is not None
 
     @classmethod
@@ -86,17 +84,19 @@ class InputValidation:
         return re.match(".+", input_string) is not None
 
     @classmethod
+    def is_empty(cls, input_string:str) -> bool:
+        return True if input_string == "" else False
+        
+    @classmethod
     def article_number(cls, input_string:str) -> bool:
         # hyväksy tyhjä syöte sekä kaikki pelkistä numeroista koostuvat syötteet
-        if input_string == "":
-            return True
+        is_empty(input_string)
         return re.match("^\d+$", input_string)
 
     @classmethod
     def pages(cls, input_string:str) -> bool:
         # hyväksy tyhjä syöte sekä kaikki muotoa a-b olevat syötteet, missä kokonaisluvut a<=b
-        if input_string == "":
-            return True
+        is_empty(input_string)
         match = re.match("^(\d+)-(\d+)$", input_string)
         if not match:
             return False
