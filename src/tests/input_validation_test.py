@@ -43,7 +43,7 @@ class TestInputValidation(unittest.TestCase):
             self.assertTrue(InputValidation.menu_command(str(i)))
 
     def test_menu_komento_liian_suurella_numerolla(self):
-        self.assertFalse(InputValidation.menu_command("9"))
+        self.assertFalse(InputValidation.menu_command("10"))
 
     def test_ei_tyhja_kelvolla_syotteella(self):
         self.assertTrue(InputValidation.not_empty("ei tyhjä"))

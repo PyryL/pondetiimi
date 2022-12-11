@@ -67,7 +67,7 @@ class InputValidation:
             (Boolean): True, jos syöte täyttää vaatimuksen.
         '''
 
-        return re.match("^[0-8]$", input_string) is not None
+        return re.match("^[0-9]$", input_string) is not None
 
 
     @classmethod

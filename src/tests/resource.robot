@@ -21,7 +21,7 @@ Input Export Command
     Input  2
 
 Input Exit Command
-    Input  8
+    Input  9
 
 Input Book Reference Details
     [Arguments]  ${author}  ${title}  ${publisher}  ${year}  ${isbn}

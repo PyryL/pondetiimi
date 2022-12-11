@@ -64,8 +64,7 @@ class UI:
                                                 Varit.PUNAINEN, lopetus="")
                 else:
                     self.listaa_viitteet(self.reference_manager.hae_viitteet())
-            #elif komento == "2":
-                #self.tarkastele_viitetta()
+
             elif komento == "2":
                 tiedostonimi = self._pyyda_syote\
                     ("Anna tiedostonimi:", None, InputValidation.not_empty)
@@ -152,7 +151,11 @@ class UI:
                 self.reference_manager.poista_filtterit()
                 self._konsoli_io.tulosta("\nFiltterit poistettu!\n",
                                             Varit.VIHREA, lopetus="")
+            
             elif komento == "8":
+                self.tarkastele_viitetta()
+
+            elif komento == "9":
                 break
     
     def _tulosta_menu_ohje(self):
@@ -165,7 +168,8 @@ class UI:
             "5": "Hae viite DOI:n perusteella",
             "6": "Lisää filttereitä",
             "7": "Poista filtterit",
-            "8": "Lopeta ohjelma"
+            "8": "Hae viitteen kaikki tiedot",
+            "9": "Lopeta ohjelma"
 
         }
         self._konsoli_io.tulosta("")
