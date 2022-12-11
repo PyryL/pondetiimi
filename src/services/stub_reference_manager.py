@@ -9,7 +9,7 @@ class StubReferenceManager:
 
     def hae_viitteet(self):
         return self.viitteet
-    
+
     def get_filtterit(self):
         return self.filterit
 

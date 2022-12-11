@@ -8,6 +8,7 @@ class SqldbService:
     '''
     Tietokanta toiminnot.
     '''
+
     def luo_uusi_viitetaulu(self):
         """ Uusi doi-tietokanta:
         database = sqlite3.connect("doi_references.db")
@@ -27,7 +28,7 @@ class SqldbService:
          PAGES,
          ENTRYTYPE,
          DOI
-         );''') 
+         );''')
 
         database.commit()
         database.close()
@@ -48,7 +49,7 @@ class SqldbService:
          BOOKTITLE,
          PAGES,
          ENTRYTYPE
-         );''') 
+         );''')
 
         database.commit()
         database.close()
@@ -140,7 +141,7 @@ class SqldbService:
         database.isolation_level = None
 
         database.execute("DROP table VIITTEET")
-        
+
         database.commit()
         database.close()
 

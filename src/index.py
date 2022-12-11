@@ -1,10 +1,11 @@
+import sqlite3
 from services.konsoli_io import KonsoliIO
 from services.sqldb_service import SqldbService
 from services.bibtex_service import BibtexService
 from services.reference_manager import ReferenceManager
 from ui.ui import UI
 #from RobotLibrary import RobotLibrary
-import sqlite3
+
 
 def main():
     """
@@ -25,12 +26,12 @@ def main():
          PAGES,
          ENTRYTYPE,
          DOI
-         );''') 
+         );''')
 
     database.commit()
     database.close()
     """
-    
+
     konsoli_io = KonsoliIO()
     bibtex_service = BibtexService()
     db_service = SqldbService()

@@ -40,14 +40,16 @@ class ReferenceManager:
         self.tallennetut_filtterit.clear()
 
     def hae_filtterihakusanoilla_kun_operandi_and(self):
-        return self.hae_viitelistasta_matchit_hakusanalistalla_kun_operandi_and(self.viitteet, self.tallennetut_filtterit)
+        return self.hae_viitelistasta_matchit_hakusanalistalla_kun_operandi_and\
+                    (self.viitteet, self.tallennetut_filtterit)
 
     # Refaktoroi
     #Laajenna avainsana muihin viitetyyppeihin ja viitetekijöihin
     def hae_viitelistasta_hakusanalla(self, viitelista, hakusana):
         lista_viitteista_haetulla_hakusanalla = []
         for viite in viitelista:
-            if hakusana.casefold() in viite.get_author().casefold() or hakusana.casefold() in viite.get_title().casefold()\
+            if hakusana.casefold() in viite.get_author().casefold()\
+            or hakusana.casefold() in viite.get_title().casefold()\
                 or hakusana in viite.get_publisher().casefold():
                 # or avainsana in viite.get_year() or avainsana in viite.get_isbn():
                 lista_viitteista_haetulla_hakusanalla.append(viite)
@@ -55,25 +57,33 @@ class ReferenceManager:
         return lista_viitteista_haetulla_hakusanalla
 
     # Refaktoroi
-    def hae_viitelistasta_matchit_hakusanalistalla_kun_operandi_and(self, viitelista, hakusanalista):
+    def hae_viitelistasta_matchit_hakusanalistalla_kun_operandi_and\
+            (self, viitelista, hakusanalista):
         hakusanojen_match_lista = []
         hakusanojen_match_listasta_poistettavien_lista = []
-        ensimmaisen_hakusanan_match_lista = self.hae_viitelistasta_hakusanalla(viitelista, hakusanalista[0])
+        ensimmaisen_hakusanan_match_lista = self.hae_viitelistasta_hakusanalla\
+                                                (viitelista, hakusanalista[0])
 
         for i in range(len(ensimmaisen_hakusanan_match_lista)):
             for j in range(len(hakusanalista) - 1):
                 #Erittele eri tapaukset eri viitetyypeille ja lisää haut eri viitetekijöille:
                 kytkin = False
 
-                if not (hakusanalista[j+1].casefold() in ensimmaisen_hakusanan_match_lista[i].get_author().casefold() or hakusanalista[j+1].casefold() in ensimmaisen_hakusanan_match_lista[i].get_title().casefold()\
-                    or hakusanalista[j+1].casefold() in ensimmaisen_hakusanan_match_lista[i].get_publisher().casefold()):
+                if not (hakusanalista[j+1].casefold() in\
+                        ensimmaisen_hakusanan_match_lista[i].get_author().casefold() or\
+                        hakusanalista[j+1].casefold() in\
+                            ensimmaisen_hakusanan_match_lista[i].get_title().casefold()\
+                        or hakusanalista[j+1].casefold() in\
+                            ensimmaisen_hakusanan_match_lista[i].get_publisher().casefold()):
                     kytkin = True
 
                 if kytkin:
-                    hakusanojen_match_listasta_poistettavien_lista.append(ensimmaisen_hakusanan_match_lista[i])
+                    hakusanojen_match_listasta_poistettavien_lista.append\
+                        (ensimmaisen_hakusanan_match_lista[i])
 
         for ensimmaisen_hakusanan_match in ensimmaisen_hakusanan_match_lista:
-            if self.hae_viitteen_indeksi_viitelistassa(ensimmaisen_hakusanan_match, hakusanojen_match_listasta_poistettavien_lista) == -1:
+            if self.hae_viitteen_indeksi_viitelistassa\
+                (ensimmaisen_hakusanan_match, hakusanojen_match_listasta_poistettavien_lista) == -1:
                 hakusanojen_match_lista.append(ensimmaisen_hakusanan_match)
 
         return hakusanojen_match_lista
@@ -123,22 +133,29 @@ class ReferenceManager:
     def hae_hakusanoilla_kun_operandi_and(self):
         hakusanojen_match_lista = []
         hakusanojen_match_listasta_poistettavien_lista = []
-        ensimmaisen_hakusanan_match_lista = self.hae_viitteista_hakusanalla(self.tallennetut_hakusanat[0])
+        ensimmaisen_hakusanan_match_lista = self.hae_viitteista_hakusanalla\
+            (self.tallennetut_hakusanat[0])
 
         for i in range(len(ensimmaisen_hakusanan_match_lista)):
             for j in range(len(self.tallennetut_hakusanat) - 1):
                 #Erittele eri tapaukset eri viitetyypeille ja lisää haut eri viitetekijöille:
                 kytkin = False
 
-                if not (self.tallennetut_hakusanat[j+1].casefold() in ensimmaisen_hakusanan_match_lista[i].get_author().casefold() or self.tallennetut_hakusanat[j+1].casefold() in ensimmaisen_hakusanan_match_lista[i].get_title().casefold()\
-                    or self.tallennetut_hakusanat[j+1].casefold() in ensimmaisen_hakusanan_match_lista[i].get_publisher().casefold()):
+                if not (self.tallennetut_hakusanat[j+1].casefold() in\
+                        ensimmaisen_hakusanan_match_lista[i].get_author().casefold()\
+                    or self.tallennetut_hakusanat[j+1].casefold() in\
+                        ensimmaisen_hakusanan_match_lista[i].get_title().casefold()\
+                    or self.tallennetut_hakusanat[j+1].casefold() in\
+                        ensimmaisen_hakusanan_match_lista[i].get_publisher().casefold()):
                     kytkin = True
 
                 if kytkin:
-                    hakusanojen_match_listasta_poistettavien_lista.append(ensimmaisen_hakusanan_match_lista[i])
+                    hakusanojen_match_listasta_poistettavien_lista.append\
+                        (ensimmaisen_hakusanan_match_lista[i])
 
         for ensimmaisen_hakusanan_match in ensimmaisen_hakusanan_match_lista:
-            if self.hae_viitteen_indeksi_viitelistassa(ensimmaisen_hakusanan_match, hakusanojen_match_listasta_poistettavien_lista) == -1:
+            if self.hae_viitteen_indeksi_viitelistassa\
+                (ensimmaisen_hakusanan_match, hakusanojen_match_listasta_poistettavien_lista) == -1:
                 hakusanojen_match_lista.append(ensimmaisen_hakusanan_match)
 
         return hakusanojen_match_lista
@@ -147,7 +164,8 @@ class ReferenceManager:
     def hae_viitteista_hakusanalla(self, hakusana):
         lista_viitteista_haetulla_hakusanalla = []
         for viite in self.viitteet:
-            if hakusana.casefold() in viite.get_author().casefold() or hakusana.casefold() in viite.get_title().casefold()\
+            if hakusana.casefold() in viite.get_author().casefold()\
+                or hakusana.casefold() in viite.get_title().casefold()\
                 or hakusana in viite.get_publisher().casefold():
                 # or avainsana in viite.get_year() or avainsana in viite.get_isbn():
                 lista_viitteista_haetulla_hakusanalla.append(viite)
@@ -326,8 +344,10 @@ class ReferenceManager:
         lista_viitteista_haetulla_avainsanalla = []
         for viite in self.viitteet:
             #Toteutus ok?
-            if avainsana.lower() in viite.get_author().lower() or avainsana.lower() in viite.get_title().lower()\
-                or avainsana.lower() in viite.get_publisher().lower() or avainsana in viite.get_year():
+            if avainsana.lower() in viite.get_author().lower()\
+                or avainsana.lower() in viite.get_title().lower()\
+                or avainsana.lower() in viite.get_publisher().lower()\
+                or avainsana in viite.get_year():
                 # or avainsana in viite.get_year() or avainsana in viite.get_isbn():
                 lista_viitteista_haetulla_avainsanalla.append(viite)
 

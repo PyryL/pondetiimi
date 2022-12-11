@@ -1,11 +1,10 @@
+import requests
 import bibtexparser
 from bibtexparser.bwriter import BibTexWriter
 from bibtexparser.bibdatabase import BibDatabase
-from pylatexenc.latexencode import UnicodeToLatexEncoder
 from bibtexparser.bparser import BibTexParser
 from bibtexparser.customization import convert_to_unicode
-
-import requests
+from pylatexenc.latexencode import UnicodeToLatexEncoder
 
 class FileIO:
     '''
