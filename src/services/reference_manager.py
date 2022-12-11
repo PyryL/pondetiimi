@@ -3,15 +3,16 @@ class ReferenceManager:
     '''
     Viitteiden hallinnointi.
     '''
+
     def __init__(self, bibtex_service, db_service):
         self.bibtex_service = bibtex_service
         self.db_service = db_service
         self.viitteet = self.hae_viitteet_databasesta()
-        self.vie_viitteet_bibtexdb() #turha?
+        self.vie_viitteet_bibtexdb()  # turha?
 
         self.tallennetut_hakusanat = []
-        self.tallennettujen_hakusanojen_operandi = "AND" #Default yksi operandi
-        #self.tallennettujen_hakusanojen_operandit= [] Useita operandeja
+        self.tallennettujen_hakusanojen_operandi = "AND"  # Default yksi operandi
+        # self.tallennettujen_hakusanojen_operandit= [] Useita operandeja
 
         self.tallennetut_filtterit = []
 
@@ -20,7 +21,7 @@ class ReferenceManager:
 
     def filtteri_jo_lisatty(self, filtteri):
         for tallennettu_filtteri in self.tallennetut_filtterit:
-            #if tallennettu_hakusana.casefold() == hakusana.casefold():
+            # if tallennettu_hakusana.casefold() == hakusana.casefold():
             if tallennettu_filtteri == filtteri:
                 return True
         return False
@@ -40,50 +41,48 @@ class ReferenceManager:
         self.tallennetut_filtterit.clear()
 
     def hae_filtterihakusanoilla_kun_operandi_and(self):
-        return self.hae_viitelistasta_matchit_hakusanalistalla_kun_operandi_and\
-                    (self.viitteet, self.tallennetut_filtterit)
+        return self.hae_viitelistasta_matchit_hakusanalistalla_kun_operandi_and(self.viitteet, self.tallennetut_filtterit)
 
     # Refaktoroi
-    #Laajenna avainsana muihin viitetyyppeihin ja viitetekijöihin
+    # Laajenna avainsana muihin viitetyyppeihin ja viitetekijöihin
     def hae_viitelistasta_hakusanalla(self, viitelista, hakusana):
         lista_viitteista_haetulla_hakusanalla = []
         for viite in viitelista:
             if hakusana.casefold() in viite.get_author().casefold()\
-            or hakusana.casefold() in viite.get_title().casefold()\
-                or hakusana in viite.get_publisher().casefold():
+                    or hakusana.casefold() in viite.get_title().casefold()\
+                    or hakusana in viite.get_publisher().casefold():
                 # or avainsana in viite.get_year() or avainsana in viite.get_isbn():
                 lista_viitteista_haetulla_hakusanalla.append(viite)
 
         return lista_viitteista_haetulla_hakusanalla
 
     # Refaktoroi
-    def hae_viitelistasta_matchit_hakusanalistalla_kun_operandi_and\
-            (self, viitelista, hakusanalista):
+    def hae_viitelistasta_matchit_hakusanalistalla_kun_operandi_and(self, viitelista, hakusanalista):
         hakusanojen_match_lista = []
         hakusanojen_match_listasta_poistettavien_lista = []
-        ensimmaisen_hakusanan_match_lista = self.hae_viitelistasta_hakusanalla\
-                                                (viitelista, hakusanalista[0])
+        ensimmaisen_hakusanan_match_lista = self.hae_viitelistasta_hakusanalla(
+            viitelista, hakusanalista[0])
 
         for i in range(len(ensimmaisen_hakusanan_match_lista)):
             for j in range(len(hakusanalista) - 1):
-                #Erittele eri tapaukset eri viitetyypeille ja lisää haut eri viitetekijöille:
+                # Erittele eri tapaukset eri viitetyypeille ja lisää haut eri viitetekijöille:
                 kytkin = False
 
-                if not (hakusanalista[j+1].casefold() in\
-                        ensimmaisen_hakusanan_match_lista[i].get_author().casefold() or\
-                        hakusanalista[j+1].casefold() in\
-                            ensimmaisen_hakusanan_match_lista[i].get_title().casefold()\
-                        or hakusanalista[j+1].casefold() in\
-                            ensimmaisen_hakusanan_match_lista[i].get_publisher().casefold()):
+                if not (hakusanalista[j+1].casefold() in
+                        ensimmaisen_hakusanan_match_lista[i].get_author().casefold() or
+                        hakusanalista[j+1].casefold() in
+                        ensimmaisen_hakusanan_match_lista[i].get_title(
+                ).casefold()
+                        or hakusanalista[j+1].casefold() in
+                        ensimmaisen_hakusanan_match_lista[i].get_publisher().casefold()):
                     kytkin = True
 
                 if kytkin:
-                    hakusanojen_match_listasta_poistettavien_lista.append\
-                        (ensimmaisen_hakusanan_match_lista[i])
+                    hakusanojen_match_listasta_poistettavien_lista.append(
+                        ensimmaisen_hakusanan_match_lista[i])
 
         for ensimmaisen_hakusanan_match in ensimmaisen_hakusanan_match_lista:
-            if self.hae_viitteen_indeksi_viitelistassa\
-                (ensimmaisen_hakusanan_match, hakusanojen_match_listasta_poistettavien_lista) == -1:
+            if self.hae_viitteen_indeksi_viitelistassa(ensimmaisen_hakusanan_match, hakusanojen_match_listasta_poistettavien_lista) == -1:
                 hakusanojen_match_lista.append(ensimmaisen_hakusanan_match)
 
         return hakusanojen_match_lista
@@ -97,76 +96,77 @@ class ReferenceManager:
             for i in range(0, len(viitelista)):
                 if viitelista[i].get_entrytype() == "book":
                     if viitelista[i].get_author() == uusi_viite.get_author()\
-                        and viitelista[i].get_title() == uusi_viite.get_title()\
-                        and viitelista[i].get_publisher() == uusi_viite.get_publisher()\
-                        and viitelista[i].get_year() == uusi_viite.get_year()\
-                        and viitelista[i].get_isbn() == uusi_viite.get_isbn():
+                            and viitelista[i].get_title() == uusi_viite.get_title()\
+                            and viitelista[i].get_publisher() == uusi_viite.get_publisher()\
+                            and viitelista[i].get_year() == uusi_viite.get_year()\
+                            and viitelista[i].get_isbn() == uusi_viite.get_isbn():
                         return i
 
         elif uusi_viite.get_entrytype() == "article":
             for i in range(0, len(viitelista)):
                 if viitelista[i].get_entrytype() == "article":
                     if viitelista[i].get_author() == uusi_viite.get_author()\
-                        and viitelista[i].get_title() == uusi_viite.get_title()\
-                        and viitelista[i].get_publisher() == uusi_viite.get_publisher()\
-                        and viitelista[i].get_year() == uusi_viite.get_year()\
-                        and viitelista[i].get_isbn() == uusi_viite.get_isbn()\
-                        and viitelista[i].get_volume() == uusi_viite.get_volume()\
-                        and viitelista[i].get_number() == uusi_viite.get_number()\
-                        and viitelista[i].get_pages() == uusi_viite.get_pages():
+                            and viitelista[i].get_title() == uusi_viite.get_title()\
+                            and viitelista[i].get_publisher() == uusi_viite.get_publisher()\
+                            and viitelista[i].get_year() == uusi_viite.get_year()\
+                            and viitelista[i].get_isbn() == uusi_viite.get_isbn()\
+                            and viitelista[i].get_volume() == uusi_viite.get_volume()\
+                            and viitelista[i].get_number() == uusi_viite.get_number()\
+                            and viitelista[i].get_pages() == uusi_viite.get_pages():
                         return i
 
         elif uusi_viite.get_entrytype() == "inproceedings":
             for i in range(0, len(viitelista)):
                 if viitelista[i].get_entrytype() == "inproceedings":
                     if viitelista[i].get_author() == uusi_viite.get_author()\
-                        and viitelista[i].get_title() == uusi_viite.get_title()\
-                        and viitelista[i].get_publisher() == uusi_viite.get_publisher()\
-                        and viitelista[i].get_year() == uusi_viite.get_year()\
-                        and viitelista[i].get_booktitle() == uusi_viite.get_booktitle()\
-                        and viitelista[i].get_pages() == uusi_viite.get_pages():
+                            and viitelista[i].get_title() == uusi_viite.get_title()\
+                            and viitelista[i].get_publisher() == uusi_viite.get_publisher()\
+                            and viitelista[i].get_year() == uusi_viite.get_year()\
+                            and viitelista[i].get_booktitle() == uusi_viite.get_booktitle()\
+                            and viitelista[i].get_pages() == uusi_viite.get_pages():
                         return i
 
         return -1
 
-    #Hakusanat parempi parametrina / ei oliomuuttujana?
+    # Hakusanat parempi parametrina / ei oliomuuttujana?
     def hae_hakusanoilla_kun_operandi_and(self):
         hakusanojen_match_lista = []
         hakusanojen_match_listasta_poistettavien_lista = []
-        ensimmaisen_hakusanan_match_lista = self.hae_viitteista_hakusanalla\
-            (self.tallennetut_hakusanat[0])
+        ensimmaisen_hakusanan_match_lista = self.hae_viitteista_hakusanalla(
+            self.tallennetut_hakusanat[0])
 
         for i in range(len(ensimmaisen_hakusanan_match_lista)):
             for j in range(len(self.tallennetut_hakusanat) - 1):
-                #Erittele eri tapaukset eri viitetyypeille ja lisää haut eri viitetekijöille:
+                # Erittele eri tapaukset eri viitetyypeille ja lisää haut eri viitetekijöille:
                 kytkin = False
 
-                if not (self.tallennetut_hakusanat[j+1].casefold() in\
-                        ensimmaisen_hakusanan_match_lista[i].get_author().casefold()\
-                    or self.tallennetut_hakusanat[j+1].casefold() in\
-                        ensimmaisen_hakusanan_match_lista[i].get_title().casefold()\
-                    or self.tallennetut_hakusanat[j+1].casefold() in\
+                if not (self.tallennetut_hakusanat[j+1].casefold() in
+                        ensimmaisen_hakusanan_match_lista[i].get_author(
+                ).casefold()
+                        or self.tallennetut_hakusanat[j+1].casefold() in
+                        ensimmaisen_hakusanan_match_lista[i].get_title(
+                ).casefold()
+                        or self.tallennetut_hakusanat[j+1].casefold() in
                         ensimmaisen_hakusanan_match_lista[i].get_publisher().casefold()):
                     kytkin = True
 
                 if kytkin:
-                    hakusanojen_match_listasta_poistettavien_lista.append\
-                        (ensimmaisen_hakusanan_match_lista[i])
+                    hakusanojen_match_listasta_poistettavien_lista.append(
+                        ensimmaisen_hakusanan_match_lista[i])
 
         for ensimmaisen_hakusanan_match in ensimmaisen_hakusanan_match_lista:
-            if self.hae_viitteen_indeksi_viitelistassa\
-                (ensimmaisen_hakusanan_match, hakusanojen_match_listasta_poistettavien_lista) == -1:
+            if self.hae_viitteen_indeksi_viitelistassa(ensimmaisen_hakusanan_match, hakusanojen_match_listasta_poistettavien_lista) == -1:
                 hakusanojen_match_lista.append(ensimmaisen_hakusanan_match)
 
         return hakusanojen_match_lista
 
-    #Laajenna avainsana muihin viitetyyppeihin ja viitetekijöihin
+    # Laajenna avainsana muihin viitetyyppeihin ja viitetekijöihin
     def hae_viitteista_hakusanalla(self, hakusana):
         lista_viitteista_haetulla_hakusanalla = []
         for viite in self.viitteet:
             if hakusana.casefold() in viite.get_author().casefold()\
-                or hakusana.casefold() in viite.get_title().casefold()\
-                or hakusana in viite.get_publisher().casefold():
+                    or hakusana.casefold() in viite.get_title().casefold()\
+                    or hakusana in viite.get_publisher().casefold():
                 # or avainsana in viite.get_year() or avainsana in viite.get_isbn():
                 lista_viitteista_haetulla_hakusanalla.append(viite)
 
@@ -179,20 +179,20 @@ class ReferenceManager:
     def lisaa_operandi(self, operandi):
         self.tallennettujen_hakusanojen_operandit.append(operandi)
     """
-    #Yksi operandi
+    # Yksi operandi
+
     def lisaa_operandi(self, operandi):
         self.tallennettujen_hakusanojen_operandi.append(operandi)
 
     def get_operandi(self):
         self.tallennettujen_hakusanojen_operandi
 
-
     def get_hakusanat(self):
         return self.tallennetut_hakusanat
 
     def hakusana_jo_lisatty(self, hakusana):
         for tallennettu_hakusana in self.tallennetut_hakusanat:
-            #if tallennettu_hakusana.casefold() == hakusana.casefold():
+            # if tallennettu_hakusana.casefold() == hakusana.casefold():
             if tallennettu_hakusana == hakusana:
                 return True
         return False
@@ -215,7 +215,7 @@ class ReferenceManager:
         """
         for tallennettu_hakusana in self.tallennetut_hakusanat:
             if tallennettu_hakusana == hakusana:
-                #self.tallennetut_hakusanat.remove(hakusana)
+                # self.tallennetut_hakusanat.remove(hakusana)
                 self.tallennetut_hakusanat.remove(tallennettu_hakusana)
                 return True
         """
@@ -244,51 +244,66 @@ class ReferenceManager:
     def vie_viitteet_tiedostoon(self, tiedostonimi):
         self.bibtex_service.vie_viitteet_tiedostoon(tiedostonimi)
 
-    def vie_viitteet_bibtexdb(self): #turha?
+    def vie_viitteet_bibtexdb(self):  # turha?
         for viite in self.viitteet:
             self.vie_viite_bibtexdb(viite)
 
-    def vie_viite_bibtexdb(self, viite): #turha?
+    def vie_viite_bibtexdb(self, viite):  # turha?
         viite_as_dictionary = viite.get_as_dictionary()
         self.bibtex_service.vie_viite_databaseen(viite_as_dictionary)
 
     # Refaktoroi
+    def tarkista_book_oikea(self, viite, uusi_viite):
+        if (
+            viite.get_author() == uusi_viite.get_author()
+            and viite.get_title() == uusi_viite.get_title()
+            and viite.get_publisher() == uusi_viite.get_publisher()
+            and viite.get_year() == uusi_viite.get_year()
+            and viite.get_isbn() == uusi_viite.get_isbn()
+        ):
+            return True
+        return False
+
+    def tarkista_inproceeding_oikea(self, viite, uusi_viite):
+        if (viite.get_author() == uusi_viite.get_author()
+            and viite.get_title() == uusi_viite.get_title()
+            and viite.get_publisher() == uusi_viite.get_publisher()
+            and viite.get_year() == uusi_viite.get_year()
+            and viite.get_booktitle() == uusi_viite.get_booktitle()
+                and viite.get_pages() == uusi_viite.get_pages()):
+            return True
+        return False
+
+    def tarkista_article_oikea(self, viite, uusi_viite):
+        if (
+            viite.get_author() == uusi_viite.get_author()
+            and viite.get_title() == uusi_viite.get_title()
+            and viite.get_publisher() == uusi_viite.get_publisher()
+            and viite.get_year() == uusi_viite.get_year()
+            and viite.get_isbn() == uusi_viite.get_isbn()
+            and viite.get_volume() == uusi_viite.get_volume()
+            and viite.get_number() == uusi_viite.get_number()
+            and viite.get_pages() == uusi_viite.get_pages()
+        ):
+            return True
+        return False
+
     def hae_viitteen_indeksi_viitteissa(self, uusi_viite):
         if uusi_viite.get_entrytype() == "book":
-            for i in range(0, len(self.viitteet)):
-                if self.viitteet[i].get_entrytype() == "book":
-                    if self.viitteet[i].get_author() == uusi_viite.get_author()\
-                        and self.viitteet[i].get_title() == uusi_viite.get_title()\
-                        and self.viitteet[i].get_publisher() == uusi_viite.get_publisher()\
-                        and self.viitteet[i].get_year() == uusi_viite.get_year()\
-                        and self.viitteet[i].get_isbn() == uusi_viite.get_isbn():
-                        return i
+            for viite_indeksi, viite in enumerate(self.viitteet):
+                if viite.get_entrytype() == "book" and self.tarkista_book_oikea(viite, uusi_viite):
+                    return viite_indeksi
 
         elif uusi_viite.get_entrytype() == "article":
-            for i in range(0, len(self.viitteet)):
-                if self.viitteet[i].get_entrytype() == "article":
-                    if self.viitteet[i].get_author() == uusi_viite.get_author()\
-                        and self.viitteet[i].get_title() == uusi_viite.get_title()\
-                        and self.viitteet[i].get_publisher() == uusi_viite.get_publisher()\
-                        and self.viitteet[i].get_year() == uusi_viite.get_year()\
-                        and self.viitteet[i].get_isbn() == uusi_viite.get_isbn()\
-                        and self.viitteet[i].get_volume() == uusi_viite.get_volume()\
-                        and self.viitteet[i].get_number() == uusi_viite.get_number()\
-                        and self.viitteet[i].get_pages() == uusi_viite.get_pages():
-                        return i
+            for viite_indeksi, viite in enumerate(self.viitteet):
+                if viite.get_entrytype() == "article" and self.tarkista_article_oikea(viite, uusi_viite):
+                    return viite_indeksi
 
         elif uusi_viite.get_entrytype() == "inproceedings":
-            for i in range(0, len(self.viitteet)):
-                if self.viitteet[i].get_entrytype() == "inproceedings":
-                    if self.viitteet[i].get_author() == uusi_viite.get_author()\
-                        and self.viitteet[i].get_title() == uusi_viite.get_title()\
-                        and self.viitteet[i].get_publisher() == uusi_viite.get_publisher()\
-                        and self.viitteet[i].get_year() == uusi_viite.get_year()\
-                        and self.viitteet[i].get_booktitle() == uusi_viite.get_booktitle()\
-                        and self.viitteet[i].get_pages() == uusi_viite.get_pages():
-                        return i
-
-        return -1
+            for viite_indeksi, viite in enumerate(self.viitteet):
+                if viite.get_entrytype() == "inproceedings" and self.tarkista_inproceeding_oikea(viite, uusi_viite):
+                    return viite_indeksi
+                    
     """
     def hae_viitteista_kirjoittajalla(self, kirjoittaja):
         lista_viitteista_haetulla_kirjoittajalla = []
@@ -326,28 +341,28 @@ class ReferenceManager:
 
         return lista_viitteista_haetulla_vuosiluvulla
 
-    #Johtaa virheeseen muilla kuin kirjoilla?
+    # Johtaa virheeseen muilla kuin kirjoilla?
     def hae_viitteista_isbnlla(self, isbn):
         lista_viitteista_haetulla_isbnlla = []
 
         for viite in self.viitteet:
             if viite.get_isbn() == isbn:
-                #return viite
+                # return viite
                 lista_viitteista_haetulla_isbnlla.append(viite)
 
         return lista_viitteista_haetulla_isbnlla
     """
 
-    #Laajenna avainsana muihin viitetyyppeihin ja viitetekijöihin
-    #Turha pois?
+    # Laajenna avainsana muihin viitetyyppeihin ja viitetekijöihin
+    # Turha pois?
     def hae_viitteista_avainsanalla(self, avainsana):
         lista_viitteista_haetulla_avainsanalla = []
         for viite in self.viitteet:
-            #Toteutus ok?
+            # Toteutus ok?
             if avainsana.lower() in viite.get_author().lower()\
-                or avainsana.lower() in viite.get_title().lower()\
-                or avainsana.lower() in viite.get_publisher().lower()\
-                or avainsana in viite.get_year():
+                    or avainsana.lower() in viite.get_title().lower()\
+                    or avainsana.lower() in viite.get_publisher().lower()\
+                    or avainsana in viite.get_year():
                 # or avainsana in viite.get_year() or avainsana in viite.get_isbn():
                 lista_viitteista_haetulla_avainsanalla.append(viite)
 
@@ -359,12 +374,13 @@ class ReferenceManager:
 
         if viitteen_indeksi != -1:
             self.viitteet.pop(viitteen_indeksi)
-            self.db_service.poista_viite_databasesta(viite) #Lisää toiminnallisuus
+            self.db_service.poista_viite_databasesta(
+                viite)  # Lisää toiminnallisuus
 
-            #TOTEUTA TOIMINNALLISUUS: self.bibtex_service.poista_viite(viite)
+            # TOTEUTA TOIMINNALLISUUS: self.bibtex_service.poista_viite(viite)
             # tai tyhjennä bibtexdb ja vie uudestaan kaikki
 
-            return True # Oikean db-toiminnallisuuden varmistamisen toteuttaminen?
+            return True  # Oikean db-toiminnallisuuden varmistamisen toteuttaminen?
 
         return False
 
@@ -372,9 +388,9 @@ class ReferenceManager:
         if viitteen_numero < len(self.viitteet):  # Tsekattu validation?
             """
             poistettava_viite = self.viitteet.pop(viitteen_numero)
-            #self.db_service.poista_viite_databasesta(poistettava_viite)
+            # self.db_service.poista_viite_databasesta(poistettava_viite)
             """
-            #ROBUST toteutus:
+            # ROBUST toteutus:
             self.viitteet.pop(viitteen_numero)
 
             self.db_service.poista_viitetaulu_databasesta()
@@ -383,14 +399,14 @@ class ReferenceManager:
             for viite in self.viitteet:
                 self.db_service.vie_viite_databaseen(viite)
 
-            #TOTEUTA TOIMINNALLISUUS: self.bibtex_service.poista_viite(viite)
+            # TOTEUTA TOIMINNALLISUUS: self.bibtex_service.poista_viite(viite)
             #  tai tyhjennä bibtexdb ja vie uudestaan kaikki
             self.bibtex_service.tyhjenna_bibdatabase()
 
             for viite in self.viitteet:
                 self.vie_viite_bibtexdb(viite)
 
-            return True # Oikean db-toiminnallisuuden varmistamisen toteuttaminen?
+            return True  # Oikean db-toiminnallisuuden varmistamisen toteuttaminen?
 
         return False
     """
