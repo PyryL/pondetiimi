@@ -5,6 +5,8 @@
 
 [Ohjelmistotuotanto](https://ohjelmistotuotanto-hy.github.io/miniprojekti/)-kurssin projektityö.
 
+Lisenssi: [GNU General Public License](https://www.gnu.org/licenses/gpl-3.0.html).
+
 ## Dokumentaatio
 
 * [Product backlog](https://docs.google.com/spreadsheets/d/1GRM8AXspv3U0oPStXTyR-001euZUgXl-X6GAkoWaCAw/edit#gid=0)
