@@ -112,3 +112,17 @@ class InputValidation:
         }
 
         return virheilmoitukset[error_type]
+
+    #@classmethod
+    def korjaa_doi_nimi(cls, tekija):
+        pattern_nimet = re.compile(r";|and")
+        nimet = re.split(pattern_nimet, tekija)
+        pattern_nimi = re.compile(r"(\w+)(\s+\w+)?\s+(\w+)")
+
+        formatted_names = []
+        for nimi in nimet:
+            formatted_name = re.sub(pattern_nimi, r"\3, \1\2", nimi)
+            formatted_names.append(formatted_name)
+        formatted_str = ';'.join(formatted_names)
+        formatted_str = re.sub(r"\s+;", ";", formatted_str)
+        return formatted_str

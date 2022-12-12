@@ -237,7 +237,7 @@ class UI:
         doi_viite = self.reference_manager.hae_viite_doi(doi)
         if doi_viite is not None:
             self._konsoli_io.tulosta("Viite löytyi.")
-            viite = Article(doi_viite["author"],
+            viite = Article(InputValidation.korjaa_doi_nimi(35, doi_viite["author"]),
                             doi_viite["title"],
                             doi_viite["publisher"],
                             doi_viite["year"],
