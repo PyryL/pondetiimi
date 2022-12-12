@@ -85,3 +85,13 @@ class TestInputValidation(unittest.TestCase):
 
     def test_palaute_epakelvolla_tuntemattomalla_syotteella(self):
         self.assertEqual(InputValidation.error_message(), "Virheellinen syöte.")
+
+    def test_korjaa_doi_nimi_korjaa_nimien_jarjestyksen(self):
+        self.assertEqual(InputValidation.korjaa_doi_nimi(30, "Edsger Dijkstra"), "Dijkstra, Edsger")
+
+    def test_korjaa_doi_nimi_korjaa_nimien_jarjestyksen_usealla_nimella(self):
+        self.assertEqual(InputValidation.korjaa_doi_nimi(30, "Edsger Dijkstra and Donald Knuth"),
+                        "Dijkstra, Edsger; Knuth, Donald")
+
+    def test_korjaa_doi_nimi_korjaa_toisen_etunimen(self):
+        self.assertEqual(InputValidation.korjaa_doi_nimi(30, "Edsger Wybe Dijkstra"), "Dijkstra, Edsger Wybe")

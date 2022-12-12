@@ -64,7 +64,7 @@ class BibtexService:
     def kutsu_bibtex(self, doi):
         url = 'http://dx.doi.org/' + doi
         headers = {'Accept': 'application/x-bibtex'}
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers, timeout=10)
 
         if response.status_code == 200:
             return response.text
