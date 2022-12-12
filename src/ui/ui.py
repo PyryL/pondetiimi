@@ -230,34 +230,25 @@ class UI:
             self._konsoli_io.tulosta(" " + selite)
     """
 
-    #Refaktoroi _tulosta_kaytetyt_hakusanat_ja_operandit() kanssa:
     def _tulosta_hakusanat_ja_operandit(self, hakusanat, operandi):
-        hakusanat_string = "\nKäytetyt hakusanat: '" + hakusanat[0] +"'"
+        hakusanat_str = f"\nKäytetyt hakusanat: {self._yhdista_sanat(hakusanat, operandi)}"
 
-        for i in range(len(hakusanat)-1):
-            hakusanat_string += " " + operandi + " '" + hakusanat[i+1] + "'"
-
-        self._konsoli_io.tulosta(hakusanat_string, Varit.VIHREA)
+        self._konsoli_io.tulosta(hakusanat_str, Varit.VIHREA)
 
     def _tulosta_kaytetyt_hakusanat_ja_operandit(self, hakusanat, operandi):
-        hakusanat_string = "\nHakutulokset hakusanoilla: '" + hakusanat[0] +"'"
+        hakusanat_str = f"\nHakutulokset hakusanoilla: {self._yhdista_sanat(hakusanat, operandi)}:"
 
-        for i in range(len(hakusanat)-1):
-            hakusanat_string += " " + operandi + " '" + hakusanat[i+1] + "'"
-
-        hakusanat_string += ":"
-
-        self._konsoli_io.tulosta(hakusanat_string, Varit.VIHREA)
+        self._konsoli_io.tulosta(hakusanat_str, Varit.VIHREA)
 
     def _tulosta_filtterit_ja_operandit(self, filtterit, operandi):
-        filtterit_string = "\nKäytössä filtterit: '" + filtterit[0] +"'"
+        filtterit_str = f"\nKäytössä filtterit: {self._yhdista_sanat(filtterit, operandi)}"
 
-        for i in range(len(filtterit)-1):
-            filtterit_string += " " + operandi + " '" + filtterit[i+1] + "'"
+        self._konsoli_io.tulosta(filtterit_str, Varit.VIHREA)
 
-        filtterit_string += ":"
-
-        self._konsoli_io.tulosta(filtterit_string, Varit.VIHREA)
+    def _yhdista_sanat(self, sanat, operandi):
+        sanat_lainausmerkeissa = [f"'{sana}'" for sana in sanat]
+        yhdistetyt = f" {operandi} ".join(sanat_lainausmerkeissa)
+        return yhdistetyt
 
     def lue_kirja(self):
         author = self.lue_nimet()
