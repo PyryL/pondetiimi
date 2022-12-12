@@ -38,8 +38,7 @@ class Reference:
         return self._publisher
 
     def set_publisher(self, publisher):
-        if InputValidation.not_empty(publisher):
-            self._publisher = publisher
+        self._publisher = publisher
 
     def get_isbn(self):
         return self._isbn

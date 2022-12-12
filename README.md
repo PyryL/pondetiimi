@@ -10,6 +10,7 @@
 * [Product backlog](https://docs.google.com/spreadsheets/d/1GRM8AXspv3U0oPStXTyR-001euZUgXl-X6GAkoWaCAw/edit#gid=0)
 * [Definition of Done](https://github.com/PyryL/pondetiimi/blob/main/documentation/definition_of_done.md)
 * [Testikattavuusraportti](https://codecov.io/gh/PyryL/pondetiimi)
+* [Loppuraportti](https://docs.google.com/document/d/1NGq4D4_lWeWqwAMPBDuQXn7lVAadm7DpNlLkhF85MLM/edit)
 
 ## Asennus ja käynnistys
 
