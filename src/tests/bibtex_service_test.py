@@ -37,3 +37,13 @@ class TestBibtexService(unittest.TestCase):
     def test_viedyn_tiedoston_nimi_on_haluttu(self):
         self.bibtext_service.vie_viitteet_tiedostoon("test_export")
         self.assertEqual(self.file_io.filename, "test_export.bib")
+
+    def test_hae_bibtex_doilla(self):
+        doi = "10.1016/j.jclepro.2018.12.027"
+        viite = self.bibtext_service.hae_bibtex_doilla(doi)
+        self.assertEqual(viite["doi"], doi)
+    
+    def test_hae_bibtex_doilla_ei_ole_oikea_doi(self):
+        doi = "10.1016/j.jclepro.2018.12.0228"
+        viite = self.bibtext_service.hae_bibtex_doilla(doi)
+        self.assertIsNone(viite)
