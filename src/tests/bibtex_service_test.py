@@ -3,6 +3,8 @@ from services.bibtex_service import BibtexService
 from entities.reference import Reference
 
 class FileIOStub:
+    '''Stub-luokka tiedoston kirjoittamiseen'''
+
     def __init__(self):
         self.filename = ""
         self.content = ""
@@ -12,6 +14,8 @@ class FileIOStub:
         self.content = content
 
 class TestBibtexService(unittest.TestCase):
+    '''Viitteiden bibtex-muodossa viemisen testit'''
+
     def setUp(self):
         self.file_io = FileIOStub()
         self.bibtext_service = BibtexService(self.file_io)
@@ -42,7 +46,7 @@ class TestBibtexService(unittest.TestCase):
         doi = "10.1016/j.jclepro.2018.12.027"
         viite = self.bibtext_service.hae_bibtex_doilla(doi)
         self.assertEqual(viite["doi"], doi)
-    
+
     def test_hae_bibtex_doilla_ei_ole_oikea_doi(self):
         doi = "10.1016/j.jclepro.2018.12.0228"
         viite = self.bibtext_service.hae_bibtex_doilla(doi)

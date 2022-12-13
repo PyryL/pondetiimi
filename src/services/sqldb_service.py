@@ -102,7 +102,12 @@ class SqldbService:
             viite.get_entrytype()
             )
 
-        insert_sql="INSERT INTO VIITTEET (ID, AUTHOR, TITLE, PUBLISHER, YEAR, ISBN, JOURNAL, VOLUME, NUMBER, BOOKTITLE, PAGES, ENTRYTYPE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        insert_sql = (
+            "INSERT INTO VIITTEET "
+            "(ID, AUTHOR, TITLE, PUBLISHER, YEAR, ISBN, JOURNAL, "
+            "VOLUME, NUMBER, BOOKTITLE, PAGES, ENTRYTYPE) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        )
 
         database.execute(insert_sql, values)
         database.commit()

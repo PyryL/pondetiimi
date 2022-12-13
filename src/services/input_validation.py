@@ -142,7 +142,7 @@ class InputValidation:
         return virheilmoitukset[error_type]
 
     #@classmethod
-    def korjaa_doi_nimi(cls, tekija):
+    def korjaa_doi_nimi(self, tekija):
         pattern_nimet = re.compile(r";|and")
         nimet = re.split(pattern_nimet, tekija)
         pattern_nimi = re.compile(r"(\w+)(\s+\w+)?\s+(\w+)")

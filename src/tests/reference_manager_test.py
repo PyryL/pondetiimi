@@ -4,6 +4,8 @@ from services.reference_manager import ReferenceManager
 from entities.reference import Reference
 
 class TestReferenceManager(unittest.TestCase):
+    '''Viitteitä hallinnoivan luokan testit'''
+
     def setUp(self):
         self.bibtex_service = Mock()
         self.db_service = Mock()

@@ -2,6 +2,8 @@ import unittest
 from services.input_validation import InputValidation
 
 class TestInputValidation(unittest.TestCase):
+    '''Testit käyttäjän syötteen validioinnille'''
+
     def test_isbn_kelvoilla_syotteilla(self):
         kelvot_syotteet = [
             "978-0-596-52068-7",
@@ -132,4 +134,5 @@ class TestInputValidation(unittest.TestCase):
                         "Dijkstra, Edsger; Knuth, Donald")
 
     def test_korjaa_doi_nimi_korjaa_toisen_etunimen(self):
-        self.assertEqual(InputValidation.korjaa_doi_nimi(30, "Edsger Wybe Dijkstra"), "Dijkstra, Edsger Wybe")
+        result = InputValidation.korjaa_doi_nimi(30, "Edsger Wybe Dijkstra")
+        self.assertEqual(result, "Dijkstra, Edsger Wybe")

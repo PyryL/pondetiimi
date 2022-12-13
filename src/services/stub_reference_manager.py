@@ -1,4 +1,6 @@
 class StubReferenceManager:
+    '''Stub-luokka viitteiden hallinnan testeille'''
+
     def __init__(self):
         self.viitteet = []
         self.filterit = []
