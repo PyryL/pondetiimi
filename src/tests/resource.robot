@@ -18,14 +18,15 @@ Input List Command
     Input  1
 
 Input Export Command
-    Input  3
+    Input  2
 
 Input Exit Command
-    Input  7
+    Input  9
 
 Input Book Reference Details
     [Arguments]  ${author}  ${title}  ${publisher}  ${year}  ${isbn}
     Input  ${author}
+    Input  ${EMPTY}
     Input  ${title}
     Input  ${publisher}  
     Input  ${year}  
@@ -34,6 +35,7 @@ Input Book Reference Details
 Input Article Reference Details
     [Arguments]  ${author}  ${title}  ${publisher}  ${year}  ${journal}  ${volume}  ${number}  ${pages}
     Input  ${author}
+    Input  ${EMPTY}
     Input  ${title}
     Input  ${publisher}
     Input  ${year}
@@ -45,6 +47,7 @@ Input Article Reference Details
 Input Inproceedings Reference Details
     [Arguments]  ${author}  ${title}  ${publisher}  ${year}  ${book_title}  ${pages}
     Input  ${author}
+    Input  ${EMPTY}
     Input  ${title}
     Input  ${publisher}
     Input  ${year}

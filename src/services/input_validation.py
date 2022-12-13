@@ -54,7 +54,10 @@ class InputValidation:
             (Boolean): True, jos syöte täyttää vaatimuksen.
         '''
         # hyväksytään kaikki merkkijonot
-        return re.match("^([A-ZÄÖ][a-zäö]+, [A-ZÄÖ][a-zäö]+;? ?)+$", input_string) is not None
+
+        if input_string == "":
+            return True
+        return re.match("^([A-ZÄÖ][a-zäö]+, [A-ZÄÖ][a-zäö]+)", input_string) is not None
 
     @classmethod
     def menu_command(cls, input_string: str) -> bool:
@@ -65,18 +68,20 @@ class InputValidation:
         Returns
             (Boolean): True, jos syöte täyttää vaatimuksen.
         '''
-        return re.match("^[0-7]$", input_string) is not None
+
+        return re.match("^[0-9]$", input_string) is not None
+
 
     @classmethod
-    def hakumenu_command(cls, input_string: str) -> bool:
+    def viitetyyppi_command(cls, input_string:str) -> bool:
         '''
-        Tarkistetaan Hakumenu-syöte. Syöte on luku 0 - 5 tai kirjain x.
+        Tarkistetaan viitetyypin valinnan syöte. Syöte on luku 0 - 2 tai kirjain x.
         Args:
             input_string (String): annettu syöte
         Returns
             (Boolean): True, jos syöte täyttää vaatimuksen.
         '''
-        return re.match("^(0|1|2|3|4|5|x)$", input_string) is not None
+        return re.match("^(0|1|2|x)$", input_string) is not None
 
     @classmethod
     def not_empty(cls, input_string: str) -> bool:
@@ -87,7 +92,7 @@ class InputValidation:
         # hyväksy tyhjä syöte sekä kaikki pelkistä numeroista koostuvat syötteet
         if input_string == "":
             return True
-        return re.match("^\\d+$", input_string)
+        return re.match("^\\d+$", input_string) is not None
 
     @classmethod
     def pages(cls, input_string: str) -> bool:
@@ -109,7 +114,11 @@ class InputValidation:
         return True
 
     @classmethod
-    def error_message(cls, error_type: str = "tyhja") -> str:
+    def hakusana(cls, input_string:str) -> bool:
+        return True
+
+    @classmethod
+    def error_message(cls, error_type : str = "tyhja") -> str:
         '''
         Palauttaa virheilmoituksen annetun virhetypin mukaan.
         Args:
@@ -131,3 +140,17 @@ class InputValidation:
         }
 
         return virheilmoitukset[error_type]
+
+    #@classmethod
+    def korjaa_doi_nimi(cls, tekija):
+        pattern_nimet = re.compile(r";|and")
+        nimet = re.split(pattern_nimet, tekija)
+        pattern_nimi = re.compile(r"(\w+)(\s+\w+)?\s+(\w+)")
+
+        formatted_names = []
+        for nimi in nimet:
+            formatted_name = re.sub(pattern_nimi, r"\3, \1\2", nimi)
+            formatted_names.append(formatted_name)
+        formatted_str = ';'.join(formatted_names)
+        formatted_str = re.sub(r"\s+;", ";", formatted_str)
+        return formatted_str

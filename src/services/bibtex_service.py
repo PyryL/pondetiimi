@@ -1,11 +1,10 @@
+import requests
 import bibtexparser
 from bibtexparser.bwriter import BibTexWriter
 from bibtexparser.bibdatabase import BibDatabase
-from pylatexenc.latexencode import UnicodeToLatexEncoder
 from bibtexparser.bparser import BibTexParser
 from bibtexparser.customization import convert_to_unicode
-
-import requests
+from pylatexenc.latexencode import UnicodeToLatexEncoder
 
 class FileIO:
     '''
@@ -65,7 +64,7 @@ class BibtexService:
     def kutsu_bibtex(self, doi):
         url = 'http://dx.doi.org/' + doi
         headers = {'Accept': 'application/x-bibtex'}
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers, timeout=10)
 
         if response.status_code == 200:
             return response.text

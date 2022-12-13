@@ -43,7 +43,7 @@ class TestInputValidation(unittest.TestCase):
             self.assertTrue(InputValidation.menu_command(str(i)))
 
     def test_menu_komento_liian_suurella_numerolla(self):
-        self.assertFalse(InputValidation.menu_command("9"))
+        self.assertFalse(InputValidation.menu_command("10"))
 
     def test_ei_tyhja_kelvolla_syotteella(self):
         self.assertTrue(InputValidation.not_empty("ei tyhjä"))
@@ -53,6 +53,9 @@ class TestInputValidation(unittest.TestCase):
 
     def test_nimi_oikealla_muodolla(self):
         self.assertTrue(InputValidation.name("Dijkstra, Edsger"))
+
+    def test_tyhja_nimi(self):
+        self.assertTrue(InputValidation.name(""))
 
     def test_useita_nimia_oikealla_muodolla(self):
         self.assertTrue(InputValidation.name("Dijkstra, Edsger; Knuth, Donald"))
@@ -75,6 +78,41 @@ class TestInputValidation(unittest.TestCase):
     def test_tyhja_isbn_syote(self):
         self.assertTrue(InputValidation.isbn(""))
 
+    def test_viitetyyppi_command_kelvolla_syotteella(self):
+        self.assertTrue(InputValidation.viitetyyppi_command("2"))
+
+    def test_viitetyyppi_command_epakelvolla_syotteella(self):
+        self.assertFalse(InputValidation.viitetyyppi_command("3"))
+
+    def test_article_number_tyhjalla_syotteella(self):
+        self.assertTrue(InputValidation.article_number(""))
+
+    def test_article_number_kelvolla_syotteella(self):
+        self.assertTrue(InputValidation.article_number("15"))
+
+    def test_article_number_epakelvolla_syotteella(self):
+        self.assertFalse(InputValidation.article_number("1.0"))
+
+    def test_pages_tyhjalla_syotteella(self):
+        self.assertTrue(InputValidation.pages(""))
+
+    def test_pages_kelvolla_syotteella(self):
+        self.assertTrue(InputValidation.pages("17-18"))
+
+    def test_pages_epakelvon_muotoisella_syotteella(self):
+        # syöte ei sisällä väliviivaa
+        self.assertFalse(InputValidation.pages("125"))
+
+    def test_pages_epakelvon_sisaltoisella_syotteella(self):
+        # luvut eivät ole suuruusjärjestyksessä
+        self.assertFalse(InputValidation.pages("18-17"))
+
+    def test_doi_kelvolla_syotteella(self):
+        self.assertTrue(InputValidation.doi("10.1000/182"))
+
+    def test_doi_epakelvolla_syotteella(self):
+        self.assertFalse(InputValidation.doi("https://doi.org/10.1000/182"))
+
     def test_palaute_epakelvolla_otsikkosyotteella(self):
         self.assertEqual(InputValidation.error_message("otsikko"),
                         "Otsikko ei voi olla tyhjä.")
@@ -85,3 +123,13 @@ class TestInputValidation(unittest.TestCase):
 
     def test_palaute_epakelvolla_tuntemattomalla_syotteella(self):
         self.assertEqual(InputValidation.error_message(), "Virheellinen syöte.")
+
+    def test_korjaa_doi_nimi_korjaa_nimien_jarjestyksen(self):
+        self.assertEqual(InputValidation.korjaa_doi_nimi(30, "Edsger Dijkstra"), "Dijkstra, Edsger")
+
+    def test_korjaa_doi_nimi_korjaa_nimien_jarjestyksen_usealla_nimella(self):
+        self.assertEqual(InputValidation.korjaa_doi_nimi(30, "Edsger Dijkstra and Donald Knuth"),
+                        "Dijkstra, Edsger; Knuth, Donald")
+
+    def test_korjaa_doi_nimi_korjaa_toisen_etunimen(self):
+        self.assertEqual(InputValidation.korjaa_doi_nimi(30, "Edsger Wybe Dijkstra"), "Dijkstra, Edsger Wybe")
