@@ -70,11 +70,13 @@ class ReferenceManager:
                 kytkin = False
 
                 if not (hakusanalista[j+1].casefold() in\
-                        ensimmaisen_hakusanan_match_lista[i].get_author().casefold() or\
-                        hakusanalista[j+1].casefold() in\
+                        ensimmaisen_hakusanan_match_lista[i].get_author().casefold()\
+                        or hakusanalista[j+1].casefold() in\
                             ensimmaisen_hakusanan_match_lista[i].get_title().casefold()\
                         or hakusanalista[j+1].casefold() in\
-                            ensimmaisen_hakusanan_match_lista[i].get_publisher().casefold()):
+                            ensimmaisen_hakusanan_match_lista[i].get_publisher().casefold()\
+                        or hakusanalista[j+1].casefold() in\
+                            str(ensimmaisen_hakusanan_match_lista[i].get_year()).casefold()):
                     kytkin = True
 
                 if kytkin:
@@ -166,8 +168,8 @@ class ReferenceManager:
         for viite in self.viitteet:
             if hakusana.casefold() in viite.get_author().casefold()\
                 or hakusana.casefold() in viite.get_title().casefold()\
-                or hakusana in viite.get_publisher().casefold():
-                # or avainsana in viite.get_year() or avainsana in viite.get_isbn():
+                or hakusana in viite.get_publisher().casefold()\
+                or hakusana in str(viite.get_year()).casefold():
                 lista_viitteista_haetulla_hakusanalla.append(viite)
 
         return lista_viitteista_haetulla_hakusanalla
