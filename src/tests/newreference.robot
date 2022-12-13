@@ -23,4 +23,13 @@ Create New Inproceedings Reference Successfully
     Run Application
     Output Should Contain  Uusi konferenssiviite on lisätty!
 
+Delete Reference Successfully
+    Input New Book Command
+    Input Book Reference Details  Sukunimi, Etunimi  Otsikko  Julkaisija  2000  9780596520687
+    Input Delete Command
+    Input Delete Details  0
+    Input Exit Command
+    Run Application
+    Output Should Contain  Viite poistettu!
+
 *** Keywords ***
