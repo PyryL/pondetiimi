@@ -7,10 +7,10 @@ class ReferenceManager:
         self.bibtex_service = bibtex_service
         self.db_service = db_service
         self.viitteet = self.hae_viitteet_databasesta()
-        self.vie_viitteet_bibtexdb() #turha?
+        self.vie_viitteet_bibtexdb()
 
         self.tallennetut_hakusanat = []
-        self.tallennettujen_hakusanojen_operandi = "AND" #Default yksi operandi
+        self.tallennettujen_hakusanojen_operandi = "AND"
         #self.tallennettujen_hakusanojen_operandit= [] Useita operandeja
 
         self.tallennetut_filtterit = []
@@ -20,7 +20,6 @@ class ReferenceManager:
 
     def filtteri_jo_lisatty(self, filtteri):
         for tallennettu_filtteri in self.tallennetut_filtterit:
-            #if tallennettu_hakusana.casefold() == hakusana.casefold():
             if tallennettu_filtteri == filtteri:
                 return True
         return False

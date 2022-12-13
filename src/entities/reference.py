@@ -4,6 +4,11 @@ class Reference:
     '''
     Viiteluokkien kattoluokka.
         Args:
+            author: string
+            title: string
+            publisher: string
+            year: string
+            isbn: string
 
     '''
     def __init__(self, author, title, publisher, year, isbn = None, entrytype = None):
@@ -66,7 +71,8 @@ class Reference:
         return viite
 
     def generate_id(self):
-        # ensimmäinen sukunimi, nimen ensimmäinen sana ja vuosi
+        ''' Generoidaan ID:
+            ensimmäinen sukunimi, otsikon ensimmäinen sana ja vuosi '''
         return (
             self.get_author().split(",")[0] +
             self.get_title().split(" ")[0] +

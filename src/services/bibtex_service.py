@@ -28,8 +28,8 @@ class BibtexService:
         self.parser = BibTexParser()
         self.file_io = file_io
 
-    def vie_viite_databaseen(self, viite): #Turha?
-        # Tarkistus, onko viite jo db:ssä puuttuu. (Tarkistus suoritettu ref_manager-luokassa?)
+    def vie_viite_databaseen(self, viite):
+        '''Tarkistus, onko viite jo db:ssä puuttuu.'''
         for key in viite:
             viite[key] = self.encoder.unicode_to_latex(viite[key])
 
@@ -43,14 +43,16 @@ class BibtexService:
         self.database = BibDatabase()
 
     def muunna_bibtex_dictionaryksi(self, bibtex_tietue):
-        # Parse the BibTeX data
+        ''' Parse the BibTeX data
+            Args: bibtex_tietue
+            Transform the BibTeX data into a dictionary
+            Returns: dictionary
+            '''
         self.parser.customization = convert_to_unicode
         bib_database = bibtexparser.loads(bibtex_tietue, parser=self.parser)
 
-        # Transform the BibTeX data into a dictionary
         bib_dict = bib_database.entries[0]
 
-        # Return the dictionary
         return bib_dict
 
     def hae_bibtex_doilla(self, doi):
