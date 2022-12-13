@@ -71,15 +71,15 @@ class InputValidation:
 
 
     @classmethod
-    def hakumenu_command(cls, input_string:str) -> bool:
+    def viitetyyppi_command(cls, input_string:str) -> bool:
         '''
-        Tarkistetaan Hakumenu-syöte. Syöte on luku 0 - 5 tai kirjain x.
+        Tarkistetaan viitetyypin valinnan syöte. Syöte on luku 0 - 2 tai kirjain x.
         Args:
             input_string (String): annettu syöte
         Returns
             (Boolean): True, jos syöte täyttää vaatimuksen.
         '''
-        return re.match("^(0|1|2|3|4|5|x)$", input_string) is not None
+        return re.match("^(0|1|2|x)$", input_string) is not None
 
     @classmethod
     def not_empty(cls, input_string:str) -> bool:
@@ -90,7 +90,7 @@ class InputValidation:
         # hyväksy tyhjä syöte sekä kaikki pelkistä numeroista koostuvat syötteet
         if input_string == "":
             return True
-        return re.match("^\d+$", input_string)
+        return re.match("^\d+$", input_string) is not None
 
     @classmethod
     def pages(cls, input_string:str) -> bool:

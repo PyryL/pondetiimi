@@ -31,7 +31,7 @@ class UI:
                 self._tulosta_ohje_eri_viitetyyppien_lisaykselle()
                 # Korjaa validation ja lisää
                 lisattavan_viitetyypin_numero = self._pyyda_syote("Anna komento:",
-                                                        None, InputValidation.hakumenu_command)
+                                                        None, InputValidation.viitetyyppi_command)
                 if lisattavan_viitetyypin_numero == "0":
                     luettu_viite = self.lue_kirja()
                     #TARK ONKO JO LISTALLA TOIMII KUNNOLLA?
