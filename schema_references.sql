@@ -1,0 +1,14 @@
+CREATE TABLE VIITTEET
+    (ID,
+    AUTHOR,
+    TITLE,
+    PUBLISHER,
+    YEAR,
+    ISBN,
+    JOURNAL,
+    VOLUME,
+    NUMBER,
+    BOOKTITLE,
+    PAGES,
+    ENTRYTYPE
+    );
