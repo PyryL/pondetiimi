@@ -51,7 +51,7 @@ Input Book Reference Details
     Input  ${isbn}
 
 Input Book Reference Two Authors Details
-    [Arguments]  ${author1}  ${author2}  ${title}  ${publisher}  ${year}  ${isbn}
+    [Arguments]  ${author1}  ${author2}  ${title}  ${publisher}  ${year}
     Input  ${author1}
     Input  ${author2}
     Input  ${EMPTY}

@@ -38,6 +38,12 @@ List Reference All Information Successfully
     Input Reference All Information Details  0
     Input Exit Command
     Run Application
-    Output Should Contain  Kirjoittaja 
+    Output Should Contain  Yksi
+    Output Should Contain  Kaksi
+    Output Should Contain  Otsikko
+    Output Should Contain  Julkaisija
+    Output Should Contain  2000
+    Output Should Contain  0000
+    Output Should Contain  YksiOtsikko2000
 
 *** Keywords ***
