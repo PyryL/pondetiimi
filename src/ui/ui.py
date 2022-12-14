@@ -71,10 +71,33 @@ class UI:
                 tiedostonimi = self._pyyda_syote\
                     ("Anna tiedostonimi:", None, InputValidation.not_empty)
                 self.reference_manager.vie_viitteet_tiedostoon(tiedostonimi)
+                #Tiedostoon viennin varmistus?
                 self._konsoli_io.tulosta("Viitteet viety tiedostoon: ", Varit.VIHREA, lopetus="")
                 self._konsoli_io.tulosta(f"{tiedostonimi}.bib", tummennus=True)
 
             elif komento == "3":
+                if len(self.reference_manager.get_filtterit()) > 0:
+                    filtteroity_lista = \
+                        self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()
+
+                    if len(filtteroity_lista) > 0:
+                        tiedostonimi = self._pyyda_syote\
+                            ("Anna tiedostonimi:", None, InputValidation.not_empty)
+
+                        self.reference_manager.vie_viitelista_tiedostoon(filtteroity_lista, tiedostonimi)
+
+                        #Tiedostoon viennin varmistus?
+                        self._konsoli_io.tulosta("Viitteet viety tiedostoon: ", Varit.VIHREA, lopetus="")
+                        self._konsoli_io.tulosta(f"{tiedostonimi}.bib", tummennus=True)
+                    else:
+                        self._konsoli_io.tulosta\
+                                ("\nViitteitä asetetuilla filttereillä ei ole. Vienti tiedostoon epäonnistui.",
+                                                Varit.PUNAINEN, lopetus="")
+                else:
+                    self._konsoli_io.tulosta\
+                            ("\nFilttereitä ei asetettu!",
+                                            Varit.PUNAINEN, lopetus="")
+            elif komento == "4":
                 self.listaa_viitteet(self.reference_manager.hae_viitteet())
                 poistettavan_lahdeviitteen_numero = int(self._pyyda_syote\
                     ("Anna poistettavan lähdeviitteen numero:",
@@ -87,7 +110,7 @@ class UI:
                     ("Viitettä annetulla viitteen numerolla ei ole. Viitteen poisto epäonnistui.",
                         Varit.PUNAINEN, lopetus="")
 
-            elif komento == "4":
+            elif komento == "5":
                 while(True):
                     if len(self.reference_manager.get_hakusanat()) > 0:
                         self._tulosta_hakusanat_ja_operandit(self.reference_manager.
@@ -111,8 +134,9 @@ class UI:
                                                 Varit.PUNAINEN, lopetus="")
                     continue
 
-                hakutuloslista = self.reference_manager.hae_hakusanoilla_kun_operandi_and()
-            
+                hakutuloslista = self.reference_manager.hae_viitelistasta_matchit_hakusanalistalla_kun_operandi_and\
+                                                            (self.reference_manager.hae_viitteet(), self.reference_manager.get_hakusanat())
+           
                 if len(hakutuloslista) > 0:
                     self._konsoli_io.tulosta("\nHakusanojen syöttö lopetettu.\n",
                                                 Varit.VIHREA, lopetus="")
@@ -126,7 +150,7 @@ class UI:
 
                 self.reference_manager.tyhjenna_hakusanat()
 
-            elif komento == "5":
+            elif komento == "6":
 
                 luettu_viite = self.lue_doi()
                 if not self.reference_manager.lisaa_uusi_viite(luettu_viite):
@@ -135,7 +159,7 @@ class UI:
                     self._konsoli_io.tulosta("Uusi artikkeliviite on lisätty!", Varit.VIHREA)
 
 
-            elif komento == "6":
+            elif komento == "7":
                 while(True):
                     if len(self.reference_manager.get_filtterit()) > 0:
                         self._tulosta_filtterit_ja_operandit\
@@ -158,30 +182,30 @@ class UI:
 
                 self._konsoli_io.tulosta("\nFilttereiden syöttö lopetettu.\n",
                                             Varit.VIHREA, lopetus="")
-            elif komento == "7":
+            elif komento == "8":
                 self.reference_manager.poista_filtterit()
                 self._konsoli_io.tulosta("\nFiltterit poistettu!\n",
                                             Varit.VIHREA, lopetus="")
 
-            elif komento == "8":
+            elif komento == "9":
                 self.tarkastele_viitetta()
 
-            elif komento == "9":
+            elif komento == "10":
                 break
 
-    def _tulosta_menu_ohje(self):
+    def _tulosta_menu_ohje(self):       
         komennot = {
             "0": "Luo uusi lähdeviite",
             "1": "Listaa kaikki lähdeviitteet",
-            "2": "Vie lähdeviitteet bibtex-tiedostoon",
-            "3": "Poista lähdeviite",
-            "4": "Hae hakusanalla",
-            "5": "Hae viite DOI:n perusteella",
-            "6": "Lisää filttereitä",
-            "7": "Poista filtterit",
-            "8": "Hae viitteen kaikki tiedot",
-            "9": "Lopeta ohjelma"
-
+            "2": "Vie kaikki lähdeviitteet bibtex-tiedostoon",
+            "3": "Vie filtteröidyt lähdeviitteet bibtex-tiedostoon",
+            "4": "Poista lähdeviite",
+            "5": "Hae hakusanalla",
+            "6": "Hae viite DOI:n perusteella",
+            "7": "Lisää filttereitä",
+            "8": "Poista filtterit",
+            "9": "Hae viitteen kaikki tiedot",
+            "10": "Lopeta ohjelma"
         }
         self._konsoli_io.tulosta("")
         for komento, selite in komennot.items():
@@ -310,7 +334,7 @@ class UI:
     def lue_nimet(self):
         nimilista = []
         self._konsoli_io.tulosta\
-            ("Syöta tekijät yksi kerrallaan muodossa Sukunimi, Etunimi. Tyhjä syöte lopettaa.\n",
+            ("Syötä tekijät yksi kerrallaan muodossa Sukunimi, Etunimi. Tyhjä syöte lopettaa.\n",
                 Varit.KELTAINEN)
         while True:
             author = self._pyyda_syote("Kirjoittaja:", 13,

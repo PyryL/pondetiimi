@@ -60,15 +60,14 @@ class InputValidation:
     @classmethod
     def menu_command(cls, input_string:str) -> bool:
         '''
-        Tarkistetaan Menu-syöte. Syöte on luku 0 - 5.
+        Tarkistetaan Menu-syöte. Syöte on luku 0 - 10.
         Args:
             input_string (String): annettu syöte
         Returns
             (Boolean): True, jos syöte täyttää vaatimuksen.
         '''
-
-        return re.match("^[0-9]$", input_string) is not None
-
+        #Oikein?
+        return re.match("^[0-9]|[10]$", input_string) is not None
 
     @classmethod
     def hakumenu_command(cls, input_string:str) -> bool:

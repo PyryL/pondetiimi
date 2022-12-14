@@ -7,12 +7,10 @@ class ReferenceManager:
         self.bibtex_service = bibtex_service
         self.db_service = db_service
         self.viitteet = self.hae_viitteet_databasesta()
-        self.vie_viitteet_bibtexdb() #turha?
-
+        self.vie_viitteet_bibtexdb() #turha?        
         self.tallennetut_hakusanat = []
         self.tallennettujen_hakusanojen_operandi = "AND" #Default yksi operandi
         #self.tallennettujen_hakusanojen_operandit= [] Useita operandeja
-
         self.tallennetut_filtterit = []
 
     def get_filtterit(self):
@@ -44,17 +42,43 @@ class ReferenceManager:
                     (self.viitteet, self.tallennetut_filtterit)
 
     # Refaktoroi
-    #Laajenna avainsana muihin viitetyyppeihin ja viitetekijöihin
     def hae_viitelistasta_hakusanalla(self, viitelista, hakusana):
         lista_viitteista_haetulla_hakusanalla = []
         for viite in viitelista:
-            if hakusana.casefold() in viite.get_author().casefold()\
-            or hakusana.casefold() in viite.get_title().casefold()\
-                or hakusana in viite.get_publisher().casefold():
-                # or avainsana in viite.get_year() or avainsana in viite.get_isbn():
-                lista_viitteista_haetulla_hakusanalla.append(viite)
+            # Refaktoroi
+            if viite.get_entrytype() == "book":
+                if hakusana.casefold() in viite.get_author().casefold()\
+                    or hakusana.casefold() in viite.get_title().casefold()\
+                    or hakusana.casefold() in viite.get_publisher().casefold()\
+                    or hakusana.casefold() in viite.get_year().casefold()\
+                    or hakusana.casefold() in viite.get_isbn().casefold():
+                    lista_viitteista_haetulla_hakusanalla.append(viite)
+
+            elif viite.get_entrytype() == "article":
+                if hakusana.casefold() in viite.get_author().casefold()\
+                    or hakusana.casefold() in viite.get_title().casefold()\
+                    or hakusana.casefold() in viite.get_publisher().casefold()\
+                    or hakusana.casefold() in viite.get_year().casefold()\
+                    or hakusana.casefold() in viite.get_journal().casefold()\
+                    or hakusana.casefold() in viite.get_volume().casefold()\
+                    or hakusana.casefold() in viite.get_number().casefold()\
+                    or hakusana.casefold() in viite.get_pages().casefold():
+                    lista_viitteista_haetulla_hakusanalla.append(viite)
+
+            elif viite.get_entrytype() == "inproceedings":
+                if hakusana.casefold() in viite.get_author().casefold()\
+                    or hakusana.casefold() in viite.get_title().casefold()\
+                    or hakusana.casefold() in viite.get_publisher().casefold()\
+                    or hakusana.casefold() in viite.get_year().casefold()\
+                    or hakusana.casefold() in viite.get_booktitle().casefold()\
+                    or hakusana.casefold() in viite.get_pages().casefold():
+                    lista_viitteista_haetulla_hakusanalla.append(viite)
 
         return lista_viitteista_haetulla_hakusanalla
+
+
+
+    #HAKU SEUR
 
     # Refaktoroi
     def hae_viitelistasta_matchit_hakusanalistalla_kun_operandi_and\
@@ -66,16 +90,57 @@ class ReferenceManager:
 
         for i in range(len(ensimmaisen_hakusanan_match_lista)):
             for j in range(len(hakusanalista) - 1):
-                #Erittele eri tapaukset eri viitetyypeille ja lisää haut eri viitetekijöille:
                 kytkin = False
 
-                if not (hakusanalista[j+1].casefold() in\
+                if ensimmaisen_hakusanan_match_lista[i].get_entrytype() == "book":
+                    if not (hakusanalista[j+1].casefold() in\
                         ensimmaisen_hakusanan_match_lista[i].get_author().casefold() or\
                         hakusanalista[j+1].casefold() in\
                             ensimmaisen_hakusanan_match_lista[i].get_title().casefold()\
                         or hakusanalista[j+1].casefold() in\
-                            ensimmaisen_hakusanan_match_lista[i].get_publisher().casefold()):
-                    kytkin = True
+                            ensimmaisen_hakusanan_match_lista[i].get_publisher().casefold()\
+                        or hakusanalista[j+1].casefold() in\
+                            ensimmaisen_hakusanan_match_lista[i].get_year().casefold()\
+                        or hakusanalista[j+1].casefold() in\
+                            ensimmaisen_hakusanan_match_lista[i].get_isbn().casefold()): 
+                        
+                        kytkin = True
+
+                elif ensimmaisen_hakusanan_match_lista[i].get_entrytype() == "article":
+                    if not (hakusanalista[j+1].casefold() in\
+                        ensimmaisen_hakusanan_match_lista[i].get_author().casefold() or\
+                        hakusanalista[j+1].casefold() in\
+                            ensimmaisen_hakusanan_match_lista[i].get_title().casefold()\
+                        or hakusanalista[j+1].casefold() in\
+                            ensimmaisen_hakusanan_match_lista[i].get_publisher().casefold()\
+                        or hakusanalista[j+1].casefold() in\
+                            ensimmaisen_hakusanan_match_lista[i].get_year().casefold()\
+                        or hakusanalista[j+1].casefold() in\
+                            ensimmaisen_hakusanan_match_lista[i].get_journal().casefold()\
+                        or hakusanalista[j+1].casefold() in\
+                            ensimmaisen_hakusanan_match_lista[i].get_volume().casefold()\
+                        or hakusanalista[j+1].casefold() in\
+                            ensimmaisen_hakusanan_match_lista[i].get_number().casefold()\
+                        or hakusanalista[j+1].casefold() in\
+                            ensimmaisen_hakusanan_match_lista[i].get_pages().casefold()): 
+                        
+                        kytkin = True
+
+                elif ensimmaisen_hakusanan_match_lista[i].get_entrytype() == "inproceedings":
+                    if not (hakusanalista[j+1].casefold() in\
+                        ensimmaisen_hakusanan_match_lista[i].get_author().casefold() or\
+                        hakusanalista[j+1].casefold() in\
+                            ensimmaisen_hakusanan_match_lista[i].get_title().casefold()\
+                        or hakusanalista[j+1].casefold() in\
+                            ensimmaisen_hakusanan_match_lista[i].get_publisher().casefold()\
+                        or hakusanalista[j+1].casefold() in\
+                            ensimmaisen_hakusanan_match_lista[i].get_year().casefold()\
+                        or hakusanalista[j+1].casefold() in\
+                            ensimmaisen_hakusanan_match_lista[i].get_booktitle().casefold()\
+                        or hakusanalista[j+1].casefold() in\
+                            ensimmaisen_hakusanan_match_lista[i].get_pages().casefold()):                        
+                        
+                        kytkin = True
 
                 if kytkin:
                     hakusanojen_match_listasta_poistettavien_lista.append\
@@ -129,6 +194,7 @@ class ReferenceManager:
 
         return -1
 
+    ### Muuttunut käyttämättömäksi? Poista?
     #Hakusanat parempi parametrina / ei oliomuuttujana?
     def hae_hakusanoilla_kun_operandi_and(self):
         hakusanojen_match_lista = []
@@ -160,6 +226,7 @@ class ReferenceManager:
 
         return hakusanojen_match_lista
 
+    ### Muuttunut käyttämättömäksi? Pois?
     #Laajenna avainsana muihin viitetyyppeihin ja viitetekijöihin
     def hae_viitteista_hakusanalla(self, hakusana):
         lista_viitteista_haetulla_hakusanalla = []
@@ -185,7 +252,6 @@ class ReferenceManager:
 
     def get_operandi(self):
         self.tallennettujen_hakusanojen_operandi
-
 
     def get_hakusanat(self):
         return self.tallennetut_hakusanat
@@ -241,8 +307,18 @@ class ReferenceManager:
     def hae_viitteet(self):
         return self.viitteet
 
+    # Refaktoroi?
     def vie_viitteet_tiedostoon(self, tiedostonimi):
         self.bibtex_service.vie_viitteet_tiedostoon(tiedostonimi)
+
+    def vie_viitelista_tiedostoon(self, viitelista, tiedostonimi):
+        for viite in viitelista:
+            viite_as_dictionary = viite.get_as_dictionary()
+            self.bibtex_service.vie_viite_temporary_databaseen(viite_as_dictionary)
+        
+        self.bibtex_service.vie_temporary_databasen_viitelista_tiedostoon(tiedostonimi)
+
+        self.bibtex_service.tyhjenna_temporary_bibdatabase()
 
     def vie_viitteet_bibtexdb(self): #turha?
         for viite in self.viitteet:
@@ -339,7 +415,7 @@ class ReferenceManager:
     """
 
     #Laajenna avainsana muihin viitetyyppeihin ja viitetekijöihin
-    #Turha pois?
+    #Turha, pois?
     def hae_viitteista_avainsanalla(self, avainsana):
         lista_viitteista_haetulla_avainsanalla = []
         for viite in self.viitteet:

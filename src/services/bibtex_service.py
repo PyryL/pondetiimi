@@ -24,6 +24,7 @@ class BibtexService:
     def __init__(self, file_io = FileIO()):
         self.writer = BibTexWriter()
         self.database = BibDatabase()
+        self.temporary_database = BibDatabase()
         self.encoder = UnicodeToLatexEncoder(replacement_latex_protection='braces-all')
         self.parser = BibTexParser()
         self.file_io = file_io
@@ -35,9 +36,23 @@ class BibtexService:
 
         self.database.entries.append(viite)
 
+    def vie_viite_temporary_databaseen(self, viite): #Turha?
+        # Tarkistus, onko viite jo db:ssä puuttuu. (Tarkistus suoritettu ref_manager-luokassa?)
+        for key in viite:
+            viite[key] = self.encoder.unicode_to_latex(viite[key])
+
+        self.temporary_database.entries.append(viite)
+
     def vie_viitteet_tiedostoon(self, tiedostonimi):
         self.writer.indent = "      "
         self.file_io.write(f"{tiedostonimi}.bib", self.writer.write(self.database))
+
+    def vie_temporary_databasen_viitelista_tiedostoon(self, tiedostonimi):
+        self.writer.indent = "      "
+        self.file_io.write(f"{tiedostonimi}.bib", self.writer.write(self.temporary_database))
+
+    def tyhjenna_temporary_bibdatabase(self):
+        self.temporary_database = BibDatabase()
 
     def tyhjenna_bibdatabase(self):
         self.database = BibDatabase()
