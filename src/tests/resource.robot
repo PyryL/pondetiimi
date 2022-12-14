@@ -21,22 +21,22 @@ Input Export Command
     Input  2
 
 Input Delete Command
-    Input  3
-
-Input Keyword Command
     Input  4
 
-Input New Filter Command
-    Input  6
+Input Keyword Command
+    Input  5
 
-Input Delete Filter Command
+Input New Filter Command
     Input  7
 
-Input Get All Information Command
+Input Delete Filter Command
     Input  8
 
-Input Exit Command
+Input Get All Information Command
     Input  9
+
+Input Exit Command
+    Input  10
 
 Input Book Reference Details
     [Arguments]  ${author}  ${title}  ${publisher}  ${year}  ${isbn}
