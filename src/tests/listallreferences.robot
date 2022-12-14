@@ -33,5 +33,11 @@ Delete All Filters Successfully
     Run Application
     Output Should Contain  Filtterit poistettu!
 
+List Reference All Information Successfully
+    Input Get All Information Command
+    Input Reference All Information Details  0
+    Input Exit Command
+    Run Application
+    Output Should Contain  Kirjoittaja 
 
 *** Keywords ***

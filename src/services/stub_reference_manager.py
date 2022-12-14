@@ -33,3 +33,6 @@ class StubReferenceManager:
 
     def poista_viite_viitteen_numeron_mukaan(self, numero):
         return True
+    
+    def hae_viite_doi(self, doi):
+        pass

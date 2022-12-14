@@ -23,6 +23,20 @@ Create New Inproceedings Reference Successfully
     Run Application
     Output Should Contain  Uusi konferenssiviite on lisätty!
 
+Create Multily Authors Book Reference Successfully
+    Input New Book Command
+    Input Book Reference Two Authors Details  Sukunimi, Etunimi  Suku, Etu  Otsikko  Julkaisia  2000  9780596520687
+    Input Exit Command
+    Run Application
+    Output Should Contain  Uusi kirjaviite on lisätty!
+
+Create Reference With Doi Successfully
+    Input Doi Command
+    Input Reference By Doi Details  10.1109/5.771073
+    Input Exit Command
+    Run Application
+    Output Should Contain  Viitettä annetulla DOI:lla ei löytynyt
+
 Delete Reference Successfully
     Input New Book Command
     Input Book Reference Details  Sukunimi, Etunimi  Otsikko  Julkaisija  2000  9780596520687

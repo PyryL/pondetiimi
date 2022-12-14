@@ -26,6 +26,9 @@ Input Delete Command
 Input Keyword Command
     Input  5
 
+Input Doi Command
+    Input  6
+
 Input New Filter Command
     Input  7
 
@@ -46,6 +49,16 @@ Input Book Reference Details
     Input  ${publisher}  
     Input  ${year}  
     Input  ${isbn}
+
+Input Book Reference Two Authors Details
+    [Arguments]  ${author1}  ${author2}  ${title}  ${publisher}  ${year}  ${isbn}
+    Input  ${author1}
+    Input  ${author2}
+    Input  ${EMPTY}
+    Input  ${title}
+    Input  ${publisher}  
+    Input  ${year}
+    Input  ${EMPTY}
 
 Input Article Reference Details
     [Arguments]  ${author}  ${title}  ${publisher}  ${year}  ${journal}  ${volume}  ${number}  ${pages}
@@ -88,3 +101,11 @@ Input Keyword Details
     [Arguments]  ${keyword}
     Input  ${keyword}
     Input  ${EMPTY}
+
+Input Reference All Information Details
+    [Arguments]  ${id}
+    Input  ${id}
+
+Input Reference By Doi Details
+    [Arguments]  ${doi}
+    Input  ${doi}
