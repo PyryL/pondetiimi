@@ -36,8 +36,8 @@ class BibtexService:
 
         self.database.entries.append(viite)
 
-    def vie_viite_temporary_databaseen(self, viite): #Turha?
-        # Tarkistus, onko viite jo db:ssä puuttuu. (Tarkistus suoritettu ref_manager-luokassa?)
+    def vie_viite_temporary_databaseen(self, viite):
+
         for key in viite:
             viite[key] = self.encoder.unicode_to_latex(viite[key])
 

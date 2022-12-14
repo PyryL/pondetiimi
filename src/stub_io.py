@@ -13,8 +13,9 @@ class StubIO:
         return "lopeta"
 
     def tulosta(self, output, *args, **kwargs): # pylint: disable=unused-argument
-        # *args ja **kwargs täytyy olla, vaikka niitä ei käytetä,
-        # koska konsoli_io-luokalla on muitakin argumentteja
+        ''' *args ja **kwargs täytyy olla, vaikka niitä ei käytetä,
+        koska konsoli_io-luokalla on muitakin argumentteja
 
-        # muulla kuin tulostuksen tekstillä ei ole testien kannalta väliä
+        muulla kuin tulostuksen tekstillä ei ole testien kannalta väliä'''
+
         self.outputs.append(output)

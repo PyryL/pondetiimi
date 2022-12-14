@@ -13,22 +13,24 @@ class InputValidation:
             input_string (String): annettu syöte
         Returns
             (Boolean): True, jos syöte täyttää vaatimuksen.
-        '''
-        # tämä ei ole kaiken kattava ratkaisu, mutta toimii useimmissa tapauksissa
-        # laatimisessa käytetty virallista ohjetta täällä:
-        # https://www.isbn-international.org/sites/default/files/ISBN-k%C3%A4ytt%C3%B6opas%20%28Finnish%20translation%20of%20seventh%20edition%29_0.pdf
 
-        # hyväksy tilanne, jossa ei ole annettu ISBN:ää ollenkaan
+        Tämä ei ole kaiken kattava ratkaisu, mutta toimii useimmissa tapauksissa
+        laatimisessa käytetty virallista ohjetta täällä:
+        https://www.isbn-international.org/sites/default/files/ISBN-k%C3%A4ytt%C3%B6opas%20%28Finnish%20translation%20of%20seventh%20edition%29_0.pdf
+
+        hyväksy tilanne, jossa ei ole annettu ISBN:ää ollenkaan
+        tarkista, että eri osissa on jokaisessa oikea määrä numeroita
+        lisäksi tarkista osien erottimein oikeellisuus
+        tarkista lisäksi, että numeroita on yhteensä oikea määrä
+        '''
+
         if input_string == "":
             return True
 
-        # tarkista, että eri osissa on jokaisessa oikea määrä numeroita
-        # lisäksi tarkista osien erottimein oikeellisuus
         regexp = "^(97(8|9)[- ]?)?\\d{1,5}[- ]?\\d{1,7}[- ]?\\d{1,6}[- ]?\\d$"
         if not re.match(regexp, input_string):
             return False
 
-        # tarkista lisäksi, että numeroita on yhteensä oikea määrä
         pelkat_numerot = [
             char for char in input_string if char in "0123456789"]
         return len(pelkat_numerot) in [10, 13]
@@ -53,7 +55,6 @@ class InputValidation:
         Returns
             (Boolean): True, jos syöte täyttää vaatimuksen.
         '''
-        # hyväksytään kaikki merkkijonot
 
         if input_string == "":
             return True
@@ -68,7 +69,7 @@ class InputValidation:
         Returns
             (Boolean): True, jos syöte täyttää vaatimuksen.
         '''
-        #Oikein?
+
         return re.match("(^[1][0]$)|(^[0-9]$)", input_string) is not None
 
     @classmethod
@@ -88,14 +89,16 @@ class InputValidation:
 
     @classmethod
     def article_number(cls, input_string: str) -> bool:
-        # hyväksy tyhjä syöte sekä kaikki pelkistä numeroista koostuvat syötteet
+        ''' Hyväksy tyhjä syöte sekä kaikki pelkistä numeroista koostuvat syötteet'''
+
         if input_string == "":
             return True
         return re.match("^\\d+$", input_string) is not None
 
     @classmethod
     def pages(cls, input_string: str) -> bool:
-        # hyväksy tyhjä syöte sekä kaikki muotoa a-b olevat syötteet, missä kokonaisluvut a<=b
+        ''' Hyväksy tyhjä syöte sekä kaikki muotoa a-b olevat syötteet, missä kokonaisluvut a<=b'''
+
         if input_string == "":
             return True
         match = re.match("^(\\d+)-(\\d+)$", input_string)
@@ -106,7 +109,8 @@ class InputValidation:
 
     @classmethod
     def doi(cls, input_string: str) -> bool:
-        # tarkista, että DOI on oikeassa formaatissa
+        ''' tarkista, että DOI on oikeassa formaatissa'''
+
         regexp = r'\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'<>])\S)+)\b'
         if not re.match(regexp, input_string):
             return False
@@ -140,7 +144,6 @@ class InputValidation:
 
         return virheilmoitukset[error_type]
 
-    #@classmethod
     def korjaa_doi_nimi(self, tekija):
         pattern_nimet = re.compile(r";|and")
         nimet = re.split(pattern_nimet, tekija)

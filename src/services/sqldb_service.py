@@ -1,5 +1,4 @@
 import sqlite3
-from entities.reference import Reference
 from entities.book import Book
 from entities.article import Article
 from entities.inproceedings import InProceedings
@@ -55,8 +54,7 @@ class SqldbService:
         database.close()
 
     def vie_viite_databaseen(self, viite):
-        # Tarkistus, onko viite jo db:ssä puuttuu.
-        #Tarkistus suoritettu ref_manager metodissa lisaa_uusi_viite()?
+        ''' Tarkistus, onko viite jo db:ssä puuttuu.'''
 
         database = sqlite3.connect("references.db")
         database.isolation_level = None
@@ -137,10 +135,6 @@ class SqldbService:
 
         return viitteet
 
-    def poista_viite_databasesta(self):
-        #Toteutus puuttuu.
-        pass
-
     def poista_viitetaulu_databasesta(self):
         database = sqlite3.connect("references.db")
         database.isolation_level = None
@@ -149,10 +143,3 @@ class SqldbService:
 
         database.commit()
         database.close()
-
-    """
-    def pois_viite_databasesta(self, viite):
-        database = sqlite3.connect("test.db")
-        database.isolation_level = None
-        database.execute("DELETE FROM test WHERE id_number = ?", (viite.get_id(),))
-    """

@@ -16,16 +16,16 @@ class TestInputValidation(unittest.TestCase):
             self.assertTrue(InputValidation.isbn(syote))
 
     def test_isbn_epakelvolla_syotteen_alulla(self):
-        # alku 977 on epäkelpo
+        ''' alku 977 on epäkelpo '''
         self.assertFalse(InputValidation.isbn("977-0-596-52068-7"))
 
     def test_isbn_epakelvolla_syotteen_pituudella(self):
-        # numeroiden määrä jokaisessa osassa on kelpo,
-        # mutta yhteensä niitä on liian paljon (ei 10 eikä 13)
+        ''' numeroiden määrä jokaisessa osassa on kelpo,
+        mutta yhteensä niitä on liian paljon (ei 10 eikä 13)'''
         self.assertFalse(InputValidation.isbn("978-1234-123456-12345-1"))
 
     def test_isbn_epakelvolla_merkilla(self):
-        # merkki X ei ole numero
+        ''' merkki X ei ole numero '''
         self.assertFalse(InputValidation.isbn("978-0-5X6-52068-7"))
 
     def test_vuosi_kelvolla_syotteella(self):
@@ -102,11 +102,11 @@ class TestInputValidation(unittest.TestCase):
         self.assertTrue(InputValidation.pages("17-18"))
 
     def test_pages_epakelvon_muotoisella_syotteella(self):
-        # syöte ei sisällä väliviivaa
+        ''' syöte ei sisällä väliviivaa '''
         self.assertFalse(InputValidation.pages("125"))
 
     def test_pages_epakelvon_sisaltoisella_syotteella(self):
-        # luvut eivät ole suuruusjärjestyksessä
+        ''' luvut eivät ole suuruusjärjestyksessä '''
         self.assertFalse(InputValidation.pages("18-17"))
 
     def test_doi_kelvolla_syotteella(self):

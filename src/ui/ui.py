@@ -29,12 +29,12 @@ class UI:
 
             if komento == "0":
                 self._tulosta_ohje_eri_viitetyyppien_lisaykselle()
-                # Korjaa validation ja lisää
+
                 lisattavan_viitetyypin_numero = self._pyyda_syote("Anna komento:",
                                                         None, InputValidation.viitetyyppi_command)
                 if lisattavan_viitetyypin_numero == "0":
                     luettu_viite = self.lue_kirja()
-                    #TARK ONKO JO LISTALLA TOIMII KUNNOLLA?
+
                     if not self.reference_manager.lisaa_uusi_viite(luettu_viite):
                         self._konsoli_io.tulosta("Viite on jo listalla!", Varit.PUNAINEN)
                     else:
@@ -71,7 +71,6 @@ class UI:
                 tiedostonimi = self._pyyda_syote\
                     ("Anna tiedostonimi:", None, InputValidation.not_empty)
                 self.reference_manager.vie_viitteet_tiedostoon(tiedostonimi)
-                #Tiedostoon viennin varmistus?
                 self._konsoli_io.tulosta("Viitteet viety tiedostoon: ", Varit.VIHREA, lopetus="")
                 self._konsoli_io.tulosta(f"{tiedostonimi}.bib", tummennus=True)
 
@@ -84,15 +83,16 @@ class UI:
                         tiedostonimi = self._pyyda_syote\
                             ("Anna tiedostonimi:", None, InputValidation.not_empty)
 
-                        self.reference_manager.vie_viitelista_tiedostoon(filtteroity_lista, tiedostonimi)
+                        self.reference_manager.vie_viitelista_tiedostoon\
+                            (filtteroity_lista, tiedostonimi)
 
-                        #Tiedostoon viennin varmistus?
-                        self._konsoli_io.tulosta("Viitteet viety tiedostoon: ", Varit.VIHREA, lopetus="")
+                        self._konsoli_io.tulosta("Viitteet viety tiedostoon: ",
+                            Varit.VIHREA, lopetus="")
                         self._konsoli_io.tulosta(f"{tiedostonimi}.bib", tummennus=True)
                     else:
                         self._konsoli_io.tulosta\
-                                ("\nViitteitä asetetuilla filttereillä ei ole. Vienti tiedostoon epäonnistui.",
-                                                Varit.PUNAINEN, lopetus="")
+                            ("\nViitteitä asetetuilla filttereillä ei ole. Vienti tiedostoon epäonnistui.",
+                                    Varit.PUNAINEN, lopetus="")
                 else:
                     self._konsoli_io.tulosta\
                             ("\nFilttereitä ei asetettu!",
@@ -134,9 +134,11 @@ class UI:
                                                 Varit.PUNAINEN, lopetus="")
                     continue
 
-                hakutuloslista = self.reference_manager.hae_viitelistasta_matchit_hakusanalistalla_kun_operandi_and\
-                                                            (self.reference_manager.hae_viitteet(), self.reference_manager.get_hakusanat())
-           
+                hakutuloslista = self.reference_manager.\
+                    hae_viitelistasta_matchit_hakusanalistalla_kun_operandi_and\
+                        (self.reference_manager.hae_viitteet(),
+                            self.reference_manager.get_hakusanat())
+
                 if len(hakutuloslista) > 0:
                     self._konsoli_io.tulosta("\nHakusanojen syöttö lopetettu.\n",
                                                 Varit.VIHREA, lopetus="")
@@ -168,11 +170,10 @@ class UI:
                                                     None, InputValidation.hakusana)
 
                     if filtteri == "":
-                        #Tulosta: filttereitä ei annettu?
                         break
 
                     if self.reference_manager.filtteri_jo_lisatty(filtteri):
-                        #Kirjainkoolla merkitystä?
+
                         self._konsoli_io.tulosta("\nFiltteri on jo lisätty.\n",
                                                 Varit.PUNAINEN, lopetus="")
                         continue
@@ -192,7 +193,7 @@ class UI:
             elif komento == "10":
                 break
 
-    def _tulosta_menu_ohje(self):       
+    def _tulosta_menu_ohje(self):
         komennot = {
             "0": "Luo uusi lähdeviite",
             "1": "Listaa kaikki lähdeviitteet",
@@ -239,7 +240,6 @@ class UI:
             self._konsoli_io.tulosta(komento, Varit.SININEN, tummennus=True, lopetus="")
             self._konsoli_io.tulosta(" " + selite)
 
-    #Refaktoroi _tulosta_kaytetyt_hakusanat_ja_operandit() kanssa:
     def _tulosta_hakusanat_ja_operandit(self, hakusanat, operandi):
         hakusanat_string = "\nKäytetyt hakusanat: '" + hakusanat[0] +"'"
 
