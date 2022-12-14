@@ -2,3 +2,5 @@
 
 Täsmällinen tietokantataulujen rakenne:
 
+https://github.com/PyryL/pondetiimi/blob/main/schema_doi_references.sql
+
