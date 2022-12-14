@@ -69,7 +69,7 @@ class InputValidation:
             (Boolean): True, jos syöte täyttää vaatimuksen.
         '''
         #Oikein?
-        return re.match("^[0-9]|[10]$", input_string) is not None
+        return re.match("(^[1-9][0]$)|(^[1-9]$)", input_string) is not None
 
     @classmethod
     def viitetyyppi_command(cls, input_string:str) -> bool:
