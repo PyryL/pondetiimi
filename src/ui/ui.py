@@ -366,13 +366,26 @@ class UI:
             self._konsoli_io.tulosta(InputValidation.error_message(virheilmoitus_tyyppi),
                 Varit.PUNAINEN)
 
+    def _viitteen_tyyppi_suomeksi(self, tyyppi):
+        tyyppi_suomennos = {
+            "book": "Kirja",
+            "article": "Artikkeli",
+            "inproceedings": "Konferenssiviite"
+        }
+        if tyyppi in tyyppi_suomennos:
+            return tyyppi_suomennos[tyyppi]
+        return tyyppi       # backup
+
     def listaa_viitteet(self, viitteet):
-        table = PrettyTable(["Nro", "Kirjoittajat", "Otsikko", "Vuosi"],
+        table = PrettyTable(["Nro", "Tyyppi", "Kirjoittajat", "Otsikko", "Vuosi"],
                                 align='l', max_width=40)
         table.set_style(PrettyTableStyle)
         table.align["Nro"] = "c"
         table.add_rows([
-            (i, viite.get_author().replace("; ", "\n"), viite.get_title(), viite.get_year())
+            (
+                i, self._viitteen_tyyppi_suomeksi(viite.get_entrytype()),
+                viite.get_author().replace("; ", "\n"), viite.get_title(), viite.get_year()
+            )
             for i, viite in enumerate(viitteet)
         ])
         self._konsoli_io.tulosta(str(table))
@@ -392,6 +405,7 @@ class UI:
         viite = viitteet[int(viitteen_id)]
 
         kuvaukset = {
+            "ENTRYTYPE": "Tyyppi",
             "author": "Kirjoittaja",
             "title": "Otsikko",
             "publisher": "Julkaisija",
@@ -406,6 +420,8 @@ class UI:
         kuvaus_pituus = max(len(kuvaus) for kuvaus in kuvaukset.values()) + 1
         self._konsoli_io.tulosta("")
         for avain, arvo in viite.get_as_dictionary().items():
+            if avain == "ENTRYTYPE":
+                arvo = self._viitteen_tyyppi_suomeksi(arvo)
             if avain in kuvaukset:
                 self._konsoli_io.tulosta(
                     f"{kuvaukset[avain]+':' : <{kuvaus_pituus}}",
