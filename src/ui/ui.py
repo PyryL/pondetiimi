@@ -31,7 +31,7 @@ class UI:
                 self._tulosta_ohje_eri_viitetyyppien_lisaykselle()
                 # Korjaa validation ja lisää
                 lisattavan_viitetyypin_numero = self._pyyda_syote("Anna komento:",
-                                                        None, InputValidation.hakumenu_command)
+                                                        None, InputValidation.viitetyyppi_command)
                 if lisattavan_viitetyypin_numero == "0":
                     luettu_viite = self.lue_kirja()
                     #TARK ONKO JO LISTALLA TOIMII KUNNOLLA?
@@ -111,7 +111,7 @@ class UI:
                         Varit.PUNAINEN, lopetus="")
 
             elif komento == "5":
-                while(True):
+                while True:
                     if len(self.reference_manager.get_hakusanat()) > 0:
                         self._tulosta_hakusanat_ja_operandit(self.reference_manager.
                             get_hakusanat(), "and")
@@ -151,16 +151,15 @@ class UI:
                 self.reference_manager.tyhjenna_hakusanat()
 
             elif komento == "6":
-
                 luettu_viite = self.lue_doi()
-                if not self.reference_manager.lisaa_uusi_viite(luettu_viite):
-                    self._konsoli_io.tulosta("Viite on jo listalla!", Varit.PUNAINEN)
-                else:
-                    self._konsoli_io.tulosta("Uusi artikkeliviite on lisätty!", Varit.VIHREA)
-
+                if luettu_viite is not None:
+                    if not self.reference_manager.lisaa_uusi_viite(luettu_viite):
+                        self._konsoli_io.tulosta("Viite on jo listalla!", Varit.PUNAINEN)
+                    else:
+                        self._konsoli_io.tulosta("Uusi artikkeliviite on lisätty!", Varit.VIHREA)
 
             elif komento == "7":
-                while(True):
+                while True:
                     if len(self.reference_manager.get_filtterit()) > 0:
                         self._tulosta_filtterit_ja_operandit\
                             (self.reference_manager.get_filtterit(), "and")
@@ -239,20 +238,6 @@ class UI:
             self._konsoli_io.tulosta(" ", lopetus="")
             self._konsoli_io.tulosta(komento, Varit.SININEN, tummennus=True, lopetus="")
             self._konsoli_io.tulosta(" " + selite)
-
-    """ Ei käytössä:
-    def _tulosta_operandi_ohje(self):
-        komennot = {
-            "0": "AND",
-            "1": "OR",
-            #"x": "Palaa takaisin"
-        }
-        self._konsoli_io.tulosta("")
-        for komento, selite in komennot.items():
-            self._konsoli_io.tulosta(" ", lopetus="")
-            self._konsoli_io.tulosta(komento, Varit.SININEN, tummennus=True, lopetus="")
-            self._konsoli_io.tulosta(" " + selite)
-    """
 
     #Refaktoroi _tulosta_kaytetyt_hakusanat_ja_operandit() kanssa:
     def _tulosta_hakusanat_ja_operandit(self, hakusanat, operandi):
@@ -342,7 +327,7 @@ class UI:
             if author == "":
                 break
             nimilista.append(author)
-        if not len(nimilista):
+        if len(nimilista) == 0:
             self._konsoli_io.tulosta("Viitteella on oltava vähintään yksi kirjoittaja!",
                                          Varit.PUNAINEN)
             self.lue_nimet()
@@ -366,6 +351,7 @@ class UI:
 
         self._konsoli_io.tulosta("Viitettä annetulla DOI:lla ei löytynyt.",
                                                 Varit.PUNAINEN, lopetus="")
+        return None
 
     def _pyyda_syote(self, kehote, kehotteen_pituus, validator, virheilmoitus_tyyppi="tyhja"):
         if kehotteen_pituus is None:

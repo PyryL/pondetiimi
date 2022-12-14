@@ -9,7 +9,7 @@ class Book(Reference):
     def __init__(self,author, title, publisher, year, isbn):
         super().__init__(author, title, publisher, year)
         self._isbn = isbn
-        self._type = "book"
+        self._entrytype = "book"
 
     def get_isbn(self):
         return self._isbn

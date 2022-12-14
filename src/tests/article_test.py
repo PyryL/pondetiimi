@@ -6,6 +6,8 @@ from services.bibtex_service import BibtexService
 from services.sqldb_service import SqldbService
 
 class TestArticle(unittest.TestCase):
+    '''Artikkeli-tyyppisen viitteen testit'''
+
     def setUp(self):
         self.article = Article('Author, First; Author, Second',
                         'Test Article', 'Pearson', 2022, 'Test Journal', '2', '5', '12-15')

@@ -6,6 +6,8 @@ from services.bibtex_service import BibtexService
 from services.sqldb_service import SqldbService
 
 class TestBook(unittest.TestCase):
+    '''Kirja-tyyppisen viitteen testit'''
+
     def setUp(self):
         self.book = Book('Kurose, Jim; Ross, Keith',
                         'Computer Networking', 'Pearson', '2019', '9780596520687')

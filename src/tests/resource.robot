@@ -20,6 +20,21 @@ Input List Command
 Input Export Command
     Input  2
 
+Input Delete Command
+    Input  3
+
+Input Keyword Command
+    Input  4
+
+Input New Filter Command
+    Input  6
+
+Input Delete Filter Command
+    Input  7
+
+Input Get All Information Command
+    Input  8
+
 Input Exit Command
     Input  9
 
@@ -53,3 +68,23 @@ Input Inproceedings Reference Details
     Input  ${year}
     Input  ${book_title}
     Input  ${pages}
+
+Input One Filter Details
+    [Arguments]  ${first_filter}
+    Input  ${first_filter}
+    Input  ${EMPTY}
+
+Input Two Filters Details
+    [Arguments]  ${first_filter}  ${second_filter}
+    Input  ${first_filter}
+    Input  ${second_filter}
+    Input  ${EMPTY}
+
+Input Delete Details
+    [Arguments]  ${reference}
+    Input  ${reference}
+
+Input Keyword Details
+    [Arguments]  ${keyword}
+    Input  ${keyword}
+    Input  ${EMPTY}

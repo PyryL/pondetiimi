@@ -6,6 +6,8 @@ from services.bibtex_service import BibtexService
 from services.sqldb_service import SqldbService
 
 class TestInProceedings(unittest.TestCase):
+    '''Testit konferenssiviite-tyyppiselle viitteelle'''
+
     def setUp(self):
         self.inproceedings = InProceedings('Author, First; Author, Second',
                         'Test Article', 'Pearson', 2022, 'Test Booktitle', '12-15')
