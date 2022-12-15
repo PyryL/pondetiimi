@@ -86,6 +86,22 @@ class TestReferenceManager(unittest.TestCase):
         self.reference_manager.lisaa_uusi_viite(self.artikkeliviite2)
         self.reference_manager.lisaa_uusi_viite(self.konferenssiviite2)
 
+    def _lisaa_kaikki_viitteet_artikkeli_ensin(self):
+        self.reference_manager.lisaa_uusi_viite(self.artikkeliviite)
+        self.reference_manager.lisaa_uusi_viite(self.kirjaviite)
+        self.reference_manager.lisaa_uusi_viite(self.konferenssiviite)
+        self.reference_manager.lisaa_uusi_viite(self.kirjaviite2)
+        self.reference_manager.lisaa_uusi_viite(self.artikkeliviite2)
+        self.reference_manager.lisaa_uusi_viite(self.konferenssiviite2)
+
+    def _lisaa_kaikki_viitteet_konferenssi_ensin(self):
+        self.reference_manager.lisaa_uusi_viite(self.konferenssiviite)
+        self.reference_manager.lisaa_uusi_viite(self.kirjaviite)
+        self.reference_manager.lisaa_uusi_viite(self.artikkeliviite)
+        self.reference_manager.lisaa_uusi_viite(self.kirjaviite2)
+        self.reference_manager.lisaa_uusi_viite(self.artikkeliviite2)
+        self.reference_manager.lisaa_uusi_viite(self.konferenssiviite2)
+
     def test_get_filtterit(self):
         self.assertEqual(len(self.reference_manager.get_filtterit()), 0)
 
@@ -167,6 +183,70 @@ class TestReferenceManager(unittest.TestCase):
         self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[0].get_author(), "Author")
         self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[1].get_author(), "Author")
         self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[2].get_author(), "Author")
+
+    def test_hae_usealla_filtterihakusanalla_kaikki_matchaavat_viitteet_kun_operandi_and_ja_artikkeli_ensin(self):
+        self._lisaa_kaikki_viitteet_artikkeli_ensin()
+        self.reference_manager.lisaa_filtteri("author")
+        self.reference_manager.lisaa_filtteri("otsik")
+        self.reference_manager.lisaa_filtteri("julk")
+        self.reference_manager.lisaa_filtteri("vuo")
+        self.assertEqual(len(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()), 6)
+        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[0].get_author(), "Author")
+        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[1].get_author(), "Author")
+        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[2].get_author(), "Author")
+
+    def test_hae_viitelistasta_hakusanalla_auth_kun_lisatty_yksi_kirjaviite(self):
+        self.reference_manager.lisaa_uusi_viite(self.kirjaviite)
+        self.assertEqual(len(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "auth")), 1)
+        self.assertEqual(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "auth")[0].get_author(), "Author")
+
+    def test_hae_viitelistasta_hakusanalla_otsikko_kun_lisatty_yksi_kirjaviite(self):
+        self.reference_manager.lisaa_uusi_viite(self.kirjaviite)
+        self.assertEqual(len(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "otsikko")), 1)
+        self.assertEqual(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "otsikko")[0].get_author(), "Author")
+
+    def test_hae_viitelistasta_hakusanalla_julkaisija_kun_lisatty_yksi_kirjaviite(self):
+        self.reference_manager.lisaa_uusi_viite(self.kirjaviite)
+        self.assertEqual(len(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "julkaisija")), 1)
+        self.assertEqual(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "julkaisija")[0].get_author(), "Author")
+
+    def test_hae_viitelistasta_hakusanalla_vuosi_kun_lisatty_yksi_kirjaviite(self):
+        self.reference_manager.lisaa_uusi_viite(self.kirjaviite)
+        self.assertEqual(len(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "vuosi")), 1)
+        self.assertEqual(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "vuosi")[0].get_author(), "Author")
+
+    def test_hae_viitelistasta_hakusanalla_isbn_kun_lisatty_yksi_kirjaviite(self):
+        self.reference_manager.lisaa_uusi_viite(self.kirjaviite)
+        self.assertEqual(len(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "isbn")), 1)
+        self.assertEqual(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "isbn")[0].get_author(), "Author")
+
+    def test_hae_viitelistasta_hakusanalla_kun_lisatty_yksi_artikkeliviite(self):
+        self.reference_manager.lisaa_uusi_viite(self.artikkeliviite)
+        self.assertEqual(len(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "auth")), 1)
+        self.assertEqual(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "auth")[0].get_author(), "Author")
+
+    def test_hae_viitelistasta_hakusanalla_kun_lisatty_yksi_konferenssiviite(self):
+        self.reference_manager.lisaa_uusi_viite(self.konferenssiviite)
+        self.assertEqual(len(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "auth")), 1)
+        self.assertEqual(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "auth")[0].get_author(), "Author")
+
+    def test_hae_viitelistasta_jossa_yksi_kirjaviite_matchit_hakusanalistalla_kun_operandi_and(self):
+        self.reference_manager.lisaa_uusi_viite(self.kirjaviite)
+        self.reference_manager.lisaa_filtteri("author")
+        self.reference_manager.lisaa_filtteri("eiloydy")
+        self.assertEqual(len(self.reference_manager.hae_viitelistasta_matchit_hakusanalistalla_kun_operandi_and(self.reference_manager.hae_viitteet(), self.reference_manager.get_filtterit())), 0)
+
+    def test_hae_viitelistasta_jossa_yksi_artikkeliviite_matchit_hakusanalistalla_kun_operandi_and(self):
+        self.reference_manager.lisaa_uusi_viite(self.artikkeliviite)
+        self.reference_manager.lisaa_filtteri("author")
+        self.reference_manager.lisaa_filtteri("eiloydy")
+        self.assertEqual(len(self.reference_manager.hae_viitelistasta_matchit_hakusanalistalla_kun_operandi_and(self.reference_manager.hae_viitteet(), self.reference_manager.get_filtterit())), 0)
+
+    def test_hae_viitelistasta_jossa_yksi_konferenssiviite_matchit_hakusanalistalla_kun_operandi_and(self):
+        self.reference_manager.lisaa_uusi_viite(self.konferenssiviite)
+        self.reference_manager.lisaa_filtteri("author")
+        self.reference_manager.lisaa_filtteri("eiloydy")
+        self.assertEqual(len(self.reference_manager.hae_viitelistasta_matchit_hakusanalistalla_kun_operandi_and(self.reference_manager.hae_viitteet(), self.reference_manager.get_filtterit())), 0)
 
     def test_hae_viitteen_indeksi_viitelistassa_toimii_oikein(self):
         self.reference_manager.lisaa_uusi_viite(self.kirjaviite)
