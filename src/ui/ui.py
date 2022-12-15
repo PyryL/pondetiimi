@@ -298,7 +298,7 @@ class UI:
         pages = self._pyyda_syote("Sivut:", 13,
                                                 InputValidation.pages, "sivut")
 
-        viite = Article(author, title, publisher, year, journal, volume, number,pages)
+        viite = Article(author, title, publisher, year, journal, volume, number, pages)
         return viite
 
     def lue_kongerenssiviite(self):

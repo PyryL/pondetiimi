@@ -225,10 +225,10 @@ class ReferenceManager:
 
         return lista_viitteista_haetulla_hakusanalla
 
-
+    """Ei käytössä?
     def lisaa_operandi(self, operandi):
         self.tallennettujen_hakusanojen_operandi.append(operandi)
-
+    """
     def get_operandi(self):
         return self.tallennettujen_hakusanojen_operandi
 
@@ -345,7 +345,6 @@ class ReferenceManager:
                 lista_viitteista_haetulla_avainsanalla.append(viite)
 
         return lista_viitteista_haetulla_avainsanalla
-
 
     def poista_viite_databasesta(self, viite):
         viitteen_indeksi = self.hae_viitteen_indeksi_viitteissa(viite)

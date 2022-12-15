@@ -38,6 +38,32 @@ class TestBibtexService(unittest.TestCase):
         for rivi in halutut_rivit:
             self.assertTrue(rivi in self.file_io.content)
 
+    def test_temporary_databasesta_tiedostoon_viedyssa_tiedostossa_halutut_rivit(self):
+        self.bibtext_service.vie_viite_temporary_databaseen(self.viite)
+        self.bibtext_service.vie_temporary_databasen_viitelista_tiedostoon("test_export")
+        halutut_rivit = [
+            'author = {John Doe {\\r{a}}{\\\"a}{\\\"o}{\\\"u}{\\ss}}',
+            "title = {Title of the book}",
+            "year = {2012}",
+            "publisher = {Best sellers Inc}",
+        ]
+        for rivi in halutut_rivit:
+            self.assertTrue(rivi in self.file_io.content)
+
+    def test_tyhjenna_bibdatabase_toimii_oikein(self):
+        self.bibtext_service.vie_viite_databaseen(self.viite)
+        self.bibtext_service.tyhjenna_bibdatabase()
+        self.bibtext_service.vie_viitteet_tiedostoon("test_export")
+
+        self.assertEqual(len(self.file_io.content), 0)
+
+    def test_tyhjenna_temporary_bibdatabase_toimii_oikein(self):
+        self.bibtext_service.vie_viite_temporary_databaseen(self.viite)
+        self.bibtext_service.tyhjenna_temporary_bibdatabase()
+        self.bibtext_service.vie_temporary_databasen_viitelista_tiedostoon("test_export")
+
+        self.assertEqual(len(self.file_io.content), 0)
+
     def test_viedyn_tiedoston_nimi_on_haluttu(self):
         self.bibtext_service.vie_viitteet_tiedostoon("test_export")
         self.assertEqual(self.file_io.filename, "test_export.bib")
