@@ -7,7 +7,6 @@ class SqldbService:
     '''
     Tietokanta toiminnot.
     '''
-    #def __init__(self, dbfile = "references.db"):
     def __init__(self, dbfile):
         self.dbfile = dbfile
 
@@ -35,7 +34,6 @@ class SqldbService:
         database.commit()
         database.close()
         """
-        #database = sqlite3.connect("references.db")
         database = sqlite3.connect(self.dbfile)
         database.isolation_level = None
 
@@ -59,8 +57,6 @@ class SqldbService:
 
     def vie_viite_databaseen(self, viite):
         ''' Tarkistus, onko viite jo db:ssä puuttuu.'''
-
-        #database = sqlite3.connect("references.db")
         database = sqlite3.connect(self.dbfile)
         database.isolation_level = None
 
@@ -119,7 +115,6 @@ class SqldbService:
     def hae_viitteet_databasesta(self):
         viitteet = []
 
-        #database = sqlite3.connect("references.db")
         database = sqlite3.connect(self.dbfile)
 
         database.isolation_level = None
@@ -143,7 +138,6 @@ class SqldbService:
 
     def poista_viitetaulu_databasesta(self):
         database = sqlite3.connect(self.dbfile)
-        #database = sqlite3.connect("references.db")
         database.isolation_level = None
 
         database.execute("DROP table VIITTEET")

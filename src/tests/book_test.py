@@ -12,7 +12,6 @@ class TestBook(unittest.TestCase):
         self.book = Book('Kurose, Jim; Ross, Keith',
                         'Computer Networking', 'Pearson', '2019', '9780596520687')
         self.bibtex_service = BibtexService()
-        #self.db_service = SqldbService()
         self.db_service = SqldbService("test.db")
         self.reference_manager = ReferenceManager(self.bibtex_service, self.db_service)
 
