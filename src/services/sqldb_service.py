@@ -7,6 +7,9 @@ class SqldbService:
     '''
     Tietokanta toiminnot.
     '''
+    #def __init__(self, dbfile = "references.db"):
+    def __init__(self, dbfile):
+        self.dbfile = dbfile
 
     def luo_uusi_viitetaulu(self):
         """ Uusi doi-tietokanta:
@@ -32,7 +35,8 @@ class SqldbService:
         database.commit()
         database.close()
         """
-        database = sqlite3.connect("references.db")
+        #database = sqlite3.connect("references.db")
+        database = sqlite3.connect(self.dbfile)
         database.isolation_level = None
 
         database.execute('''CREATE TABLE VIITTEET
@@ -56,7 +60,8 @@ class SqldbService:
     def vie_viite_databaseen(self, viite):
         ''' Tarkistus, onko viite jo db:ssä puuttuu.'''
 
-        database = sqlite3.connect("references.db")
+        #database = sqlite3.connect("references.db")
+        database = sqlite3.connect(self.dbfile)
         database.isolation_level = None
 
         values = 0
@@ -99,7 +104,7 @@ class SqldbService:
             viite.get_pages(),
             viite.get_entrytype()
             )
-
+        
         insert_sql = (
             "INSERT INTO VIITTEET "
             "(ID, AUTHOR, TITLE, PUBLISHER, YEAR, ISBN, JOURNAL, "
@@ -114,7 +119,8 @@ class SqldbService:
     def hae_viitteet_databasesta(self):
         viitteet = []
 
-        database = sqlite3.connect("references.db")
+        #database = sqlite3.connect("references.db")
+        database = sqlite3.connect(self.dbfile)
 
         database.isolation_level = None
         all_references = database.execute("SELECT * FROM VIITTEET")
@@ -136,7 +142,8 @@ class SqldbService:
         return viitteet
 
     def poista_viitetaulu_databasesta(self):
-        database = sqlite3.connect("references.db")
+        database = sqlite3.connect(self.dbfile)
+        #database = sqlite3.connect("references.db")
         database.isolation_level = None
 
         database.execute("DROP table VIITTEET")

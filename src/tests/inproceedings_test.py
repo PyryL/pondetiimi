@@ -12,7 +12,8 @@ class TestInProceedings(unittest.TestCase):
         self.inproceedings = InProceedings('Author, First; Author, Second',
                         'Test Article', 'Pearson', 2022, 'Test Booktitle', '12-15')
         self.bibtex_service = BibtexService()
-        self.db_service = SqldbService()
+        #self.db_service = SqldbService()
+        self.db_service = SqldbService("test.db")
         self.reference_manager = ReferenceManager(self.bibtex_service, self.db_service)
 
     def test_set_new_booktitle_with_empty_value_not_change_journal(self):

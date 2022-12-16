@@ -12,7 +12,8 @@ class TestArticle(unittest.TestCase):
         self.article = Article('Author, First; Author, Second',
                         'Test Article', 'Pearson', 2022, 'Test Journal', '2', '5', '12-15')
         self.bibtex_service = BibtexService()
-        self.db_service = SqldbService()
+        #self.db_service = SqldbService()
+        self.db_service = SqldbService("test.db")
         self.reference_manager = ReferenceManager(self.bibtex_service, self.db_service)
 
     def test_set_new_journal_with_empty_value_not_change_journal(self):

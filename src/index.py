@@ -7,7 +7,8 @@ from ui.ui import UI
 def main():
     konsoli_io = KonsoliIO()
     bibtex_service = BibtexService()
-    db_service = SqldbService()
+    #db_service = SqldbService()
+    db_service = SqldbService("references.db")
     reference_manager = ReferenceManager(bibtex_service, db_service)
 
     user_interface = UI(konsoli_io, reference_manager)

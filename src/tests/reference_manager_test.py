@@ -15,6 +15,9 @@ class TestReferenceManager(unittest.TestCase):
         self.db_service.hae_viitteet_databasesta.return_value = []
         self.reference_manager = ReferenceManager(self.bibtex_service, self.db_service)
 
+        self.reference_manager.tyhjenna_hakusanat()
+        self.reference_manager.poista_filtterit()
+
         self.viite = Reference(
             "John Doe",
             "Title of the book",
@@ -258,6 +261,33 @@ class TestReferenceManager(unittest.TestCase):
         self.assertEqual(self.reference_manager.hae_viitteen_indeksi_viitelistassa(self.kirjaviite, self.reference_manager.hae_viitteet()), 0)
         self.assertEqual(self.reference_manager.hae_viitteen_indeksi_viitelistassa(self.artikkeliviite, self.reference_manager.hae_viitteet()), 1)
         self.assertEqual(self.reference_manager.hae_viitteen_indeksi_viitelistassa(self.konferenssiviite, self.reference_manager.hae_viitteet()), 2)
+
+    def test_hae_kahdella_hakusanalla_kun_operandi_and_kun_lisatty_kaikki_viitteet_kirjaviite_ensin(self):
+        self._lisaa_kaikki_viitteet()
+        self.reference_manager.lisaa_hakusana("auth")
+        self.reference_manager.lisaa_hakusana("otsi")
+        self.assertEqual(len(self.reference_manager.hae_hakusanoilla_kun_operandi_and()), 6)
+
+    def test_hae_kolmella_hakusanalla_kun_operandi_and_kun_lisatty_kaikki_viitteet_kirjaviite_ensin(self):
+        self._lisaa_kaikki_viitteet()
+        self.reference_manager.lisaa_hakusana("auth")
+        self.reference_manager.lisaa_hakusana("otsi")
+        self.reference_manager.lisaa_hakusana("julk")
+        self.assertEqual(len(self.reference_manager.hae_hakusanoilla_kun_operandi_and()), 6)
+
+    def test_hae_kolmella_hakusanalla_kun_operandi_and_kun_lisatty_kaikki_viitteet_kirjaviite_ensin_ja_ei_matcheja(self):
+        self._lisaa_kaikki_viitteet()
+        self.reference_manager.lisaa_hakusana("auth")
+        self.reference_manager.lisaa_hakusana("otsi")
+        self.reference_manager.lisaa_hakusana("eiloydy")
+        self.assertEqual(len(self.reference_manager.hae_hakusanoilla_kun_operandi_and()), 0)
+
+    def test_poista_hakusana_kun_hakusanaa_ei_viela_lisatty(self):
+        self.assertFalse(self.reference_manager.poista_hakusana("auth"))
+
+    def test_poista_hakusana_kun_hakusanaa_jo_lisatty(self):
+        self.reference_manager.lisaa_hakusana("auth")
+        self.assertTrue(self.reference_manager.poista_hakusana("auth"))
 
     """
     def test_lisaa_operandi(self):
