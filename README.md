@@ -6,6 +6,10 @@
 
 [Ohjelmistotuotanto](https://ohjelmistotuotanto-hy.github.io/miniprojekti/)-kurssin projektityö.
 
+## Release
+
+[Release 1.0.0](https://github.com/PyryL/pondetiimi/releases/tag/v1.0.0)
+
 ## Dokumentaatio
 
 * [Product backlog](https://docs.google.com/spreadsheets/d/1GRM8AXspv3U0oPStXTyR-001euZUgXl-X6GAkoWaCAw/edit#gid=0)
