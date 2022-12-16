@@ -99,8 +99,7 @@ class SqldbService:
             viite.get_booktitle(),
             viite.get_pages(),
             viite.get_entrytype()
-            )
-        
+            )        
         insert_sql = (
             "INSERT INTO VIITTEET "
             "(ID, AUTHOR, TITLE, PUBLISHER, YEAR, ISBN, JOURNAL, "

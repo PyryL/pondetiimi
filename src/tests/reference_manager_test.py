@@ -133,22 +133,26 @@ class TestReferenceManager(unittest.TestCase):
     def test_hae_filtterihakusanoilla_viite_kun_operandi_and(self):
         self.reference_manager.lisaa_uusi_viite(self.viite)
         self.reference_manager.lisaa_filtteri("john")
-        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[0].get_author(), "John Doe")
+        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[0]\
+            .get_author(), "John Doe")
 
     def test_hae_filtterihakusanoilla_kirjaviite_kun_operandi_and(self):
         self.reference_manager.lisaa_uusi_viite(self.kirjaviite)
         self.reference_manager.lisaa_filtteri("author")
-        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[0].get_author(), "Author")
+        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[0]\
+            .get_author(), "Author")
 
     def test_hae_filtterihakusanoilla_artikkeliviite_kun_operandi_and(self):
         self.reference_manager.lisaa_uusi_viite(self.artikkeliviite)
         self.reference_manager.lisaa_filtteri("author")
-        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[0].get_author(), "Author")
+        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[0]\
+            .get_author(), "Author")
 
     def test_hae_filtterihakusanoilla_konferenssiviite_kun_operandi_and(self):
         self.reference_manager.lisaa_uusi_viite(self.konferenssiviite)
         self.reference_manager.lisaa_filtteri("author")
-        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[0].get_author(), "Author")
+        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[0]\
+            .get_author(), "Author")
 
     def test_hae_yhdella_filtterihakusanalla_kaikki_matchaavat_viitteet_kun_operandi_and(self):
         self.reference_manager.lisaa_uusi_viite(self.kirjaviite)
@@ -156,9 +160,12 @@ class TestReferenceManager(unittest.TestCase):
         self.reference_manager.lisaa_uusi_viite(self.konferenssiviite)
         self.reference_manager.lisaa_filtteri("author")
         self.assertEqual(len(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()), 3)
-        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[0].get_author(), "Author")
-        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[1].get_author(), "Author")
-        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[2].get_author(), "Author")
+        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[0]\
+            .get_author(), "Author")
+        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[1]\
+            .get_author(), "Author")
+        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[2]\
+            .get_author(), "Author")
 
     def test_hae_kahdella_filtterihakusanalla_kaikki_matchaavat_viitteet_kun_operandi_and(self):
         self.reference_manager.lisaa_uusi_viite(self.kirjaviite)
@@ -167,9 +174,12 @@ class TestReferenceManager(unittest.TestCase):
         self.reference_manager.lisaa_filtteri("author")
         self.reference_manager.lisaa_filtteri("otsik")
         self.assertEqual(len(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()), 3)
-        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[0].get_author(), "Author")
-        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[1].get_author(), "Author")
-        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[2].get_author(), "Author")
+        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[0]\
+            .get_author(), "Author")
+        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[1]\
+            .get_author(), "Author")
+        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[2]\
+            .get_author(), "Author")
 
     def test_hae_usealla_filtterihakusanalla_kaikki_matchaavat_viitteet_kun_operandi_and(self):
         self.reference_manager.lisaa_uusi_viite(self.kirjaviite)
@@ -183,9 +193,12 @@ class TestReferenceManager(unittest.TestCase):
         self.reference_manager.lisaa_filtteri("julk")
         self.reference_manager.lisaa_filtteri("vuo")
         self.assertEqual(len(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()), 6)
-        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[0].get_author(), "Author")
-        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[1].get_author(), "Author")
-        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[2].get_author(), "Author")
+        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[0]\
+            .get_author(), "Author")
+        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[1]\
+            .get_author(), "Author")
+        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[2]\
+            .get_author(), "Author")
 
     def test_hae_usealla_filtterihakusanalla_kaikki_matchaavat_viitteet_kun_operandi_and_ja_artikkeli_ensin(self):
         self._lisaa_kaikki_viitteet_artikkeli_ensin()
@@ -194,62 +207,85 @@ class TestReferenceManager(unittest.TestCase):
         self.reference_manager.lisaa_filtteri("julk")
         self.reference_manager.lisaa_filtteri("vuo")
         self.assertEqual(len(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()), 6)
-        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[0].get_author(), "Author")
-        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[1].get_author(), "Author")
-        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[2].get_author(), "Author")
+        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[0]\
+            .get_author(), "Author")
+        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[1]\
+            .get_author(), "Author")
+        self.assertEqual(self.reference_manager.hae_filtterihakusanoilla_kun_operandi_and()[2]\
+            .get_author(), "Author")
 
     def test_hae_viitelistasta_hakusanalla_auth_kun_lisatty_yksi_kirjaviite(self):
         self.reference_manager.lisaa_uusi_viite(self.kirjaviite)
-        self.assertEqual(len(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "auth")), 1)
-        self.assertEqual(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "auth")[0].get_author(), "Author")
+        self.assertEqual(len(self.reference_manager.hae_viitelistasta_hakusanalla\
+            (self.reference_manager.hae_viitteet(), "auth")), 1)
+        self.assertEqual(self.reference_manager.hae_viitelistasta_hakusanalla\
+            (self.reference_manager.hae_viitteet(), "auth")[0].get_author(), "Author")
 
     def test_hae_viitelistasta_hakusanalla_otsikko_kun_lisatty_yksi_kirjaviite(self):
         self.reference_manager.lisaa_uusi_viite(self.kirjaviite)
-        self.assertEqual(len(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "otsikko")), 1)
-        self.assertEqual(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "otsikko")[0].get_author(), "Author")
+        self.assertEqual(len(self.reference_manager.hae_viitelistasta_hakusanalla\
+            (self.reference_manager.hae_viitteet(), "otsikko")), 1)
+        self.assertEqual(self.reference_manager.hae_viitelistasta_hakusanalla\
+            (self.reference_manager.hae_viitteet(), "otsikko")[0].get_author(), "Author")
 
     def test_hae_viitelistasta_hakusanalla_julkaisija_kun_lisatty_yksi_kirjaviite(self):
         self.reference_manager.lisaa_uusi_viite(self.kirjaviite)
-        self.assertEqual(len(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "julkaisija")), 1)
-        self.assertEqual(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "julkaisija")[0].get_author(), "Author")
+        self.assertEqual(len(self.reference_manager.hae_viitelistasta_hakusanalla\
+            (self.reference_manager.hae_viitteet(), "julkaisija")), 1)
+        self.assertEqual(self.reference_manager.hae_viitelistasta_hakusanalla\
+            (self.reference_manager.hae_viitteet(), "julkaisija")[0].get_author(), "Author")
 
     def test_hae_viitelistasta_hakusanalla_vuosi_kun_lisatty_yksi_kirjaviite(self):
         self.reference_manager.lisaa_uusi_viite(self.kirjaviite)
-        self.assertEqual(len(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "vuosi")), 1)
-        self.assertEqual(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "vuosi")[0].get_author(), "Author")
+        self.assertEqual(len(self.reference_manager.hae_viitelistasta_hakusanalla\
+            (self.reference_manager.hae_viitteet(), "vuosi")), 1)
+        self.assertEqual(self.reference_manager.hae_viitelistasta_hakusanalla\
+            (self.reference_manager.hae_viitteet(), "vuosi")[0].get_author(), "Author")
 
     def test_hae_viitelistasta_hakusanalla_isbn_kun_lisatty_yksi_kirjaviite(self):
         self.reference_manager.lisaa_uusi_viite(self.kirjaviite)
-        self.assertEqual(len(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "isbn")), 1)
-        self.assertEqual(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "isbn")[0].get_author(), "Author")
+        self.assertEqual(len(self.reference_manager.hae_viitelistasta_hakusanalla\
+            (self.reference_manager.hae_viitteet(), "isbn")), 1)
+        self.assertEqual(self.reference_manager.hae_viitelistasta_hakusanalla\
+            (self.reference_manager.hae_viitteet(), "isbn")[0].get_author(), "Author")
 
     def test_hae_viitelistasta_hakusanalla_kun_lisatty_yksi_artikkeliviite(self):
         self.reference_manager.lisaa_uusi_viite(self.artikkeliviite)
-        self.assertEqual(len(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "auth")), 1)
-        self.assertEqual(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "auth")[0].get_author(), "Author")
+        self.assertEqual(len(self.reference_manager.hae_viitelistasta_hakusanalla\
+            (self.reference_manager.hae_viitteet(), "auth")), 1)
+        self.assertEqual(self.reference_manager.hae_viitelistasta_hakusanalla\
+            (self.reference_manager.hae_viitteet(), "auth")[0].get_author(), "Author")
 
     def test_hae_viitelistasta_hakusanalla_kun_lisatty_yksi_konferenssiviite(self):
         self.reference_manager.lisaa_uusi_viite(self.konferenssiviite)
-        self.assertEqual(len(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "auth")), 1)
-        self.assertEqual(self.reference_manager.hae_viitelistasta_hakusanalla(self.reference_manager.hae_viitteet(), "auth")[0].get_author(), "Author")
+        self.assertEqual(len(self.reference_manager.hae_viitelistasta_hakusanalla\
+            (self.reference_manager.hae_viitteet(), "auth")), 1)
+        self.assertEqual(self.reference_manager.hae_viitelistasta_hakusanalla\
+            (self.reference_manager.hae_viitteet(), "auth")[0].get_author(), "Author")
 
     def test_hae_viitelistasta_jossa_yksi_kirjaviite_matchit_hakusanalistalla_kun_operandi_and(self):
         self.reference_manager.lisaa_uusi_viite(self.kirjaviite)
         self.reference_manager.lisaa_filtteri("author")
         self.reference_manager.lisaa_filtteri("eiloydy")
-        self.assertEqual(len(self.reference_manager.hae_viitelistasta_matchit_hakusanalistalla_kun_operandi_and(self.reference_manager.hae_viitteet(), self.reference_manager.get_filtterit())), 0)
+        self.assertEqual(len(self.reference_manager\
+            .hae_viitelistasta_matchit_hakusanalistalla_kun_operandi_and\
+                (self.reference_manager.hae_viitteet(), self.reference_manager.get_filtterit())), 0)
 
     def test_hae_viitelistasta_jossa_yksi_artikkeliviite_matchit_hakusanalistalla_kun_operandi_and(self):
         self.reference_manager.lisaa_uusi_viite(self.artikkeliviite)
         self.reference_manager.lisaa_filtteri("author")
         self.reference_manager.lisaa_filtteri("eiloydy")
-        self.assertEqual(len(self.reference_manager.hae_viitelistasta_matchit_hakusanalistalla_kun_operandi_and(self.reference_manager.hae_viitteet(), self.reference_manager.get_filtterit())), 0)
+        self.assertEqual(len(self.reference_manager\
+            .hae_viitelistasta_matchit_hakusanalistalla_kun_operandi_and\
+                (self.reference_manager.hae_viitteet(), self.reference_manager.get_filtterit())), 0)
 
     def test_hae_viitelistasta_jossa_yksi_konferenssiviite_matchit_hakusanalistalla_kun_operandi_and(self):
         self.reference_manager.lisaa_uusi_viite(self.konferenssiviite)
         self.reference_manager.lisaa_filtteri("author")
         self.reference_manager.lisaa_filtteri("eiloydy")
-        self.assertEqual(len(self.reference_manager.hae_viitelistasta_matchit_hakusanalistalla_kun_operandi_and(self.reference_manager.hae_viitteet(), self.reference_manager.get_filtterit())), 0)
+        self.assertEqual(len(self.reference_manager\
+            .hae_viitelistasta_matchit_hakusanalistalla_kun_operandi_and\
+                (self.reference_manager.hae_viitteet(), self.reference_manager.get_filtterit())), 0)
 
     def test_hae_viitteen_indeksi_viitelistassa_toimii_oikein(self):
         self.reference_manager.lisaa_uusi_viite(self.kirjaviite)
@@ -258,9 +294,12 @@ class TestReferenceManager(unittest.TestCase):
         self.reference_manager.lisaa_uusi_viite(self.kirjaviite2)
         self.reference_manager.lisaa_uusi_viite(self.artikkeliviite2)
         self.reference_manager.lisaa_uusi_viite(self.konferenssiviite2)
-        self.assertEqual(self.reference_manager.hae_viitteen_indeksi_viitelistassa(self.kirjaviite, self.reference_manager.hae_viitteet()), 0)
-        self.assertEqual(self.reference_manager.hae_viitteen_indeksi_viitelistassa(self.artikkeliviite, self.reference_manager.hae_viitteet()), 1)
-        self.assertEqual(self.reference_manager.hae_viitteen_indeksi_viitelistassa(self.konferenssiviite, self.reference_manager.hae_viitteet()), 2)
+        self.assertEqual(self.reference_manager.hae_viitteen_indeksi_viitelistassa\
+            (self.kirjaviite, self.reference_manager.hae_viitteet()), 0)
+        self.assertEqual(self.reference_manager.hae_viitteen_indeksi_viitelistassa\
+            (self.artikkeliviite, self.reference_manager.hae_viitteet()), 1)
+        self.assertEqual(self.reference_manager.hae_viitteen_indeksi_viitelistassa\
+            (self.konferenssiviite, self.reference_manager.hae_viitteet()), 2)
 
     def test_hae_kahdella_hakusanalla_kun_operandi_and_kun_lisatty_kaikki_viitteet_kirjaviite_ensin(self):
         self._lisaa_kaikki_viitteet()
@@ -317,14 +356,18 @@ class TestReferenceManager(unittest.TestCase):
 
     def test_hae_viitteen_indeksi_viitteissa(self):
         self._lisaa_kaikki_viitteet()
-        self.assertEqual(self.reference_manager.hae_viitteen_indeksi_viitteissa(self.kirjaviite), 0)
-        self.assertEqual(self.reference_manager.hae_viitteen_indeksi_viitteissa(self.artikkeliviite), 1)
-        self.assertEqual(self.reference_manager.hae_viitteen_indeksi_viitteissa(self.konferenssiviite), 2)
-           
+        self.assertEqual(self.reference_manager.hae_viitteen_indeksi_viitteissa\
+            (self.kirjaviite), 0)
+        self.assertEqual(self.reference_manager.hae_viitteen_indeksi_viitteissa\
+            (self.artikkeliviite), 1)
+        self.assertEqual(self.reference_manager.hae_viitteen_indeksi_viitteissa\
+            (self.konferenssiviite), 2)
+            
     def test_vie_viitelista_tiedostoon(self):
         #self._lisaa_kaikki_viitteet()
         self.reference_manager.lisaa_uusi_viite(self.viite)
-        self.reference_manager.vie_viitelista_tiedostoon(self.reference_manager.hae_viitteet(), "tiedostonimi")
+        self.reference_manager.vie_viitelista_tiedostoon(self.reference_manager.hae_viitteet(),\
+             "tiedostonimi")
         self.bibtex_service.vie_viite_temporary_databaseen.assert_called_once()
         self.bibtex_service.tyhjenna_temporary_bibdatabase.assert_called_once()
         self.bibtex_service.vie_temporary_databasen_viitelista_tiedostoon.assert_called_once()
